@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Weight Calculator</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide calculator panes by default */
+        .calc-pane {
+            display: none;
+        }
+        /* Show the active pane */
+        .calc-pane.active {
+            display: block;
+        }
+        /* Style for active nav link */
+        .nav-link.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .nav-link.active svg {
+            color: white;
+            opacity: 1;
+        }
+        
+        /* Animation for result box */
+        .result-box {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .result-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Input focus glow */
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* blue-500 with transparency */
+        }
+
+        /* Custom scrollbar for Webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px; /* For horizontal scrollbars */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0; /* Light gray for track */
+            border-radius: 10px;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #374151; /* Dark gray for track in dark mode */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a0a0a0; /* Gray for thumb */
+            border-radius: 10px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #6b7280; /* Darker gray for thumb in dark mode */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888; /* Darker gray on hover */
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Even darker gray on hover in dark mode */
+        }
+    </style>
+</head>
+<!-- Added dark mode classes for body --><body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+    <!-- Added relative positioning for the toggle button --><div class="container mx-auto p-4 md:p-8 max-w-7xl relative">
+        
+        <!-- Theme Toggle Button --><div class="absolute top-4 right-4 md:top-8 md:right-8 z-10">
+            <button id="themeToggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                <svg id="themeIconSun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <svg id="themeIconMoon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+        </div>
+
+        <header class="mb-8">
+            <!-- Responsive header text --><h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-100 transition-colors duration-300">Metal Weight Calculator</h1>
+            <p class="text-center text-gray-600 dark:text-gray-400 mt-2 transition-colors duration-300">Calculate the weight of standard metal components.</p>
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Navigation Sidebar --><nav class="w-full md:w-64 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 h-full transition-colors duration-300">
+                <ul class="space-y-2">
+                    <!-- Added icons and flex layout to nav links --><li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="pipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" /><path stroke-linecap="round" stroke-linejoin="round" d="M8 4a4 4 0 014 4h0a4 4 0 01-4 4H4v8h4a4 4 0 004-4h0a4 4 0 00-4-4H4V4z" opacity="0.6"/></svg>
+                        Pipe
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="reducer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" opacity="0.6" /></svg>
+                        Reducer
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="plate">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-4M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1M9 4h6" opacity="0.6"/></svg>
+                        Plate / Disc
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="dish">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" opacity="0.6"/></svg>
+                        Dish End
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="angle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v-6a2 2 0 012-2h8a2 2 0 012 2v6m-2-2h2m-4-4V4m0 4H4" opacity="0.6"/></svg>
+                        Angle
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="channel">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16V6a2 2 0 012-2h12a2 2 0 012 2v10m-6-4h.01M12 12h.01M18 12h.01M6 12h.01" opacity="0.6"/></svg>
+                        Channel
+                    </a></li>
+                    <li><a href="#" class="nav-link flex items-center gap-3 p-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300" data-target="beam">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" opacity="0.6"/></svg>
+                        I-Beam
+                    </a></li>
+                </ul>
+            </nav>
+
+            <!-- Calculator Content Area --><main class="flex-1 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 md:p-8 transition-colors duration-300">
+                
+                <!-- Pipe Calculator --><div id="pipeCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Pipe Weight</h2>
+                    <form id="pipeForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material Density --><div>
+                                <label for="pipeMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="pipeMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                            <!-- Length --><div>
+                                <label for="pipeLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length (mm)</label>
+                                <input type="number" id="pipeLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <!-- Outer Diameter --><div>
+                                <label for="pipeOD" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Outer Diameter (mm)</label>
+                                <input type="number" id="pipeOD" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 114.3">
+                            </div>
+                            <!-- Wall Thickness --><div>
+                                <label for="pipeWT" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Wall Thickness (mm)</label>
+                                <input type="number" id="pipeWT" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 6.02">
+                            </div>
+                        </div>
+                        <!-- Enhanced button hover effect --><button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <!-- Added 'result-box' class for animation --><div id="pipeResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- Reducer Calculator --><div id="reducerCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Reducer (Concentric) Weight</h2>
+                    <form id="reducerForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="reducerMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="reducerMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                            <!-- Length --><div>
+                                <label for="reducerLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length / Height (mm)</label>
+                                <input type="number" id="reducerLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 152">
+                            </div>
+                            <!-- Large OD --><div>
+                                <label for="reducerLargeOD" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Large Outer Diameter (mm)</label>
+                                <input type="number" id="reducerLargeOD" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 114.3">
+                            </div>
+                            <!-- Small OD --><div>
+                                <label for="reducerSmallOD" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Small Outer Diameter (mm)</label>
+                                <input type="number" id="reducerSmallOD" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 60.3">
+                            </div>
+                             <!-- Thickness --><div>
+                                <label for="reducerThickness" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Thickness (mm)</label>
+                                <input type="number" id="reducerThickness" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 6.02">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="reducerResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- Plate Calculator --><div id="plateCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Plate / Disc Weight</h2>
+                    <form id="plateForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="plateMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="plateMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                            <!-- Shape Type --><div>
+                                <label for="plateType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Shape</label>
+                                <select id="plateType" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="rectangular">Rectangular</option>
+                                    <option value="circular">Circular (Disc)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Inputs for Rectangular Plate --><div id="plateRectInputs" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="plateLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length (mm)</label>
+                                <input type="number" id="plateLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <div>
+                                <label for="plateWidth" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Width (mm)</label>
+                                <input type="number" id="plateWidth" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 500">
+                            </div>
+                            <div>
+                                <label for="plateThickness" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Thickness (mm)</label>
+                                <input type="number" id="plateThickness" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 10">
+                            </div>
+                        </div>
+
+                        <!-- Inputs for Circular Plate --><div id="plateCircInputs" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+                            <div>
+                                <label for="plateDiameter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Diameter (mm)</label>
+                                <input type="number" id="plateDiameter" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 500">
+                            </div>
+                            <div>
+                                <label for="plateThicknessCirc" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Thickness (mm)</label>
+                                <input type="number" id="plateThicknessCirc" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 10">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="plateResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- Dish End Calculator --><div id="dishCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Dish End Weight</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 transition-colors duration-300">Calculation is an approximation for a 2:1 ellipsoidal head based on blank disc diameter.</p>
+                    <form id="dishForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="dishMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="dishMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                             <!-- Diameter --><div>
+                                <label for="dishDiameter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Diameter (mm)</label>
+                                <input type="number" id="dishDiameter" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <!-- Straight Flange --><div>
+                                <label for="dishSF" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Straight Flange (mm)</label>
+                                <input type="number" id="dishSF" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 50">
+                            </div>
+                            <!-- Thickness --><div>
+                                <label for="dishThickness" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Thickness (mm)</label>
+                                <input type="number" id="dishThickness" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 10">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="dishResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- Angle Calculator --><div id="angleCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Angle (L-Bar) Weight</h2>
+                    <form id="angleForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="angleMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="angleMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                             <!-- Length --><div>
+                                <label for="angleLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length (mm)</label>
+                                <input type="number" id="angleLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <!-- Leg 1 (A) --><div>
+                                <label for="angleLegA" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Leg 1 (A) (mm)</label>
+                                <input type="number" id="angleLegA" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 50">
+                            </div>
+                            <!-- Leg 2 (B) --><div>
+                                <label for="angleLegB" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Leg 2 (B) (mm)</label>
+                                <input type="number" id="angleLegB" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 50">
+                            </div>
+                            <!-- Thickness --><div>
+                                <label for="angleThickness" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Thickness (mm)</label>
+                                <input type="number" id="angleThickness" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 5">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="angleResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- Channel Calculator --><div id="channelCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">Channel (U-Bar) Weight</h2>
+                    <form id="channelForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="channelMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="channelMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                            <!-- Length --><div>
+                                <label for="channelLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length (mm)</label>
+                                <input type="number" id="channelLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <!-- Height (H) --><div>
+                                <label for="channelHeight" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Height (H) (mm)</label>
+                                <input type="number" id="channelHeight" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 100">
+                            </div>
+                            <!-- Width (W) --><div>
+                                <label for="channelWidth" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Width (W) (mm)</label>
+                                <input type="number" id="channelWidth" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 50">
+                            </div>
+                            <!-- Web Thickness (Tw) --><div>
+                                <label for="channelWebT" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Web Thickness (Tw) (mm)</label>
+                                <input type="number" id="channelWebT" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 5">
+                            </div>
+                            <!-- Flange Thickness (Tf) --><div>
+                                <label for="channelFlangeT" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Flange Thickness (Tf) (mm)</label>
+                                <input type="number" id="channelFlangeT" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 7">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="channelResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+                <!-- I-Beam Calculator --><div id="beamCalculator" class="calc-pane">
+                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 transition-colors duration-300">I-Beam Weight</h2>
+                    <form id="beamForm" class="space-y-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner transition-colors duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Material --><div>
+                                <label for="beamMaterial" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Material</label>
+                                <select id="beamMaterial" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300">
+                                    <option value="7850">Carbon Steel (7850 kg/m³)</option>
+                                    <option value="8000">Stainless Steel (8000 kg/m³)</option>
+                                    <option value="2700">Aluminum (2700 kg/m³)</option>
+                                    <option value="8960">Copper (8960 kg/m³)</option>
+                                    <option value="4500">Titanium (4500 kg/m³)</option>
+                                </select>
+                            </div>
+                            <!-- Length --><div>
+                                <label for="beamLength" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Length (mm)</label>
+                                <input type="number" id="beamLength" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 1000">
+                            </div>
+                            <!-- Height (H) --><div>
+                                <label for="beamHeight" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Height (H) (mm)</label>
+                                <input type="number" id="beamHeight" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 150">
+                            </div>
+                            <!-- Width (W) --><div>
+                                <label for="beamWidth" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Width (W) (mm)</label>
+                                <input type="number" id="beamWidth" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 75">
+                            </div>
+                            <!-- Web Thickness (Tw) --><div>
+                                <label for="beamWebT" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Web Thickness (Tw) (mm)</label>
+                                <input type="number" id="beamWebT" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 5.5">
+                            </div>
+                            <!-- Flange Thickness (Tf) --><div>
+                                <label for="beamFlangeT" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors duration-300">Flange Thickness (Tf) (mm)</label>
+                                <input type="number" id="beamFlangeT" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300" placeholder="e.g., 8.5">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-105">Calculate</button>
+                        <div id="beamResult" class="mt-6 p-4 rounded-lg text-lg font-semibold text-center result-box"></div>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+        
+        <footer class="text-center text-gray-500 dark:text-gray-400 text-sm mt-8 transition-colors duration-300">
+            <p>Calculations are for estimation purposes only. All dimensions in mm, densities in kg/m³.</p>
+            <p class="mt-2">Developed by - Sayon Hazra</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Theme Toggle Logic ---
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIconSun = document.getElementById('themeIconSun');
+            const themeIconMoon = document.getElementById('themeIconMoon');
+            const userTheme = localStorage.getItem('theme');
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    themeIconSun.style.display = 'block';
+                    themeIconMoon.style.display = 'none';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    themeIconSun.style.display = 'none';
+                    themeIconMoon.style.display = 'block';
+                    localStorage.setItem('theme', 'light');
+                }
+            };
+
+            // Initial theme setup
+            if (userTheme === 'dark' || (!userTheme && systemTheme)) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+
+            // Button click listener
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                if (isDark) {
+                    applyTheme('light');
+                } else {
+                    applyTheme('dark');
+                }
+            });
+
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const calcPanes = document.querySelectorAll('.calc-pane');
+
+            // --- Navigation Logic ---
+            function showPane(targetId) {
+                // Hide all panes
+                calcPanes.forEach(pane => {
+                    pane.classList.remove('active');
+                });
+                // Deactivate all links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    // Reset icon color
+                    link.querySelector('svg').classList.remove('text-white');
+                    link.querySelector('svg').classList.add('text-gray-500', 'dark:text-gray-400');
+                });
+
+                // Show target pane
+                const targetPane = document.getElementById(targetId + 'Calculator');
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                }
+                // Activate target link
+                const targetLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                    // Set icon color to white for active link
+                    targetLink.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+                    targetLink.querySelector('svg').classList.add('text-white');
+                }
+            }
+
+            // Add click event to nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('data-target');
+                    showPane(target);
+                });
+            });
+
+            // Show the first pane by default
+            showPane('pipe');
+
+            // --- Helper Functions ---
+            function getVal(id) {
+                return parseFloat(document.getElementById(id).value);
+            }
+
+            function showResult(id, message, isError = false) {
+                const resultDiv = document.getElementById(id);
+                resultDiv.textContent = message;
+                // Use 'show' class to trigger animation
+                resultDiv.classList.add('show');
+                if (isError) {
+                    // Remove old classes and add new ones for error
+                    resultDiv.classList.remove('bg-green-100', 'border-green-300', 'text-green-800', 'dark:bg-green-900', 'dark:border-green-700', 'dark:text-green-200');
+                    resultDiv.classList.add('bg-red-100', 'border-red-300', 'text-red-800', 'dark:bg-red-900', 'dark:border-red-700', 'dark:text-red-200');
+                } else {
+                    // Remove old classes and add new ones for success
+                    resultDiv.classList.remove('bg-red-100', 'border-red-300', 'text-red-800', 'dark:bg-red-900', 'dark:border-red-700', 'dark:text-red-200');
+                    resultDiv.classList.add('bg-green-100', 'border-green-300', 'text-green-800', 'dark:bg-green-900', 'dark:border-green-700', 'dark:text-green-200');
+                }
+                // Smooth scroll to the result
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function validateInputs(inputs) {
+                for (const val of inputs) {
+                    if (isNaN(val) || val <= 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // --- Calculation Logic ---
+
+            // 1. Pipe
+            document.getElementById('pipeForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('pipeMaterial');
+                const l = getVal('pipeLength') / 1000; // to m
+                const od = getVal('pipeOD') / 1000; // to m
+                const wt = getVal('pipeWT') / 1000; // to m
+
+                if (!validateInputs([density, l, od, wt])) {
+                    showResult('pipeResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+                if (wt * 2 >= od) {
+                     showResult('pipeResult', 'Wall thickness cannot be half of the Outer Diameter or more.', true);
+                    return;
+                }
+
+                const id = od - (2 * wt);
+                const outerRadius = od / 2;
+                const innerRadius = id / 2;
+                
+                const volume = (Math.PI * (Math.pow(outerRadius, 2) - Math.pow(innerRadius, 2))) * l;
+                const weight = volume * density;
+
+                showResult('pipeResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 2. Reducer
+            document.getElementById('reducerForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('reducerMaterial');
+                const l = getVal('reducerLength') / 1000;
+                const D_o = getVal('reducerLargeOD') / 1000;
+                const d_o = getVal('reducerSmallOD') / 1000;
+                const t = getVal('reducerThickness') / 1000;
+
+                if (!validateInputs([density, l, D_o, d_o, t])) {
+                    showResult('reducerResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+                if (t * 2 >= d_o || t * 2 >= D_o) {
+                     showResult('reducerResult', 'Thickness cannot be half of the Diameter or more.', true);
+                    return;
+                }
+
+                const D_i = D_o - 2 * t;
+                const d_i = d_o - 2 * t;
+                
+                const R_o = D_o / 2;
+                const r_o = d_o / 2;
+                const R_i = D_i / 2;
+                const r_i = d_i / 2;
+
+                // Volume of a frustum = (1/3) * π * h * (R² + Rr + r²)
+                const V_outer = (1/3) * Math.PI * l * (Math.pow(R_o, 2) + R_o * r_o + Math.pow(r_o, 2));
+                const V_inner = (1/3) * Math.PI * l * (Math.pow(R_i, 2) + R_i * r_i + Math.pow(r_i, 2));
+
+                const volume = V_outer - V_inner;
+                const weight = volume * density;
+                showResult('reducerResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 3. Plate (with toggle)
+            document.getElementById('plateType').addEventListener('change', (e) => {
+                const type = e.target.value;
+                if (type === 'rectangular') {
+                    document.getElementById('plateRectInputs').classList.remove('hidden');
+                    document.getElementById('plateCircInputs').classList.add('hidden');
+                } else {
+                    document.getElementById('plateRectInputs').classList.add('hidden');
+                    document.getElementById('plateCircInputs').classList.remove('hidden');
+                }
+            });
+
+            document.getElementById('plateForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('plateMaterial');
+                const type = document.getElementById('plateType').value;
+                let volume = 0;
+
+                if (type === 'rectangular') {
+                    const l = getVal('plateLength') / 1000;
+                    const w = getVal('plateWidth') / 1000;
+                    const t = getVal('plateThickness') / 1000;
+                    if (!validateInputs([density, l, w, t])) {
+                        showResult('plateResult', 'Please fill all fields with valid positive numbers.', true);
+                        return;
+                    }
+                    volume = l * w * t;
+                } else { // circular
+                    const d = getVal('plateDiameter') / 1000;
+                    const t = getVal('plateThicknessCirc') / 1000;
+                    if (!validateInputs([density, d, t])) {
+                        showResult('plateResult', 'Please fill all fields with valid positive numbers.', true);
+                        return;
+                    }
+                    const r = d / 2;
+                    volume = (Math.PI * Math.pow(r, 2)) * t;
+                }
+
+                const weight = volume * density;
+                showResult('plateResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 4. Dish End
+            document.getElementById('dishForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('dishMaterial');
+                const d = getVal('dishDiameter');
+                const sf = getVal('dishSF');
+                const t = getVal('dishThickness');
+
+                if (!validateInputs([density, d, sf, t])) {
+                    showResult('dishResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+
+                // Approx. Blank Diameter for 2:1 Ellipsoidal Head
+                const blank_d_mm = d + (d / 4.5) + (2 * sf); 
+                const blank_d_m = blank_d_mm / 1000;
+                const t_m = t / 1000;
+                
+                const r = blank_d_m / 2;
+                const volume = (Math.PI * Math.pow(r, 2)) * t_m;
+                const weight = volume * density;
+                
+                showResult('dishResult', `Approx. Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 5. Angle
+            document.getElementById('angleForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('angleMaterial');
+                const l = getVal('angleLength') / 1000;
+                const a = getVal('angleLegA') / 1000;
+                const b = getVal('angleLegB') / 1000;
+                const t = getVal('angleThickness') / 1000;
+
+                if (!validateInputs([density, l, a, b, t])) {
+                    showResult('angleResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+                if (t > a || t > b) {
+                    showResult('angleResult', 'Thickness cannot be greater than leg length.', true);
+                    return;
+                }
+
+                // Cross-sectional area = (A*T) + ((B-T)*T)
+                const area = (a * t) + ((b - t) * t);
+                const volume = area * l;
+                const weight = volume * density;
+                
+                showResult('angleResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 6. Channel
+            document.getElementById('channelForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('channelMaterial');
+                const l = getVal('channelLength') / 1000;
+                const h = getVal('channelHeight') / 1000;
+                const w = getVal('channelWidth') / 1000;
+                const tw = getVal('channelWebT') / 1000;
+                const tf = getVal('channelFlangeT') / 1000;
+
+                if (!validateInputs([density, l, h, w, tw, tf])) {
+                    showResult('channelResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+                if (tf * 2 > h) {
+                    showResult('channelResult', 'Flange thickness cannot be more than half the height.', true);
+                    return;
+                }
+
+                // Area = (2 * Flanges) + Web
+                const area = (w * tf * 2) + ((h - 2 * tf) * tw);
+                const volume = area * l;
+                const weight = volume * density;
+                
+                showResult('channelResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+            // 7. I-Beam
+            document.getElementById('beamForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const density = getVal('beamMaterial');
+                const l = getVal('beamLength') / 1000;
+                const h = getVal('beamHeight') / 1000;
+                const w = getVal('beamWidth') / 1000;
+                const tw = getVal('beamWebT') / 1000;
+                const tf = getVal('beamFlangeT') / 1000;
+
+                if (!validateInputs([density, l, h, w, tw, tf])) {
+                    showResult('beamResult', 'Please fill all fields with valid positive numbers.', true);
+                    return;
+                }
+                if (tf * 2 > h) {
+                    showResult('beamResult', 'Flange thickness cannot be more than half the height.', true);
+                    return;
+                }
+                
+                // Area = (2 * Flanges) + Web (Same formula as Channel)
+                const area = (w * tf * 2) + ((h - 2 * tf) * tw);
+                const volume = area * l;
+                const weight = volume * density;
+                
+                showResult('beamResult', `Calculated Weight: ${weight.toFixed(2)} kg`);
+            });
+
+        });
+    </script>
+</body>
+</html>
