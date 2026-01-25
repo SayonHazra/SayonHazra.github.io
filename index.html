@@ -32,15 +32,15 @@
         body {
             font-family: 'Cormorant Garamond', serif;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(196, 30, 58, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(196, 30, 58, 0.08) 0%, transparent 40%),
                 linear-gradient(135deg, #FFF8DC 0%, #FFFACD 50%, #FFF5E6 100%);
             color: var(--dark-maroon);
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Decorative Background Pattern */
+        /* Simplified decorative pattern */
         body::before {
             content: '';
             position: fixed;
@@ -49,26 +49,9 @@
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 215, 0, 0.03) 35px, rgba(255, 215, 0, 0.03) 70px),
-                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(196, 30, 58, 0.03) 35px, rgba(196, 30, 58, 0.03) 70px);
+                repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(255, 215, 0, 0.02) 50px, rgba(255, 215, 0, 0.02) 100px);
             pointer-events: none;
             z-index: 0;
-        }
-
-        /* Floating decorative elements */
-        body::after {
-            content: '✦ ❋ ✦ ❋ ✦ ❋ ✦ ❋ ✦';
-            position: fixed;
-            top: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 1.5rem;
-            color: var(--golden-yellow);
-            opacity: 0.4;
-            z-index: 0;
-            letter-spacing: 40px;
-            animation: float 6s ease-in-out infinite;
         }
 
         .container {
@@ -89,13 +72,10 @@
             padding: 40px 20px;
             text-align: center;
             position: relative;
-            background: 
-                linear-gradient(to bottom, rgba(255, 248, 220, 0.75), rgba(255, 245, 230, 0.85)),
-                url('couple-photo.jpg') center/cover no-repeat;
-            background-attachment: fixed;
+            background: url('couple-photo.jpg') center/cover no-repeat fixed;
         }
         
-        /* Overlay pattern */
+        /* Simple dark overlay for text readability */
         .hero::before {
             content: '';
             position: absolute;
@@ -103,12 +83,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.2) 0%, transparent 30%),
-                radial-gradient(circle at 70% 60%, rgba(196, 30, 58, 0.2) 0%, transparent 30%),
-                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="paisley" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="2" fill="%23FFD700" opacity="0.3"/><circle cx="25" cy="25" r="1.5" fill="%23C41E3A" opacity="0.2"/><circle cx="75" cy="75" r="1.5" fill="%23C41E3A" opacity="0.2"/><path d="M 20 50 Q 30 30, 50 50 T 80 50" stroke="%23FFD700" stroke-width="0.5" fill="none" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23paisley)"/></svg>');
+            background: rgba(0, 0, 0, 0.35);
             z-index: 0;
-            pointer-events: none;
         }
         
         .hero > * {
@@ -121,22 +97,22 @@
             border-radius: 30px;
             padding: 60px 40px;
             background: 
-                linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 250, 205, 0.9)),
-                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 215, 0, 0.05) 10px, rgba(255, 215, 0, 0.05) 20px);
-            backdrop-filter: blur(10px);
+                linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 250, 205, 0.92)),
+                repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 215, 0, 0.04) 15px, rgba(255, 215, 0, 0.04) 30px);
+            backdrop-filter: blur(12px);
             box-shadow: 
-                0 25px 70px rgba(196, 30, 58, 0.25),
-                inset 0 0 40px rgba(255, 215, 0, 0.15),
-                0 0 0 8px rgba(255, 255, 255, 0.5);
+                0 25px 70px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(255, 215, 0, 0.1),
+                0 0 0 8px rgba(255, 255, 255, 0.3);
             max-width: 900px;
             position: relative;
-            animation: fadeInScale 1.2s ease-out;
+            animation: fadeInScale 1s ease-out;
         }
 
         @keyframes fadeInScale {
             from {
                 opacity: 0;
-                transform: scale(0.95);
+                transform: scale(0.97);
             }
             to {
                 opacity: 1;
@@ -151,7 +127,7 @@
             font-size: 3rem;
             color: var(--golden-yellow);
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            animation: sparkle 2s infinite;
+            animation: gentle-sparkle 3s ease-in-out infinite;
         }
 
         .decorative-border::before {
@@ -164,11 +140,12 @@
             bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
+            animation-delay: 1.5s;
         }
 
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1) rotate(0deg); }
-            50% { opacity: 0.7; transform: translateX(-50%) scale(1.15) rotate(180deg); }
+        @keyframes gentle-sparkle {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.7; transform: translateX(-50%) scale(1.1); }
         }
 
         .mantra {
@@ -180,6 +157,7 @@
             letter-spacing: 1px;
             line-height: 1.8;
             animation: fadeIn 1.5s ease-out 0.3s both;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
         @keyframes fadeIn {
@@ -194,6 +172,7 @@
             margin-bottom: 25px;
             font-style: italic;
             animation: fadeIn 1.5s ease-out 0.6s both;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
         .couple-names {
@@ -205,34 +184,33 @@
                 var(--primary-red) 25%, 
                 var(--burnt-orange) 50%, 
                 var(--golden-yellow) 75%,
-                var(--burnt-orange) 100%);
+                var(--primary-red) 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin: 20px 0;
             line-height: 1.2;
-            animation: fadeIn 1.5s ease-out 0.9s both, shimmer 4s ease-in-out infinite;
+            animation: fadeIn 1.5s ease-out 0.9s both, shimmer 6s ease-in-out infinite;
             text-shadow: 0 5px 15px rgba(196, 30, 58, 0.2);
             letter-spacing: 2px;
         }
 
         @keyframes shimmer {
-            0% { background-position: 0% center; }
+            0%, 100% { background-position: 0% center; }
             50% { background-position: 100% center; }
-            100% { background-position: 0% center; }
         }
 
         .ampersand {
             font-size: 3rem;
             display: inline-block;
             margin: 0 20px;
-            animation: float 3s ease-in-out infinite;
+            animation: gentle-float 4s ease-in-out infinite;
         }
 
-        @keyframes float {
+        @keyframes gentle-float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
         /* Couple Photos */
@@ -335,6 +313,7 @@
             margin: 30px 0;
             font-weight: 600;
             animation: fadeIn 1.5s ease-out 1.2s both;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
         }
 
         /* Countdown Timer */
@@ -345,51 +324,37 @@
 
         .countdown-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
+            font-size: 2rem;
             color: var(--burnt-orange);
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+            font-weight: 600;
         }
 
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
         }
 
         .countdown-item {
             background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
             color: white;
-            padding: 25px 20px;
-            border-radius: 20px;
-            min-width: 100px;
+            padding: 35px 30px;
+            border-radius: 25px;
+            min-width: 140px;
             box-shadow: 
                 0 10px 30px rgba(196, 30, 58, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 3px solid var(--golden-yellow);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 4px solid var(--golden-yellow);
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .countdown-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .countdown-item:hover::before {
-            left: 100%;
         }
 
         .countdown-item:hover {
-            transform: translateY(-8px) scale(1.08);
+            transform: translateY(-5px) scale(1.05);
             box-shadow: 
                 0 15px 40px rgba(196, 30, 58, 0.5),
                 0 0 20px rgba(255, 215, 0, 0.4),
@@ -397,17 +362,18 @@
         }
 
         .countdown-number {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
             font-family: 'Cinzel', serif;
             display: block;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
 
         .countdown-label {
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
+            letter-spacing: 2px;
+            margin-top: 10px;
             opacity: 0.9;
         }
 
@@ -428,28 +394,7 @@
             text-shadow: 0 2px 4px rgba(196, 30, 58, 0.1);
         }
 
-        .section-title::before,
-        .section-title::after {
-            content: '❋';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            color: var(--golden-yellow);
-            opacity: 0.6;
-        }
-
         .section-title::before {
-            left: 0;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .section-title::after {
-            right: 0;
-            animation: float 3s ease-in-out infinite 1.5s;
-        }
-
-        .section-title::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -464,13 +409,6 @@
                 var(--golden-yellow) 80%, 
                 transparent);
             border-radius: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .section-title::before,
-            .section-title::after {
-                display: none;
-            }
         }
 
         /* About Couple */
@@ -491,32 +429,15 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
             border: 3px double var(--golden-yellow);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .person-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .person-card:hover::before {
-            opacity: 1;
         }
 
         .person-card:hover {
-            transform: translateY(-15px) scale(1.02);
+            transform: translateY(-12px);
             box-shadow: 
-                0 25px 70px rgba(196, 30, 58, 0.3),
-                0 0 0 6px rgba(255, 215, 0, 0.2),
+                0 20px 60px rgba(196, 30, 58, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
             border-color: var(--primary-red);
         }
@@ -555,27 +476,26 @@
 
         .invitation-message::before,
         .invitation-message::after {
-            content: '';
+            content: '✦';
             position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--golden-yellow);
+            font-size: 1.5rem;
+            color: var(--golden-yellow);
+            animation: corner-sparkle 3s ease-in-out infinite;
         }
 
         .invitation-message::before {
-            top: -2px;
-            left: -2px;
-            border-right: none;
-            border-bottom: none;
-            border-radius: 25px 0 0 0;
+            top: 15px;
+            left: 15px;
         }
 
         .invitation-message::after {
-            bottom: -2px;
-            right: -2px;
-            border-left: none;
-            border-top: none;
-            border-radius: 0 0 25px 0;
+            bottom: 15px;
+            right: 15px;
+        }
+
+        @keyframes corner-sparkle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         .invitation-message p {
@@ -664,25 +584,14 @@
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--deep-red) 0%, var(--primary-red) 50%, var(--deep-red) 100%);
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255, 215, 0, 0.05) 30px, rgba(255, 215, 0, 0.05) 60px),
+                linear-gradient(135deg, var(--deep-red) 0%, var(--primary-red) 100%);
             color: white;
             padding: 50px 20px;
             text-align: center;
             font-size: 1.1rem;
             position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 215, 0, 0.1) 20px, rgba(255, 215, 0, 0.1) 40px);
-            pointer-events: none;
         }
 
         footer p {
@@ -705,12 +614,12 @@
             margin: 20px 0;
             display: block;
             text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
-            animation: gentle-pulse 3s ease-in-out infinite;
+            animation: gentle-pulse 4s ease-in-out infinite;
         }
 
         @keyframes gentle-pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 0.85; }
         }
 
         /* Music Control Button */
@@ -744,15 +653,17 @@
         }
 
         .music-control.playing {
-            animation: pulse 2s infinite;
+            animation: music-pulse 2s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        @keyframes music-pulse {
             0%, 100% {
                 box-shadow: 0 5px 25px rgba(196, 30, 58, 0.4);
+                transform: scale(1);
             }
             50% {
                 box-shadow: 0 5px 35px rgba(255, 215, 0, 0.6);
+                transform: scale(1.05);
             }
         }
 
@@ -879,27 +790,6 @@
                     ওঁ গং গণপতয়ে নমঃ<br>
                     (Om Gam Ganapataye Namaha)
                 </div>
-
-                <!-- Couple Photos -->
-                <div class="couple-photos">
-                    <div class="photo-container">
-                        <div class="photo-frame">
-                            <div class="photo-placeholder">👰</div>
-                            <!-- Replace with: <img src="path-to-tanmoy-photo.jpg" alt="Tanmoy"> -->
-                        </div>
-                        <div class="photo-label">Tanmoy</div>
-                    </div>
-                    
-                    <div class="heart-divider">❤️</div>
-                    
-                    <div class="photo-container">
-                        <div class="photo-frame">
-                            <div class="photo-placeholder">🤵</div>
-                            <!-- Replace with: <img src="path-to-priyanka-photo.jpg" alt="Priyanka"> -->
-                        </div>
-                        <div class="photo-label">Priyanka</div>
-                    </div>
-                </div>
                 
                 <div class="invitation-text">
                     You are invited to the wedding of
@@ -912,26 +802,29 @@
                 <div class="wedding-date-display">
                     9th March 2026
                 </div>
-                
-                <div class="countdown-section">
-                    <div class="countdown-title">COUNTDOWN TO OUR SPECIAL DAY</div>
-                    <div class="countdown" id="countdown">
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="days">--</span>
-                            <span class="countdown-label">Days</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="hours">--</span>
-                            <span class="countdown-label">Hours</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="minutes">--</span>
-                            <span class="countdown-label">Minutes</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="seconds">--</span>
-                            <span class="countdown-label">Seconds</span>
-                        </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section style="background: linear-gradient(135deg, #FFF8DC, #FFFACD); padding: 100px 20px;">
+            <div class="countdown-section" style="max-width: 1200px; margin: 0 auto;">
+                <div class="countdown-title">COUNTDOWN TO OUR SPECIAL DAY</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">--</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">--</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">--</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">--</span>
+                        <span class="countdown-label">Seconds</span>
                     </div>
                 </div>
             </div>
