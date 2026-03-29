@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngiCalc Pro | Material & Unit Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style type="text/tailwindcss">
+        .active-tab { @apply border-l-4 border-blue-500 bg-slate-50 text-blue-700 dark:bg-slate-700/50 dark:text-blue-400 dark:border-blue-400; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .input-group { @apply flex flex-col mb-4; }
+        label { @apply text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1; }
+        input, select { @apply p-3 border border-slate-200 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500; }
+        input[readonly] { @apply bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-500 cursor-not-allowed border-transparent dark:border-transparent focus:ring-0; }
+        .shape-btn-active { @apply border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-slate-700 dark:text-blue-300; }
+        .error-border { @apply border-red-500 focus:ring-red-400 dark:border-red-500; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen font-sans transition-colors duration-200">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col">
+            <div class="p-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight">ENGI<span class="text-slate-800 dark:text-white">CALC</span></h1>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Engineering Suite v2.5</p>
+                </div>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                    <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+            
+            <div class="flex flex-col space-y-1">
+                <button onclick="switchMainTab('units')" id="nav-units" class="nav-btn px-6 py-4 text-left font-semibold active-tab transition dark:text-slate-300">📏 Unit Converter</button>
+                <button onclick="switchMainTab('weight')" id="nav-weight" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition">⚖️ Weight Calculator</button>
+            </div>
+
+            <div class="p-6 mt-6 border-t border-slate-100 dark:border-slate-700 flex-1">
+                <div class="mb-6">
+                    <label>Material Preset</label>
+                    <select id="materialSelect" onchange="updateDensity()" class="w-full mt-1 text-sm mb-4">
+                        <option value="7850">Carbon Steel (7850)</option>
+                        <option value="8000">Stainless Steel (8000)</option>
+                        <option value="2700">Aluminum (2700)</option>
+                        <option value="8960">Copper (8960)</option>
+                        <option value="custom">Custom Density</option>
+                    </select>
+                    
+                    <label>Density (kg/m³)</label>
+                    <input type="number" id="globalDensity" value="7850" readonly class="w-full mt-1 text-sm font-mono">
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto">
+            
+            <div id="section-units" class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
+                <h2 class="text-xl font-bold mb-6">Precision Length Converter</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                    <div class="input-group md:col-span-1">
+                        <label>Input Value</label>
+                        <input type="number" id="uInput" oninput="convert()" placeholder="Enter value...">
+                    </div>
+                    <div class="input-group">
+                        <label>From Unit</label>
+                        <select id="uFrom" onchange="convert()">
+                            <option value="mm">Millimeter (mm)</option>
+                            <option value="cm">Centimeter (cm)</option>
+                            <option value="m">Meter (m)</option>
+                            <option value="in">Inches (in)</option>
+                            <option value="ft">Feet (ft)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>To Unit</label>
+                        <select id="uTo" onchange="convert()">
+                            <option value="mm">Millimeter (mm)</option>
+                            <option value="cm" selected>Centimeter (cm)</option>
+                            <option value="m">Meter (m)</option>
+                            <option value="in">Inches (in)</option>
+                            <option value="ft">Feet (ft)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-10 p-8 bg-slate-900 dark:bg-black rounded-2xl text-center shadow-inner">
+                    <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-2">Resulting Measurement</p>
+                    <div id="uOutput" class="text-5xl font-mono font-bold text-white">0.00</div>
+                </div>
+            </div>
+
+            <div id="section-weight" class="hidden max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-3 space-y-2">
+                        <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter">Choose Profile</p>
+                        <div id="shapeMenu" class="grid grid-cols-2 gap-3">
+                            
+                            <button onclick="loadShape('plate')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="plate.jpg" onerror="this.src='https://placehold.co/100x100?text=Plate'" alt="Plate" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">Plate / Flat</span>
+                            </button>
+
+                            <button onclick="loadShape('round')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="round.jpg" onerror="this.src='https://placehold.co/100x100?text=Round'" alt="Round Tube" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">Round Tube</span>
+                            </button>
+
+                            <button onclick="loadShape('rect')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="rect.jpg" onerror="this.src='https://placehold.co/100x100?text=Rect'" alt="Rect Tube" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">Sq/Rect Tube</span>
+                            </button>
+
+                            <button onclick="loadShape('angle')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="angle.jpg" onerror="this.src='https://placehold.co/100x100?text=Angle'" alt="L-Angle" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">L-Angle</span>
+                            </button>
+
+                            <button onclick="loadShape('channel')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="channel.jpg" onerror="this.src='https://placehold.co/100x100?text=Channel'" alt="C-Channel" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">C-Channel</span>
+                            </button>
+
+                            <button onclick="loadShape('beam')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
+                                <img src="beam.jpg" onerror="this.src='https://placehold.co/100x100?text=Beam'" alt="I-Beam" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
+                                <span class="text-center text-xs">I / H Beam</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-9 space-y-6">
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
+                            <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase italic">Plate Calculator</h2>
+                            
+                            <div id="errorBox" class="hidden mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm font-semibold"></div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div id="inputGrid" class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                                <div class="md:col-span-1 flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-600">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Profile Reference</p>
+                                    <div id="diagramBox" class="w-full h-32 flex items-center justify-center text-slate-300 dark:text-slate-500"></div>
+                                </div>
+                            </div>
+
+                            <div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-8">
+                                <button onclick="calcWeight()" class="w-full md:w-auto px-12 py-4 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 shadow-xl shadow-blue-100 dark:shadow-none transform active:scale-95 transition-all">CALCULATE & ADD</button>
+                                <div class="text-right">
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Part Mass</p>
+                                    <p id="wResult" class="text-5xl font-mono font-black text-slate-900 dark:text-white">0.000 <span class="text-xl text-slate-400 font-sans">kg</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end px-2">
+                            <button id="btnToggleCost" onclick="toggleCostEstimator()" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                Enable Cost Estimation
+                            </button>
+                        </div>
+
+                        <div id="costEstimatorPanel" class="hidden bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-200 dark:border-emerald-800/50 p-6 transition-all shadow-sm">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                <div>
+                                    <h3 class="font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Project Cost Estimator
+                                    </h3>
+                                    <p class="text-xs text-emerald-600 dark:text-emerald-500 mt-1">Enter your material rate to calculate the total BOM cost.</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-slate-400 font-bold text-xl">₹</span>
+                                    <input type="number" id="pricePerKg" value="85.00" step="1.00" min="0" oninput="updateBOM()" class="p-3 border border-emerald-300 dark:border-emerald-700 rounded-lg focus:ring-2 focus:ring-emerald-400 outline-none w-32 bg-white dark:bg-slate-800 text-emerald-900 dark:text-emerald-300 font-bold text-lg text-center shadow-inner">
+                                    <span class="text-slate-500 text-sm font-bold">/ kg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors duration-200">
+                            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200">Bill of Materials (BOM)</h3>
+                                <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline">Clear All</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm whitespace-nowrap">
+                                    <thead>
+                                        <tr class="text-slate-400 border-b border-slate-50 dark:border-slate-700">
+                                            <th class="px-6 py-3 font-semibold">Shape</th>
+                                            <th class="px-6 py-3 font-semibold">Material</th>
+                                            <th class="px-6 py-3 font-semibold text-right">Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="historyBody">
+                                        </tbody>
+                                    <tfoot class="bg-slate-50 dark:bg-slate-700/80 font-bold border-t-2 border-slate-200 dark:border-slate-600">
+                                        <tr>
+                                            <td colspan="2" class="px-6 py-4 text-right text-slate-700 dark:text-slate-200 tracking-wider">TOTAL ASSEMBLY:</td>
+                                            <td class="px-6 py-4 text-right">
+                                                <div id="bomTotalWeight" class="text-lg text-blue-600 dark:text-blue-400">0.000 kg</div>
+                                                <div id="bomTotalCost" class="text-lg text-emerald-600 dark:text-emerald-400 mt-1 hidden">₹0.00</div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // --- State Variables ---
+        let totalAssemblyWeight = 0;
+        let isCostEnabled = false;
+
+        // --- Dark Mode Logic ---
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            html.classList.toggle('dark');
+            
+            if (html.classList.contains('dark')) {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            }
+        }
+
+        // --- UI Toggles ---
+        function toggleCostEstimator() {
+            isCostEnabled = !isCostEnabled;
+            const panel = document.getElementById('costEstimatorPanel');
+            const btn = document.getElementById('btnToggleCost');
+            const costDisplay = document.getElementById('bomTotalCost');
+
+            if (isCostEnabled) {
+                panel.classList.remove('hidden');
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Hide Cost Estimation`;
+                btn.classList.replace('text-emerald-600', 'text-slate-500');
+                btn.classList.replace('dark:text-emerald-400', 'dark:text-slate-400');
+                costDisplay.classList.remove('hidden');
+            } else {
+                panel.classList.add('hidden');
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg> Enable Cost Estimation`;
+                btn.classList.replace('text-slate-500', 'text-emerald-600');
+                btn.classList.replace('dark:text-slate-400', 'dark:text-emerald-400');
+                costDisplay.classList.add('hidden');
+            }
+            updateBOM();
+        }
+
+        // --- SVG Profile Library (For the large Diagram Box) ---
+        const svgs = {
+            plate: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><rect x="10" y="35" width="80" height="30" rx="2"/><text x="50" y="25" class="text-[12px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="50" y="80" class="text-[12px] fill-slate-500" text-anchor="middle">Thick (T)</text></svg>`,
+            round: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="25" class="fill-slate-50 dark:fill-slate-700/50"/><line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" stroke-dasharray="2" stroke-width="1"/><text x="50" y="98" class="text-[10px] fill-slate-500" text-anchor="middle">O.D. & Wall (T)</text></svg>`,
+            rect: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><rect x="15" y="15" width="70" height="70" rx="4"/><rect x="25" y="25" width="50" height="50" rx="2" class="fill-slate-50 dark:fill-slate-700/50"/><text x="50" y="10" class="text-[12px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="5" y="55" class="text-[10px] fill-slate-500" transform="rotate(-90 5 55)">Height (H)</text></svg>`,
+            angle: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="20,10 40,10 40,70 90,70 90,90 20,90"/><text x="55" y="98" class="text-[10px] fill-slate-500" text-anchor="middle">Leg B</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Leg A</text></svg>`,
+            channel: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="20,10 80,10 80,30 40,30 40,70 80,70 80,90 20,90"/><text x="50" y="8" class="text-[10px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Height (H)</text></svg>`,
+            beam: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="10,10 90,10 90,25 58,25 58,75 90,75 90,90 10,90 10,75 42,75 42,25 10,25"/><text x="50" y="8" class="text-[10px] fill-slate-500" text-anchor="middle">Flange (W)</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Height (H)</text></svg>`
+        };
+
+        function updateDensity() {
+            const select = document.getElementById('materialSelect');
+            const densityInput = document.getElementById('globalDensity');
+            if(select.value !== 'custom') {
+                densityInput.value = select.value;
+                densityInput.readOnly = true; 
+            } else {
+                densityInput.readOnly = false;
+                densityInput.focus();
+            }
+        }
+
+        function switchMainTab(tab) {
+            document.getElementById('section-units').classList.toggle('hidden', tab !== 'units');
+            document.getElementById('section-weight').classList.toggle('hidden', tab !== 'weight');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById('nav-' + tab).classList.add('active-tab');
+            if(tab === 'weight') loadShape('plate');
+        }
+
+        const factors = { mm: 1, cm: 10, m: 1000, in: 25.4, ft: 304.8 };
+        function convert() {
+            const val = parseFloat(document.getElementById('uInput').value) || 0;
+            const from = document.getElementById('uFrom').value;
+            const to = document.getElementById('uTo').value;
+            const result = (val * factors[from]) / factors[to];
+            document.getElementById('uOutput').innerText = result.toLocaleString(undefined, {maximumFractionDigits: 4});
+        }
+
+        let activeShape = 'plate';
+        function loadShape(shape) {
+            activeShape = shape;
+            const grid = document.getElementById('inputGrid');
+            const title = document.getElementById('shapeTitle');
+            const diagram = document.getElementById('diagramBox');
+            
+            hideError();
+            
+            document.querySelectorAll('.shape-item').forEach(btn => {
+                btn.classList.remove('shape-btn-active');
+                if(btn.getAttribute('onclick').includes(shape)) {
+                    btn.classList.add('shape-btn-active');
+                }
+            });
+
+            diagram.innerHTML = svgs[shape] || '';
+
+            let html = '';
+            const L = `<div class="input-group"><label>Length (mm)</label><input type="number" id="inp_L" placeholder="e.g. 1000" min="0"></div>`;
+
+            if(shape === 'plate') {
+                title.innerText = "Plate / Flat Bar";
+                html = `<div class="input-group"><label>Thickness (mm)</label><input type="number" id="inp_T" min="0"></div>
+                        <div class="input-group"><label>Width (mm)</label><input type="number" id="inp_W" min="0"></div>` + L;
+            } else if(shape === 'round') {
+                title.innerText = "Round Section";
+                html = `<div class="input-group"><label>Outer Dia (mm)</label><input type="number" id="inp_OD" min="0"></div>
+                        <div class="input-group"><label>Wall Thk (mm)</label><input type="number" id="inp_T" placeholder="0 for Solid" min="0"></div>` + L;
+            } else if(shape === 'rect') {
+                title.innerText = "Sq / Rect Tube";
+                html = `<div class="input-group"><label>Height (mm)</label><input type="number" id="inp_H" min="0"></div>
+                        <div class="input-group"><label>Width (mm)</label><input type="number" id="inp_W" min="0"></div>
+                        <div class="input-group"><label>Wall Thk (mm)</label><input type="number" id="inp_T" placeholder="0 for Solid" min="0"></div>` + L;
+            } else if(shape === 'angle') {
+                title.innerText = "L-Angle Section";
+                html = `<div class="input-group"><label>Leg A (mm)</label><input type="number" id="inp_H" min="0"></div>
+                        <div class="input-group"><label>Leg B (mm)</label><input type="number" id="inp_W" min="0"></div>
+                        <div class="input-group"><label>Thickness (mm)</label><input type="number" id="inp_T" min="0"></div>` + L;
+            } else if(shape === 'channel' || shape === 'beam') {
+                title.innerText = shape === 'channel' ? "C-CHANNEL" : "I / H BEAM";
+                html = `<div class="input-group"><label>Height (H) (mm)</label><input type="number" id="inp_H" min="0"></div>
+                        <div class="input-group"><label>Flange Width (W) (mm)</label><input type="number" id="inp_W" min="0"></div>
+                        <div class="input-group"><label>Web Thk (tw) (mm)</label><input type="number" id="inp_tw" min="0"></div>
+                        <div class="input-group"><label>Flange Thk (tf) (mm)</label><input type="number" id="inp_tf" min="0"></div>` + L;
+            }
+            grid.innerHTML = html;
+        }
+
+        function showError(msg, errorElementIds = []) {
+            const box = document.getElementById('errorBox');
+            box.innerHTML = `⚠️ ${msg}`;
+            box.classList.remove('hidden');
+            
+            document.querySelectorAll('#inputGrid input').forEach(inp => inp.classList.remove('error-border'));
+            
+            errorElementIds.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('error-border');
+            });
+        }
+
+        function hideError() {
+            document.getElementById('errorBox').classList.add('hidden');
+            document.querySelectorAll('#inputGrid input').forEach(inp => inp.classList.remove('error-border'));
+        }
+
+        function getVal(id) {
+            const val = document.getElementById(id)?.value;
+            return val ? parseFloat(val) : null; 
+        }
+
+        function calcWeight() {
+            hideError(); 
+
+            const density = parseFloat(document.getElementById('globalDensity').value) || 0;
+            if (density <= 0) {
+                showError("Density must be greater than zero.", ['globalDensity']);
+                return;
+            }
+
+            const L = getVal('inp_L');
+            if (L === null || L <= 0) {
+                showError("Please enter a valid Length.", ['inp_L']);
+                return;
+            }
+
+            let area = 0;
+
+            if(activeShape === 'plate') {
+                const T = getVal('inp_T');
+                const W = getVal('inp_W');
+                if (T === null || W === null || T <= 0 || W <= 0) return showError("Thickness and Width must be greater than zero.", ['inp_T', 'inp_W']);
+                area = T * W;
+            } 
+            else if(activeShape === 'round') {
+                const OD = getVal('inp_OD');
+                const T = getVal('inp_T') || 0; 
+                if (OD === null || OD <= 0) return showError("Outer Diameter is required.", ['inp_OD']);
+                if (T >= OD / 2) return showError("Wall thickness cannot be equal to or greater than the radius (OD/2).", ['inp_T', 'inp_OD']);
+                
+                area = T === 0 ? Math.PI * Math.pow(OD/2, 2) : Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2));
+            } 
+            else if(activeShape === 'rect') {
+                const H = getVal('inp_H');
+                const W = getVal('inp_W');
+                const T = getVal('inp_T') || 0;
+                if (H === null || W === null || H <= 0 || W <= 0) return showError("Height and Width are required.", ['inp_H', 'inp_W']);
+                if (T >= H / 2 || T >= W / 2) return showError("Wall thickness is too large for these outer dimensions.", ['inp_T']);
+                
+                area = T === 0 ? H * W : (H * W) - ((H - 2*T) * (W - 2*T));
+            } 
+            else if(activeShape === 'angle') {
+                const H = getVal('inp_H');
+                const W = getVal('inp_W');
+                const T = getVal('inp_T');
+                if (H === null || W === null || T === null || H <= 0 || W <= 0 || T <= 0) return showError("All dimensions are required.", ['inp_H', 'inp_W', 'inp_T']);
+                if (T >= H || T >= W) return showError("Thickness cannot exceed the leg length.", ['inp_T']);
+                
+                area = (H * T) + ((W - T) * T);
+            } 
+            else if(activeShape === 'channel' || activeShape === 'beam') {
+                const H = getVal('inp_H');
+                const W = getVal('inp_W');
+                const tw = getVal('inp_tw');
+                const tf = getVal('inp_tf');
+                if (H === null || W === null || tw === null || tf === null) return showError("All profile dimensions are required.", ['inp_H', 'inp_W', 'inp_tw', 'inp_tf']);
+                if (tw >= W) return showError("Web thickness cannot exceed total flange width.", ['inp_tw', 'inp_W']);
+                if ((2 * tf) >= H) return showError("Combined flange thickness cannot exceed total height.", ['inp_tf', 'inp_H']);
+                
+                area = (2 * W * tf) + ((H - 2 * tf) * tw);
+            }
+
+            const weight = (area * L * density) / 1000000000;
+            const resultString = weight.toFixed(3);
+            
+            document.getElementById('wResult').innerHTML = `${resultString} <span class="text-xl text-slate-400 font-sans">kg</span>`;
+            
+            addToHistory(activeShape, weight);
+        }
+
+        // --- BOM & History Update Functions ---
+        function addToHistory(shape, weight) {
+            const tbody = document.getElementById('historyBody');
+            const matName = document.getElementById('materialSelect').options[document.getElementById('materialSelect').selectedIndex].text;
+            const resultString = weight.toFixed(3);
+            
+            const row = `<tr class="border-b border-slate-50 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                <td class="px-6 py-3 font-medium capitalize text-slate-600 dark:text-slate-300">${shape}</td>
+                <td class="px-6 py-3 text-slate-500 dark:text-slate-400">${matName}</td>
+                <td class="px-6 py-3 text-right font-bold text-blue-600 dark:text-blue-400">${resultString} kg</td>
+            </tr>`;
+            tbody.insertAdjacentHTML('afterbegin', row);
+
+            totalAssemblyWeight += weight;
+            updateBOM();
+        }
+
+        function updateBOM() {
+            const price = parseFloat(document.getElementById('pricePerKg').value) || 0;
+            const totalCost = totalAssemblyWeight * price;
+
+            document.getElementById('bomTotalWeight').innerText = `${totalAssemblyWeight.toFixed(3)} kg`;
+            document.getElementById('bomTotalCost').innerText = `₹${totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+
+        function clearHistory() {
+            document.getElementById('historyBody').innerHTML = '';
+            totalAssemblyWeight = 0;
+            updateBOM();
+            document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`;
+        }
+
+    </script>
+</body>
+</html>
