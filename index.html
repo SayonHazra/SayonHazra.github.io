@@ -51,7 +51,7 @@
             <div class="p-6 flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.1 PWA</p>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.2 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
@@ -190,7 +190,14 @@
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 print:border-none print:shadow-none overflow-hidden transition-colors duration-200">
                             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
-                                <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline print:hidden" data-i18n="btn_clear">Clear All</button>
+                                
+                                <div class="flex gap-4 items-center">
+                                    <button onclick="shareWhatsApp()" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline flex items-center gap-1 print:hidden">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.802.372-.282.297-1.089 1.066-1.089 2.603 0 1.537 1.114 3.024 1.268 3.222.154.198 2.197 3.354 5.32 4.708 2.056.89 2.76.993 3.693.846.932-.148 2.873-1.173 3.27-2.308.397-1.135.397-2.107.278-2.308-.12-.201-.417-.325-.714-.474zM12 22.37A10.323 10.323 0 0 1 6.705 21l-.38-.225-3.924 1.026 1.05-3.826-.247-.393A10.33 10.33 0 0 1 1.63 12c0-5.713 4.654-10.37 10.37-10.37 5.715 0 10.37 4.657 10.37 10.37 0 5.713-4.655 10.37-10.37 10.37zM12 0C5.373 0 0 5.373 0 12c0 2.13.558 4.21 1.624 6.035L.036 24l6.096-1.603A11.936 11.936 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                                        <span data-i18n="btn_wa">Share</span>
+                                    </button>
+                                    <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline print:hidden" data-i18n="btn_clear">Clear All</button>
+                                </div>
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm whitespace-nowrap">
@@ -276,7 +283,7 @@
         const dict = {
             en: {
                 app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
-                app_version: "VERSION 3.1 PWA",
+                app_version: "VERSION 3.2 PWA",
                 nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Us",
                 lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
                 mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
@@ -286,7 +293,7 @@
                 sh_plate: "Plate / Blank", sh_shell: "Cylindrical Shell", sh_cone: "Cone (Frustum/Roof)", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
                 
                 lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass",
-                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All",
+                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_wa: "Share",
                 th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
                 
                 // About Section
@@ -304,7 +311,7 @@
             },
             bn: {
                 app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
-                app_version: "সংস্করণ ৩.১ PWA",
+                app_version: "সংস্করণ ৩.২ PWA",
                 nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ আমাদের সম্পর্কে",
                 lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
                 mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
@@ -314,7 +321,7 @@
                 sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_shell: "নলাকার শেল", sh_cone: "শঙ্কু (ফ্রাস্টাম/রুফ)", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
                 
                 lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন",
-                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন",
+                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_wa: "শেয়ার",
                 th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
                 
                 // About Section
@@ -335,6 +342,10 @@
         
         function changeLanguage() {
             currentLang = document.getElementById('langToggle').value;
+            
+            // Save preference to LocalStorage
+            localStorage.setItem('salap_lang', currentLang);
+            
             document.documentElement.lang = currentLang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -347,14 +358,22 @@
 
         function t(key) { return dict[currentLang][key] || key; }
 
-        // --- Core Toggles ---
+        // --- Core Toggles (Theme with LocalStorage) ---
         function toggleDarkMode() {
             const html = document.documentElement;
             const icon = document.getElementById('theme-icon');
             html.classList.toggle('dark');
-            icon.innerHTML = html.classList.contains('dark') ? 
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>' : 
-                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            }
+            
+            // Save preference to LocalStorage
+            localStorage.setItem('salap_theme', isDark ? 'dark' : 'light');
         }
 
         function updateDensity() {
@@ -519,9 +538,58 @@
             document.getElementById('historyBody').insertAdjacentHTML('afterbegin', row);
             totalAssemblyWeight += w; document.getElementById('bomTotalWeight').innerText = `${totalAssemblyWeight.toFixed(3)} kg`;
         }
-        function clearHistory() { document.getElementById('historyBody').innerHTML = ''; totalAssemblyWeight = 0; document.getElementById('bomTotalWeight').innerText = '0.000 kg'; document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`; }
 
-        window.onload = function() { loadShape('plate'); };
+        function clearHistory() { 
+            document.getElementById('historyBody').innerHTML = ''; 
+            totalAssemblyWeight = 0; 
+            document.getElementById('bomTotalWeight').innerText = '0.000 kg'; 
+            document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`; 
+        }
+
+        // --- WhatsApp Share Feature ---
+        function shareWhatsApp() {
+            if (totalAssemblyWeight === 0) {
+                alert(currentLang === 'bn' ? "বিওএম খালি। আগে উপাদান যোগ করুন।" : "BOM is empty. Please add items first.");
+                return;
+            }
+
+            let text = currentLang === 'bn' ? "*প্রজেক্ট বিওএম (BOM):*\n\n" : "*Project BOM:*\n\n";
+            const rows = document.querySelectorAll('#historyBody tr');
+            
+            rows.forEach((row, index) => {
+                const cols = row.querySelectorAll('td');
+                const shape = cols[0].innerText;
+                const mat = cols[1].innerText;
+                const qty = cols[2].innerText;
+                const weight = cols[3].innerText;
+                text += `${index + 1}. ${shape} | ${mat} | ${qty} | ${weight}\n`;
+            });
+
+            text += currentLang === 'bn' ? `\n*মোট ওজন:* ${totalAssemblyWeight.toFixed(3)} kg` : `\n*Total Weight:* ${totalAssemblyWeight.toFixed(3)} kg`;
+            
+            const encodedText = encodeURIComponent(text);
+            window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+        }
+
+        // --- Memory / LocalStorage Initialization ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Apply saved theme
+            const savedTheme = localStorage.getItem('salap_theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            }
+            
+            // Apply saved language
+            const savedLang = localStorage.getItem('salap_lang');
+            if (savedLang === 'en' || savedLang === 'bn') {
+                currentLang = savedLang;
+                document.getElementById('langToggle').value = currentLang;
+                changeLanguage(); // This automatically triggers loadShape()
+            } else {
+                loadShape('plate'); 
+            }
+        });
     </script>
 </body>
 </html>
