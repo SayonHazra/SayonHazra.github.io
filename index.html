@@ -3,71 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EngiCalc Pro | Material & Unit Toolkit</title>
+    <title>Salap Factory | Fabrication & Unit Toolkit</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1e293b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Fonts for clean English & Bengali rendering -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '"Hind Siliguri"', 'sans-serif'],
+                    }
+                }
+            }
         }
     </script>
     <style type="text/tailwindcss">
         .active-tab { @apply border-l-4 border-blue-500 bg-slate-50 text-blue-700 dark:bg-slate-700/50 dark:text-blue-400 dark:border-blue-400; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .input-group { @apply flex flex-col mb-4; }
-        label { @apply text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1; }
-        input, select { @apply p-3 border border-slate-200 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500; }
+        label { @apply text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1 transition-colors leading-relaxed; }
+        input, select { @apply p-3 border border-slate-200 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 leading-relaxed; }
         input[readonly] { @apply bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-500 cursor-not-allowed border-transparent dark:border-transparent focus:ring-0; }
         .shape-btn-active { @apply border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-slate-700 dark:text-blue-300; }
         .error-border { @apply border-red-500 focus:ring-red-400 dark:border-red-500; }
+        select option { font-family: 'Inter', 'Hind Siliguri', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 min-h-screen font-sans transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen font-sans transition-colors duration-200 print:bg-white text-base">
 
     <div class="flex flex-col md:flex-row min-h-screen">
-        <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col">
+        <!-- Navigation Sidebar -->
+        <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col print:hidden">
             <div class="p-6 flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight">ENGI<span class="text-slate-800 dark:text-white">CALC</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Engineering Suite v2.5</p>
+                    <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.1 PWA</p>
                 </div>
-                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
-                    <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
+                <div class="flex gap-2">
+                    <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
+                        <option value="en">EN</option>
+                        <option value="bn">BN</option>
+                    </select>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                        <svg id="theme-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
             </div>
             
             <div class="flex flex-col space-y-1">
-                <button onclick="switchMainTab('units')" id="nav-units" class="nav-btn px-6 py-4 text-left font-semibold active-tab transition dark:text-slate-300">📏 Unit Converter</button>
-                <button onclick="switchMainTab('weight')" id="nav-weight" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition">⚖️ Weight Calculator</button>
+                <button onclick="switchMainTab('units')" id="nav-units" class="nav-btn px-6 py-4 text-left font-semibold active-tab transition dark:text-slate-300" data-i18n="nav_units">📏 Unit Converter</button>
+                <button onclick="switchMainTab('weight')" id="nav-weight" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_fab">⚖️ Fabrication BOM</button>
+                <button onclick="switchMainTab('about')" id="nav-about" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_about">ℹ️ About Us</button>
             </div>
 
             <div class="p-6 mt-6 border-t border-slate-100 dark:border-slate-700 flex-1">
                 <div class="mb-6">
-                    <label>Material Preset</label>
+                    <label data-i18n="lbl_mat_preset">Material Preset</label>
                     <select id="materialSelect" onchange="updateDensity()" class="w-full mt-1 text-sm mb-4">
-                        <option value="7850">Carbon Steel (7850)</option>
-                        <option value="8000">Stainless Steel (8000)</option>
-                        <option value="2700">Aluminum (2700)</option>
-                        <option value="8960">Copper (8960)</option>
-                        <option value="custom">Custom Density</option>
+                        <option value="7850" data-i18n="mat_cs">Carbon Steel (7850)</option>
+                        <option value="8000" data-i18n="mat_ss">Stainless Steel (8000)</option>
+                        <option value="2700" data-i18n="mat_al">Aluminum (2700)</option>
+                        <option value="8960" data-i18n="mat_cu">Copper (8960)</option>
+                        <option value="custom" data-i18n="mat_custom">Custom Density</option>
                     </select>
                     
-                    <label>Density (kg/m³)</label>
+                    <label data-i18n="lbl_density">Density (kg/m³)</label>
                     <input type="number" id="globalDensity" value="7850" readonly class="w-full mt-1 text-sm font-mono">
                 </div>
             </div>
         </nav>
 
-        <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto">
+        <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto print:p-0 relative">
             
-            <div id="section-units" class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
-                <h2 class="text-xl font-bold mb-6">Precision Length Converter</h2>
+            <!-- SECTION 1: Unit Converter -->
+            <div id="section-units" class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
+                <h2 class="text-xl font-bold mb-6" data-i18n="title_converter">Precision Length Converter</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                     <div class="input-group md:col-span-1">
-                        <label>Input Value</label>
-                        <input type="number" id="uInput" oninput="convert()" placeholder="Enter value...">
+                        <label data-i18n="lbl_input_val">Input Value</label>
+                        <input type="number" id="uInput" oninput="convert()" placeholder="0.0">
                     </div>
                     <div class="input-group">
-                        <label>From Unit</label>
+                        <label data-i18n="lbl_from_unit">From Unit</label>
                         <select id="uFrom" onchange="convert()">
                             <option value="mm">Millimeter (mm)</option>
                             <option value="cm">Centimeter (cm)</option>
@@ -77,7 +108,7 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>To Unit</label>
+                        <label data-i18n="lbl_to_unit">To Unit</label>
                         <select id="uTo" onchange="convert()">
                             <option value="mm">Millimeter (mm)</option>
                             <option value="cm" selected>Centimeter (cm)</option>
@@ -88,119 +119,95 @@
                     </div>
                 </div>
                 <div class="mt-10 p-8 bg-slate-900 dark:bg-black rounded-2xl text-center shadow-inner">
-                    <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-2">Resulting Measurement</p>
+                    <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-2" data-i18n="lbl_result_meas">Resulting Measurement</p>
                     <div id="uOutput" class="text-5xl font-mono font-bold text-white">0.00</div>
                 </div>
             </div>
 
+            <!-- SECTION 2: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
+                <div class="hidden print:block text-center mb-8 border-b-2 border-slate-800 pb-4">
+                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">NSNWW</h1>
+                    <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Project Bill of Materials</p>
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-3 space-y-2">
-                        <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter">Choose Profile</p>
-                        <div id="shapeMenu" class="grid grid-cols-2 gap-3">
-                            
-                            <button onclick="loadShape('plate')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="plate.jpg" onerror="this.src='https://placehold.co/100x100?text=Plate'" alt="Plate" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">Plate / Flat</span>
+                    <!-- Sidebar Profiles -->
+                    <div class="lg:col-span-3 space-y-2 print:hidden">
+                        <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter" data-i18n="lbl_fab_profiles">Fabrication Profiles</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-3">
+                            <button onclick="loadShape('plate')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_plate">Plate / Blank</span>
                             </button>
-
-                            <button onclick="loadShape('round')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="round.jpg" onerror="this.src='https://placehold.co/100x100?text=Round'" alt="Round Tube" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">Round Tube</span>
+                            <button onclick="loadShape('shell')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_shell">Cylindrical Shell</span>
                             </button>
-
-                            <button onclick="loadShape('rect')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="rect.jpg" onerror="this.src='https://placehold.co/100x100?text=Rect'" alt="Rect Tube" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">Sq/Rect Tube</span>
+                            <button onclick="loadShape('cone')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_cone">Cone (Frustum/Roof)</span>
                             </button>
-
-                            <button onclick="loadShape('angle')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="angle.jpg" onerror="this.src='https://placehold.co/100x100?text=Angle'" alt="L-Angle" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">L-Angle</span>
+                            <button onclick="loadShape('dishend')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_dishend">Dish End</span>
                             </button>
-
-                            <button onclick="loadShape('channel')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="channel.jpg" onerror="this.src='https://placehold.co/100x100?text=Channel'" alt="C-Channel" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">C-Channel</span>
+                            <button onclick="loadShape('ring')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_ring">Circular Ring</span>
                             </button>
-
-                            <button onclick="loadShape('beam')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-500 transition text-sm font-bold gap-2">
-                                <img src="beam.jpg" onerror="this.src='https://placehold.co/100x100?text=Beam'" alt="I-Beam" class="w-12 h-12 object-cover rounded shadow-sm border border-slate-100 dark:border-slate-700">
-                                <span class="text-center text-xs">I / H Beam</span>
+                            <button onclick="loadShape('ismb')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_ismb">ISMB Beam</span>
                             </button>
-
+                            <button onclick="loadShape('ismc')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_ismc">ISMC Channel</span>
+                            </button>
+                            <button onclick="loadShape('isa')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_isa">ISA Angle</span>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-9 space-y-6">
-                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
-                            <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase italic">Plate Calculator</h2>
-                            
+                    <!-- Main Content Area -->
+                    <div class="lg:col-span-9 space-y-6 print:space-y-2">
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
+                            <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase italic">Steel Plate</h2>
                             <div id="errorBox" class="hidden mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm font-semibold"></div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                                 <div id="inputGrid" class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                                 <div class="md:col-span-1 flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-100 dark:border-slate-600">
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Profile Reference</p>
-                                    <div id="diagramBox" class="w-full h-32 flex items-center justify-center text-slate-300 dark:text-slate-500"></div>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4" data-i18n="lbl_prof_ref">Profile Reference</p>
+                                    <div id="diagramBox" class="w-full h-32 flex items-center justify-center"></div>
                                 </div>
                             </div>
 
                             <div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-700 flex flex-col md:flex-row justify-between items-center gap-8">
-                                <button onclick="calcWeight()" class="w-full md:w-auto px-12 py-4 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 shadow-xl shadow-blue-100 dark:shadow-none transform active:scale-95 transition-all">CALCULATE & ADD</button>
+                                <button onclick="calcWeight()" class="w-full md:w-auto px-12 py-4 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 shadow-xl shadow-blue-100 dark:shadow-none transform active:scale-95 transition-all" data-i18n="btn_calc">CALCULATE & ADD</button>
                                 <div class="text-right">
-                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Current Part Mass</p>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest" data-i18n="lbl_current_mass">Current Part Mass</p>
                                     <p id="wResult" class="text-5xl font-mono font-black text-slate-900 dark:text-white">0.000 <span class="text-xl text-slate-400 font-sans">kg</span></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex justify-end px-2">
-                            <button id="btnToggleCost" onclick="toggleCostEstimator()" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                                Enable Cost Estimation
-                            </button>
-                        </div>
-
-                        <div id="costEstimatorPanel" class="hidden bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-200 dark:border-emerald-800/50 p-6 transition-all shadow-sm">
-                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                                <div>
-                                    <h3 class="font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        Project Cost Estimator
-                                    </h3>
-                                    <p class="text-xs text-emerald-600 dark:text-emerald-500 mt-1">Enter your material rate to calculate the total BOM cost.</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-slate-400 font-bold text-xl">₹</span>
-                                    <input type="number" id="pricePerKg" value="85.00" step="1.00" min="0" oninput="updateBOM()" class="p-3 border border-emerald-300 dark:border-emerald-700 rounded-lg focus:ring-2 focus:ring-emerald-400 outline-none w-32 bg-white dark:bg-slate-800 text-emerald-900 dark:text-emerald-300 font-bold text-lg text-center shadow-inner">
-                                    <span class="text-slate-500 text-sm font-bold">/ kg</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors duration-200">
-                            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
-                                <h3 class="font-bold text-slate-700 dark:text-slate-200">Bill of Materials (BOM)</h3>
-                                <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline">Clear All</button>
+                        <!-- BOM Table Area -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 print:border-none print:shadow-none overflow-hidden transition-colors duration-200">
+                            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
+                                <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline print:hidden" data-i18n="btn_clear">Clear All</button>
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm whitespace-nowrap">
                                     <thead>
-                                        <tr class="text-slate-400 border-b border-slate-50 dark:border-slate-700">
-                                            <th class="px-6 py-3 font-semibold">Shape</th>
-                                            <th class="px-6 py-3 font-semibold">Material</th>
-                                            <th class="px-6 py-3 font-semibold text-right">Result</th>
+                                        <tr class="text-slate-400 print:text-slate-800 border-b border-slate-50 dark:border-slate-700 print:border-slate-300">
+                                            <th class="px-6 py-3 font-semibold" data-i18n="th_shape">Shape</th>
+                                            <th class="px-6 py-3 font-semibold" data-i18n="th_material">Material</th>
+                                            <th class="px-6 py-3 font-semibold text-center" data-i18n="th_qty">Qty</th>
+                                            <th class="px-6 py-3 font-semibold text-right" data-i18n="th_result">Result Mass</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="historyBody">
-                                        </tbody>
-                                    <tfoot class="bg-slate-50 dark:bg-slate-700/80 font-bold border-t-2 border-slate-200 dark:border-slate-600">
+                                    <tbody id="historyBody" class="print:text-black"></tbody>
+                                    <tfoot class="bg-slate-50 dark:bg-slate-700/80 print:bg-white font-bold border-t-2 border-slate-200 dark:border-slate-600 print:border-slate-800">
                                         <tr>
-                                            <td colspan="2" class="px-6 py-4 text-right text-slate-700 dark:text-slate-200 tracking-wider">TOTAL ASSEMBLY:</td>
-                                            <td class="px-6 py-4 text-right">
-                                                <div id="bomTotalWeight" class="text-lg text-blue-600 dark:text-blue-400">0.000 kg</div>
-                                                <div id="bomTotalCost" class="text-lg text-emerald-600 dark:text-emerald-400 mt-1 hidden">₹0.00</div>
+                                            <td colspan="3" class="px-6 py-4 text-right text-slate-700 dark:text-slate-200 print:text-black tracking-wider" id="lbl_total">TOTAL ASSEMBLY:</td>
+                                            <td class="px-6 py-4 text-right flex items-center justify-end gap-3">
+                                                <div id="bomTotalWeight" class="text-lg text-blue-600 dark:text-blue-400 print:text-black">0.000 kg</div>
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -211,262 +218,310 @@
                 </div>
             </div>
 
+            <!-- SECTION 3: About Us -->
+            <div id="section-about" class="hidden max-w-6xl mx-auto space-y-6">
+                
+                <!-- Description Card -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
+                    <h2 class="text-2xl font-black mb-4 text-slate-800 dark:text-white uppercase tracking-tight" data-i18n="about_title">About The Application</h2>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg" id="aboutDesc" data-i18n="about_desc">
+                        This professional toolkit was collaboratively developed by <strong>United Fabricators</strong> and <strong>New Satya Narayan Welding Works</strong>. It is designed as an internal utility to empower our shop-floor employees, streamline fabrication estimates, and ensure absolute precision in our engineering workflows.
+                    </p>
+                </div>
+
+                <!-- Maps Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- UF Map -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-colors duration-200">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">United Fabricators</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Workshop Location</p>
+                        </div>
+                        <div class="w-full h-80">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d387.84360249462475!2d88.2675696!3d22.6158926!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f883b10762a3db%3A0xe410b712b44c4efd!2sUnited%20Fabricators!5e1!3m2!1sen!2sin!4v1781846301087!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- NSNWW Map -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-colors duration-200">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">New Satya Narayan Welding Works</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Workshop Location</p>
+                        </div>
+                        <div class="w-full h-80">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4916.202458506584!2d88.26579711441862!3d22.616830201851105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8830034457161%3A0x6582fabc7670dd4e!2sNew%20Satya%20Narayan%20Welding%20Works!5e0!3m2!1sen!2sin!4v1781846367224!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </main>
     </div>
 
     <script>
-        // --- State Variables ---
-        let totalAssemblyWeight = 0;
-        let isCostEnabled = false;
+        // --- PWA REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
 
-        // --- Dark Mode Logic ---
+        // --- i18n Dictionary ---
+        const dict = {
+            en: {
+                app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
+                app_version: "VERSION 3.1 PWA",
+                nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Us",
+                lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
+                mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
+                title_converter: "Precision Length Converter", lbl_input_val: "Input Value", lbl_from_unit: "From Unit", lbl_to_unit: "To Unit", lbl_result_meas: "Resulting Measurement",
+                lbl_fab_profiles: "Fabrication Profiles",
+                
+                sh_plate: "Plate / Blank", sh_shell: "Cylindrical Shell", sh_cone: "Cone (Frustum/Roof)", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
+                
+                lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass",
+                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All",
+                th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
+                
+                // About Section
+                about_title: "About The Application",
+                about_desc: "This professional toolkit was collaboratively developed by <strong>United Fabricators</strong> and <strong>New Satya Narayan Welding Works</strong>. It is designed as an internal utility to empower our shop-floor employees, streamline fabrication estimates, and ensure absolute precision in our engineering workflows.",
+                
+                // Form Labels
+                f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity",
+                f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
+                f_type_cone: "Cone Type", f_opt_frust: "Frustum Cone (Taper)", f_opt_roof: "Roof Cone",
+                f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (OD) (mm)",
+                f_d1: "Top OD (mm)", f_d2: "Bottom OD (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)",
+                f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)",
+                f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)"
+            },
+            bn: {
+                app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
+                app_version: "সংস্করণ ৩.১ PWA",
+                nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ আমাদের সম্পর্কে",
+                lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
+                mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
+                title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ",
+                lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
+                
+                sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_shell: "নলাকার শেল", sh_cone: "শঙ্কু (ফ্রাস্টাম/রুফ)", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
+                
+                lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন",
+                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন",
+                th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
+                
+                // About Section
+                about_title: "অ্যাপ্লিকেশন সম্পর্কে",
+                about_desc: "এই টুলকিটটি <strong>ইউনাইটেড ফ্যাব্রিকেটরস</strong> এবং <strong>নিউ সত্যনারায়ণ ওয়েল্ডিং ওয়ার্কস</strong>-এর যৌথ উদ্যোগে তৈরি করা হয়েছে। এটি আমাদের কারখানার কর্মীদের সাহায্য করতে, ফ্যাব্রিকেশন এস্টিমেট সহজ করতে এবং ইঞ্জিনিয়ারিং কাজে নিখুঁত নির্ভুলতা নিশ্চিত করতে ডিজাইন করা হয়েছে।",
+
+                f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ",
+                f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার (ফ্ল্যাট প্লেট)", f_opt_circ: "গোলাকার (ব্ল্যাঙ্ক/ডিস্ক)",
+                f_type_cone: "শঙ্কুর ধরন", f_opt_frust: "ফ্রাস্টাম শঙ্কু (টেপার)", f_opt_roof: "রুফ শঙ্কু",
+                f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (OD) (mm)",
+                f_d1: "শীর্ষ ব্যাস (OD) (mm)", f_d2: "নিচের ব্যাস (OD) (mm)", f_base_od: "বেস ব্যাস (OD) (mm)", f_h: "উল্লম্ব উচ্চতা (mm)",
+                f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)",
+                f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)"
+            }
+        };
+
+        let currentLang = 'en';
+        
+        function changeLanguage() {
+            currentLang = document.getElementById('langToggle').value;
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[currentLang][key]) el.innerHTML = dict[currentLang][key];
+            });
+            document.getElementById('lbl_total').innerHTML = dict[currentLang]['lbl_total'];
+            
+            if (!document.getElementById('section-weight').classList.contains('hidden')) loadShape(activeShape);
+        }
+
+        function t(key) { return dict[currentLang][key] || key; }
+
+        // --- Core Toggles ---
         function toggleDarkMode() {
             const html = document.documentElement;
             const icon = document.getElementById('theme-icon');
             html.classList.toggle('dark');
-            
-            if (html.classList.contains('dark')) {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
-            } else {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
-            }
+            icon.innerHTML = html.classList.contains('dark') ? 
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>' : 
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
         }
-
-        // --- UI Toggles ---
-        function toggleCostEstimator() {
-            isCostEnabled = !isCostEnabled;
-            const panel = document.getElementById('costEstimatorPanel');
-            const btn = document.getElementById('btnToggleCost');
-            const costDisplay = document.getElementById('bomTotalCost');
-
-            if (isCostEnabled) {
-                panel.classList.remove('hidden');
-                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> Hide Cost Estimation`;
-                btn.classList.replace('text-emerald-600', 'text-slate-500');
-                btn.classList.replace('dark:text-emerald-400', 'dark:text-slate-400');
-                costDisplay.classList.remove('hidden');
-            } else {
-                panel.classList.add('hidden');
-                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg> Enable Cost Estimation`;
-                btn.classList.replace('text-slate-500', 'text-emerald-600');
-                btn.classList.replace('dark:text-slate-400', 'dark:text-emerald-400');
-                costDisplay.classList.add('hidden');
-            }
-            updateBOM();
-        }
-
-        // --- SVG Profile Library (For the large Diagram Box) ---
-        const svgs = {
-            plate: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><rect x="10" y="35" width="80" height="30" rx="2"/><text x="50" y="25" class="text-[12px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="50" y="80" class="text-[12px] fill-slate-500" text-anchor="middle">Thick (T)</text></svg>`,
-            round: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="25" class="fill-slate-50 dark:fill-slate-700/50"/><line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" stroke-dasharray="2" stroke-width="1"/><text x="50" y="98" class="text-[10px] fill-slate-500" text-anchor="middle">O.D. & Wall (T)</text></svg>`,
-            rect: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><rect x="15" y="15" width="70" height="70" rx="4"/><rect x="25" y="25" width="50" height="50" rx="2" class="fill-slate-50 dark:fill-slate-700/50"/><text x="50" y="10" class="text-[12px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="5" y="55" class="text-[10px] fill-slate-500" transform="rotate(-90 5 55)">Height (H)</text></svg>`,
-            angle: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="20,10 40,10 40,70 90,70 90,90 20,90"/><text x="55" y="98" class="text-[10px] fill-slate-500" text-anchor="middle">Leg B</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Leg A</text></svg>`,
-            channel: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="20,10 80,10 80,30 40,30 40,70 80,70 80,90 20,90"/><text x="50" y="8" class="text-[10px] fill-slate-500" text-anchor="middle">Width (W)</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Height (H)</text></svg>`,
-            beam: `<svg viewBox="0 0 100 100" class="w-full h-full fill-current"><polygon points="10,10 90,10 90,25 58,25 58,75 90,75 90,90 10,90 10,75 42,75 42,25 10,25"/><text x="50" y="8" class="text-[10px] fill-slate-500" text-anchor="middle">Flange (W)</text><text x="10" y="50" class="text-[10px] fill-slate-500" transform="rotate(-90 10 50)">Height (H)</text></svg>`
-        };
 
         function updateDensity() {
-            const select = document.getElementById('materialSelect');
-            const densityInput = document.getElementById('globalDensity');
-            if(select.value !== 'custom') {
-                densityInput.value = select.value;
-                densityInput.readOnly = true; 
-            } else {
-                densityInput.readOnly = false;
-                densityInput.focus();
-            }
+            const sel = document.getElementById('materialSelect');
+            const inp = document.getElementById('globalDensity');
+            if(sel.value !== 'custom') { inp.value = sel.value; inp.readOnly = true; } 
+            else { inp.readOnly = false; inp.focus(); }
         }
 
         function switchMainTab(tab) {
             document.getElementById('section-units').classList.toggle('hidden', tab !== 'units');
             document.getElementById('section-weight').classList.toggle('hidden', tab !== 'weight');
+            document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
             document.getElementById('nav-' + tab).classList.add('active-tab');
-            if(tab === 'weight') loadShape('plate');
+            if(tab === 'weight') loadShape(activeShape);
         }
 
+        // --- Extracted Helpers ---
         const factors = { mm: 1, cm: 10, m: 1000, in: 25.4, ft: 304.8 };
         function convert() {
             const val = parseFloat(document.getElementById('uInput').value) || 0;
-            const from = document.getElementById('uFrom').value;
-            const to = document.getElementById('uTo').value;
-            const result = (val * factors[from]) / factors[to];
-            document.getElementById('uOutput').innerText = result.toLocaleString(undefined, {maximumFractionDigits: 4});
+            const res = (val * factors[document.getElementById('uFrom').value]) / factors[document.getElementById('uTo').value];
+            document.getElementById('uOutput').innerText = res.toLocaleString(undefined, {maximumFractionDigits: 4});
         }
 
+        function getVal(id) { const v = document.getElementById(id)?.value; return v ? parseFloat(v) : null; }
+        
+        function hideError(boxId, gridId) {
+            document.getElementById(boxId).classList.add('hidden');
+            document.querySelectorAll(`#${gridId} input`).forEach(inp => inp.classList.remove('error-border'));
+        }
+        function showError(msg, errorElementIds, boxId, gridId) {
+            const box = document.getElementById(boxId);
+            box.innerHTML = `⚠️ ${msg}`;
+            box.classList.remove('hidden');
+            document.querySelectorAll(`#${gridId} input`).forEach(inp => inp.classList.remove('error-border'));
+            errorElementIds.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('error-border'); });
+        }
+
+        // ==========================================
+        // SECTION: WEIGHT BOM ESTIMATOR
+        // ==========================================
+        let totalAssemblyWeight = 0;
         let activeShape = 'plate';
+
+        function togglePlateInputs() {
+            const type = document.getElementById('inp_plate_type').value;
+            document.getElementById('wrap_L').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('wrap_W').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('wrap_OD').classList.toggle('hidden', type === 'rect');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
+        function toggleConeInputs() {
+            const type = document.getElementById('inp_cone_type').value;
+            document.getElementById('wrap_D2').classList.toggle('hidden', type !== 'frustum');
+            document.getElementById('lbl_D1').innerText = type === 'frustum' ? t('f_d1') : t('f_base_od');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'frustum' ? 'frustum-ref.jpg' : 'roof_cone-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=CONE'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
+
         function loadShape(shape) {
             activeShape = shape;
             const grid = document.getElementById('inputGrid');
-            const title = document.getElementById('shapeTitle');
-            const diagram = document.getElementById('diagramBox');
+            hideError('errorBox', 'inputGrid');
             
-            hideError();
-            
-            document.querySelectorAll('.shape-item').forEach(btn => {
+            document.querySelectorAll('#section-weight .shape-item').forEach(btn => {
                 btn.classList.remove('shape-btn-active');
-                if(btn.getAttribute('onclick').includes(shape)) {
-                    btn.classList.add('shape-btn-active');
-                }
+                if(btn.getAttribute('onclick').includes(`('${shape}')`)) btn.classList.add('shape-btn-active');
             });
-
-            diagram.innerHTML = svgs[shape] || '';
+            if (shape !== 'plate' && shape !== 'cone') {
+                document.getElementById('diagramBox').innerHTML = `<img src="${shape}-ref.jpg" onerror="this.src='https://placehold.co/300x200?text=${shape.toUpperCase()}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+            }
 
             let html = '';
-            const L = `<div class="input-group"><label>Length (mm)</label><input type="number" id="inp_L" placeholder="e.g. 1000" min="0"></div>`;
+            const L = `<div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>`;
+            const Qty = `<div class="input-group"><label>${t('f_qty')}</label><input type="number" id="inp_Qty" value="1" min="1"></div>`;
 
             if(shape === 'plate') {
-                title.innerText = "Plate / Flat Bar";
-                html = `<div class="input-group"><label>Thickness (mm)</label><input type="number" id="inp_T" min="0"></div>
-                        <div class="input-group"><label>Width (mm)</label><input type="number" id="inp_W" min="0"></div>` + L;
-            } else if(shape === 'round') {
-                title.innerText = "Round Section";
-                html = `<div class="input-group"><label>Outer Dia (mm)</label><input type="number" id="inp_OD" min="0"></div>
-                        <div class="input-group"><label>Wall Thk (mm)</label><input type="number" id="inp_T" placeholder="0 for Solid" min="0"></div>` + L;
-            } else if(shape === 'rect') {
-                title.innerText = "Sq / Rect Tube";
-                html = `<div class="input-group"><label>Height (mm)</label><input type="number" id="inp_H" min="0"></div>
-                        <div class="input-group"><label>Width (mm)</label><input type="number" id="inp_W" min="0"></div>
-                        <div class="input-group"><label>Wall Thk (mm)</label><input type="number" id="inp_T" placeholder="0 for Solid" min="0"></div>` + L;
-            } else if(shape === 'angle') {
-                title.innerText = "L-Angle Section";
-                html = `<div class="input-group"><label>Leg A (mm)</label><input type="number" id="inp_H" min="0"></div>
-                        <div class="input-group"><label>Leg B (mm)</label><input type="number" id="inp_W" min="0"></div>
-                        <div class="input-group"><label>Thickness (mm)</label><input type="number" id="inp_T" min="0"></div>` + L;
-            } else if(shape === 'channel' || shape === 'beam') {
-                title.innerText = shape === 'channel' ? "C-CHANNEL" : "I / H BEAM";
-                html = `<div class="input-group"><label>Height (H) (mm)</label><input type="number" id="inp_H" min="0"></div>
-                        <div class="input-group"><label>Flange Width (W) (mm)</label><input type="number" id="inp_W" min="0"></div>
-                        <div class="input-group"><label>Web Thk (tw) (mm)</label><input type="number" id="inp_tw" min="0"></div>
-                        <div class="input-group"><label>Flange Thk (tf) (mm)</label><input type="number" id="inp_tf" min="0"></div>` + L;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group hidden"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
+                setTimeout(togglePlateInputs, 10);
+            } 
+            else if(shape === 'cone') {
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="frustum">${t('f_opt_frust')}</option><option value="roof">${t('f_opt_roof')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                setTimeout(toggleConeInputs, 10);
             }
+            else if(shape === 'shell') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + L + Qty; }
+            else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
+            else if(shape === 'dishend') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
+            else if(['ismb','ismc'].includes(shape)) { html = `<div class="input-group"><label>${t('f_h_sec')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_w_fl')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_tw')}</label><input type="number" id="inp_tw" min="0"></div><div class="input-group"><label>${t('f_tf')}</label><input type="number" id="inp_tf" min="0"></div>` + L + Qty; }
+            else if(shape === 'isa') { html = `<div class="input-group"><label>${t('f_leg_a')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_leg_b')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + L + Qty; }
+            
             grid.innerHTML = html;
         }
 
-        function showError(msg, errorElementIds = []) {
-            const box = document.getElementById('errorBox');
-            box.innerHTML = `⚠️ ${msg}`;
-            box.classList.remove('hidden');
-            
-            document.querySelectorAll('#inputGrid input').forEach(inp => inp.classList.remove('error-border'));
-            
-            errorElementIds.forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.classList.add('error-border');
-            });
-        }
-
-        function hideError() {
-            document.getElementById('errorBox').classList.add('hidden');
-            document.querySelectorAll('#inputGrid input').forEach(inp => inp.classList.remove('error-border'));
-        }
-
-        function getVal(id) {
-            const val = document.getElementById(id)?.value;
-            return val ? parseFloat(val) : null; 
-        }
-
         function calcWeight() {
-            hideError(); 
-
+            hideError('errorBox', 'inputGrid');
             const density = parseFloat(document.getElementById('globalDensity').value) || 0;
-            if (density <= 0) {
-                showError("Density must be greater than zero.", ['globalDensity']);
-                return;
-            }
+            if (density <= 0) return showError("Density must be > 0.", ['globalDensity'], 'errorBox', 'inputGrid');
 
-            const L = getVal('inp_L');
-            if (L === null || L <= 0) {
-                showError("Please enter a valid Length.", ['inp_L']);
-                return;
-            }
-
-            let area = 0;
+            const qty = getVal('inp_Qty') || 1;
+            let volume = 0; let name = activeShape;
 
             if(activeShape === 'plate') {
                 const T = getVal('inp_T');
-                const W = getVal('inp_W');
-                if (T === null || W === null || T <= 0 || W <= 0) return showError("Thickness and Width must be greater than zero.", ['inp_T', 'inp_W']);
-                area = T * W;
+                if (document.getElementById('inp_plate_type').value === 'rect') {
+                    const L = getVal('inp_L'), W = getVal('inp_W');
+                    if (!L || !W || !T) return showError("Fields missing.", ['inp_L','inp_W','inp_T'], 'errorBox', 'inputGrid');
+                    volume = L * W * T; name = "Rectangular Plate";
+                } else {
+                    const OD = getVal('inp_OD');
+                    if (!OD || !T) return showError("Fields missing.", ['inp_OD','inp_T'], 'errorBox', 'inputGrid');
+                    volume = (Math.PI / 4) * Math.pow(OD, 2) * T; name = "Circular Blank";
+                }
             } 
-            else if(activeShape === 'round') {
-                const OD = getVal('inp_OD');
-                const T = getVal('inp_T') || 0; 
-                if (OD === null || OD <= 0) return showError("Outer Diameter is required.", ['inp_OD']);
-                if (T >= OD / 2) return showError("Wall thickness cannot be equal to or greater than the radius (OD/2).", ['inp_T', 'inp_OD']);
-                
-                area = T === 0 ? Math.PI * Math.pow(OD/2, 2) : Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2));
-            } 
-            else if(activeShape === 'rect') {
-                const H = getVal('inp_H');
-                const W = getVal('inp_W');
-                const T = getVal('inp_T') || 0;
-                if (H === null || W === null || H <= 0 || W <= 0) return showError("Height and Width are required.", ['inp_H', 'inp_W']);
-                if (T >= H / 2 || T >= W / 2) return showError("Wall thickness is too large for these outer dimensions.", ['inp_T']);
-                
-                area = T === 0 ? H * W : (H * W) - ((H - 2*T) * (W - 2*T));
-            } 
-            else if(activeShape === 'angle') {
-                const H = getVal('inp_H');
-                const W = getVal('inp_W');
-                const T = getVal('inp_T');
-                if (H === null || W === null || T === null || H <= 0 || W <= 0 || T <= 0) return showError("All dimensions are required.", ['inp_H', 'inp_W', 'inp_T']);
-                if (T >= H || T >= W) return showError("Thickness cannot exceed the leg length.", ['inp_T']);
-                
-                area = (H * T) + ((W - T) * T);
-            } 
-            else if(activeShape === 'channel' || activeShape === 'beam') {
-                const H = getVal('inp_H');
-                const W = getVal('inp_W');
-                const tw = getVal('inp_tw');
-                const tf = getVal('inp_tf');
-                if (H === null || W === null || tw === null || tf === null) return showError("All profile dimensions are required.", ['inp_H', 'inp_W', 'inp_tw', 'inp_tf']);
-                if (tw >= W) return showError("Web thickness cannot exceed total flange width.", ['inp_tw', 'inp_W']);
-                if ((2 * tf) >= H) return showError("Combined flange thickness cannot exceed total height.", ['inp_tf', 'inp_H']);
-                
-                area = (2 * W * tf) + ((H - 2 * tf) * tw);
+            else if(activeShape === 'cone') {
+                const D1 = getVal('inp_D1'), H = getVal('inp_H'), T = getVal('inp_T');
+                if (document.getElementById('inp_cone_type').value === 'frustum') {
+                    const D2 = getVal('inp_D2');
+                    if (D1===null || D2===null || !H || !T) return showError("Fields missing.", ['inp_D1','inp_D2','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    volume = Math.PI * ((D1/2) + (D2/2)) * Math.sqrt(Math.pow((D1/2)-(D2/2), 2) + Math.pow(H, 2)) * T; name = "Frustum Cone";
+                } else {
+                    if (!D1 || !H || !T) return showError("Fields missing.", ['inp_D1','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    volume = Math.PI * (D1/2) * Math.sqrt(Math.pow(D1/2, 2) + Math.pow(H, 2)) * T; name = "Roof Cone";
+                }
+            }
+            else if(activeShape === 'shell') {
+                const OD = getVal('inp_OD'), T = getVal('inp_T'), L = getVal('inp_L');
+                if (!OD || !T || !L) return showError("Fields missing.", ['inp_OD','inp_T','inp_L'], 'errorBox', 'inputGrid');
+                volume = Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2)) * L;
+            }
+            else if(activeShape === 'ring') {
+                const OD = getVal('inp_OD'), ID = getVal('inp_ID'), T = getVal('inp_T');
+                if (!OD || !ID || !T) return showError("Fields missing.", ['inp_OD','inp_ID','inp_T'], 'errorBox', 'inputGrid');
+                volume = Math.PI * (Math.pow(OD/2, 2) - Math.pow(ID/2, 2)) * T;
+            }
+            else if(activeShape === 'dishend') {
+                const OD = getVal('inp_OD'), SF = getVal('inp_SF') !== null ? getVal('inp_SF') : 25, T = getVal('inp_T');
+                if (!OD || !T) return showError("Fields missing.", ['inp_OD','inp_T'], 'errorBox', 'inputGrid');
+                volume = (Math.PI / 4) * Math.pow((1.12 * OD) + (2 * SF), 2) * T;
+            }
+            else if(['ismb','ismc'].includes(activeShape)) {
+                const H = getVal('inp_H'), W = getVal('inp_W'), tw = getVal('inp_tw'), tf = getVal('inp_tf'), L = getVal('inp_L');
+                if (!H || !W || !tw || !tf || !L) return showError("Fields missing.", ['inp_H','inp_W','inp_tw','inp_tf','inp_L'], 'errorBox', 'inputGrid');
+                volume = (((H - (2 * tf)) * tw) + (2 * W * tf)) * L; name = activeShape.toUpperCase();
+            }
+            else if(activeShape === 'isa') {
+                const H = getVal('inp_H'), W = getVal('inp_W'), T = getVal('inp_T'), L = getVal('inp_L');
+                if (!H || !W || !T || !L) return showError("Fields missing.", ['inp_H','inp_W','inp_T','inp_L'], 'errorBox', 'inputGrid');
+                volume = ((H * T) + ((W - T) * T)) * L; name = "ISA Angle";
             }
 
-            const weight = (area * L * density) / 1000000000;
-            const resultString = weight.toFixed(3);
-            
-            document.getElementById('wResult').innerHTML = `${resultString} <span class="text-xl text-slate-400 font-sans">kg</span>`;
-            
-            addToHistory(activeShape, weight);
+            const totalWeight = (volume / 1000000000) * density * qty;
+            document.getElementById('wResult').innerHTML = `${totalWeight.toFixed(3)} <span class="text-xl text-slate-400 font-sans">kg</span>`;
+            addToHistory(name, totalWeight, qty);
         }
 
-        // --- BOM & History Update Functions ---
-        function addToHistory(shape, weight) {
-            const tbody = document.getElementById('historyBody');
-            const matName = document.getElementById('materialSelect').options[document.getElementById('materialSelect').selectedIndex].text;
-            const resultString = weight.toFixed(3);
-            
+        function addToHistory(n, w, q) {
+            const sel = document.getElementById('materialSelect');
             const row = `<tr class="border-b border-slate-50 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-                <td class="px-6 py-3 font-medium capitalize text-slate-600 dark:text-slate-300">${shape}</td>
-                <td class="px-6 py-3 text-slate-500 dark:text-slate-400">${matName}</td>
-                <td class="px-6 py-3 text-right font-bold text-blue-600 dark:text-blue-400">${resultString} kg</td>
-            </tr>`;
-            tbody.insertAdjacentHTML('afterbegin', row);
-
-            totalAssemblyWeight += weight;
-            updateBOM();
+                <td class="px-6 py-3 font-medium text-slate-600 dark:text-slate-300">${n}</td><td class="px-6 py-3 text-slate-500 dark:text-slate-400">${sel.options[sel.selectedIndex].text}</td>
+                <td class="px-6 py-3 text-center text-slate-500 dark:text-slate-400 font-semibold">x${q}</td><td class="px-6 py-3 text-right font-bold text-blue-600 dark:text-blue-400">${w.toFixed(3)} kg</td></tr>`;
+            document.getElementById('historyBody').insertAdjacentHTML('afterbegin', row);
+            totalAssemblyWeight += w; document.getElementById('bomTotalWeight').innerText = `${totalAssemblyWeight.toFixed(3)} kg`;
         }
+        function clearHistory() { document.getElementById('historyBody').innerHTML = ''; totalAssemblyWeight = 0; document.getElementById('bomTotalWeight').innerText = '0.000 kg'; document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`; }
 
-        function updateBOM() {
-            const price = parseFloat(document.getElementById('pricePerKg').value) || 0;
-            const totalCost = totalAssemblyWeight * price;
-
-            document.getElementById('bomTotalWeight').innerText = `${totalAssemblyWeight.toFixed(3)} kg`;
-            document.getElementById('bomTotalCost').innerText = `₹${totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        }
-
-        function clearHistory() {
-            document.getElementById('historyBody').innerHTML = '';
-            totalAssemblyWeight = 0;
-            updateBOM();
-            document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`;
-        }
-
+        window.onload = function() { loadShape('plate'); };
     </script>
 </body>
 </html>
