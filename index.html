@@ -49,7 +49,7 @@
             <div class="p-6 flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.6 PWA</p>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.7 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
@@ -273,7 +273,7 @@
         const dict = {
             en: {
                 app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
-                app_version: "VERSION 3.6 PWA",
+                app_version: "VERSION 3.7 PWA",
                 nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Developer",
                 lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
                 mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
@@ -322,7 +322,7 @@
             },
             bn: {
                 app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
-                app_version: "সংস্করণ ৩.৬ PWA",
+                app_version: "সংস্করণ ৩.৭ PWA",
                 nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ ডেভেলপার সম্পর্কে",
                 lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
                 mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
@@ -459,17 +459,19 @@
 
         function togglePlateInputs() {
             const type = document.getElementById('inp_plate_type').value;
-            document.getElementById('wrap_L').classList.toggle('hidden', type !== 'rect');
-            document.getElementById('wrap_W').classList.toggle('hidden', type !== 'rect');
-            document.getElementById('wrap_OD').classList.toggle('hidden', type === 'rect');
-            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+            // Explicitly force style.display instead of Tailwind's hidden class
+            document.getElementById('wrap_L').style.display = type === 'rect' ? 'flex' : 'none';
+            document.getElementById('wrap_W').style.display = type === 'rect' ? 'flex' : 'none';
+            document.getElementById('wrap_OD').style.display = type === 'circle' ? 'flex' : 'none';
+            
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
         function toggleHollowInputs() {
             const type = document.getElementById('inp_hollow_type').value;
-            document.getElementById('wrap_hollow_OD').classList.toggle('hidden', type !== 'cyl');
-            document.getElementById('wrap_hollow_A').classList.toggle('hidden', type === 'cyl');
-            document.getElementById('wrap_hollow_B').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('wrap_hollow_OD').style.display = type === 'cyl' ? 'flex' : 'none';
+            document.getElementById('wrap_hollow_A').style.display = type !== 'cyl' ? 'flex' : 'none';
+            document.getElementById('wrap_hollow_B').style.display = type === 'rect' ? 'flex' : 'none';
             
             let imgName = 'shell-ref.jpg';
             if(type === 'sq') imgName = 'sq_tube-ref.jpg';
@@ -480,9 +482,9 @@
 
         function toggleSolidInputs() {
             const type = document.getElementById('inp_solid_type').value;
-            document.getElementById('wrap_solid_OD').classList.toggle('hidden', type !== 'rnd');
-            document.getElementById('wrap_solid_A').classList.toggle('hidden', type === 'rnd');
-            document.getElementById('wrap_solid_B').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('wrap_solid_OD').style.display = type === 'rnd' ? 'flex' : 'none';
+            document.getElementById('wrap_solid_A').style.display = type !== 'rnd' ? 'flex' : 'none';
+            document.getElementById('wrap_solid_B').style.display = type === 'rect' ? 'flex' : 'none';
             
             let imgName = 'sq_bar-ref.jpg';
             if(type === 'rect') imgName = 'rect_bar-ref.jpg';
@@ -493,20 +495,20 @@
         
         function toggleConeInputs() {
             const type = document.getElementById('inp_cone_type').value;
-            document.getElementById('wrap_D2').classList.toggle('hidden', type !== 'truncated');
+            document.getElementById('wrap_D2').style.display = type === 'truncated' ? 'flex' : 'none';
             document.getElementById('lbl_D1').innerText = type === 'truncated' ? t('f_d1') : t('f_base_od');
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'frustum-ref.jpg' : 'roof_cone-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_CONE'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
         function togglePyramidInputs() {
             const type = document.getElementById('inp_pyramid_type').value;
-            document.getElementById('wrap_pyr_B').classList.toggle('hidden', type !== 'truncated');
+            document.getElementById('wrap_pyr_B').style.display = type === 'truncated' ? 'flex' : 'none';
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'trunc_pyr-ref.jpg' : 'full_pyr-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_PYRAMID'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
         function toggleSq2RndInputs() {
             const type = document.getElementById('inp_sq2rnd_type').value;
-            document.getElementById('wrap_B').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('wrap_B').style.display = type === 'rect' ? 'flex' : 'none';
             document.getElementById('lbl_A').innerText = type === 'square' ? t('f_base_dim') : t('f_base_l');
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'square' ? 'sq2rnd-ref.jpg' : 'rect2rnd-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}2RND'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
@@ -530,15 +532,15 @@
             const Qty = `<div class="input-group"><label>${t('f_qty')}</label><input type="number" id="inp_Qty" value="1" min="1"></div>`;
 
             if(shape === 'plate') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group hidden"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
                 setTimeout(togglePlateInputs, 10);
             } 
             else if(shape === 'hollow') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_hollow')}</label><select id="inp_hollow_type" onchange="toggleHollowInputs()"><option value="cyl">${t('f_opt_cyl_shell')}</option><option value="sq">${t('f_opt_sq_tube')}</option><option value="rect">${t('f_opt_rect_tube')}</option></select></div><div id="wrap_hollow_OD" class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_hollow_OD" min="0"></div><div id="wrap_hollow_A" class="input-group hidden"><label>${t('f_side_a')}</label><input type="number" id="inp_hollow_A" min="0"></div><div id="wrap_hollow_B" class="input-group hidden"><label>${t('f_side_b')}</label><input type="number" id="inp_hollow_B" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_hollow')}</label><select id="inp_hollow_type" onchange="toggleHollowInputs()"><option value="cyl">${t('f_opt_cyl_shell')}</option><option value="sq">${t('f_opt_sq_tube')}</option><option value="rect">${t('f_opt_rect_tube')}</option></select></div><div id="wrap_hollow_OD" class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_hollow_OD" min="0"></div><div id="wrap_hollow_A" class="input-group" style="display:none;"><label>${t('f_side_a')}</label><input type="number" id="inp_hollow_A" min="0"></div><div id="wrap_hollow_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_hollow_B" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
                 setTimeout(toggleHollowInputs, 10);
             }
             else if(shape === 'solid') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_solid')}</label><select id="inp_solid_type" onchange="toggleSolidInputs()"><option value="sq">${t('f_opt_sq_bar')}</option><option value="rect">${t('f_opt_rect_bar')}</option><option value="rnd">${t('f_opt_rnd_bar')}</option></select></div><div id="wrap_solid_OD" class="input-group hidden"><label>${t('f_dia')}</label><input type="number" id="inp_solid_OD" min="0"></div><div id="wrap_solid_A" class="input-group"><label>${t('f_side_a')}</label><input type="number" id="inp_solid_A" min="0"></div><div id="wrap_solid_B" class="input-group hidden"><label>${t('f_side_b')}</label><input type="number" id="inp_solid_B" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_solid')}</label><select id="inp_solid_type" onchange="toggleSolidInputs()"><option value="sq">${t('f_opt_sq_bar')}</option><option value="rect">${t('f_opt_rect_bar')}</option><option value="rnd">${t('f_opt_rnd_bar')}</option></select></div><div id="wrap_solid_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_solid_OD" min="0"></div><div id="wrap_solid_A" class="input-group"><label>${t('f_side_a')}</label><input type="number" id="inp_solid_A" min="0"></div><div id="wrap_solid_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_solid_B" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
                 setTimeout(toggleSolidInputs, 10);
             }
             else if(shape === 'cone') {
@@ -550,7 +552,7 @@
                 setTimeout(togglePyramidInputs, 10);
             }
             else if(shape === 'sq2rnd') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_sq2rnd')}</label><select id="inp_sq2rnd_type" onchange="toggleSq2RndInputs()"><option value="square">${t('f_opt_square')}</option><option value="rect">${t('f_opt_rect_rnd')}</option></select></div><div class="input-group"><label id="lbl_A">${t('f_base_dim')}</label><input type="number" id="inp_A" min="0"></div><div id="wrap_B" class="input-group hidden"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_sq2rnd')}</label><select id="inp_sq2rnd_type" onchange="toggleSq2RndInputs()"><option value="square">${t('f_opt_square')}</option><option value="rect">${t('f_opt_rect_rnd')}</option></select></div><div class="input-group"><label id="lbl_A">${t('f_base_dim')}</label><input type="number" id="inp_A" min="0"></div><div id="wrap_B" class="input-group" style="display:none;"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(toggleSq2RndInputs, 10);
             }
             else if(shape === 'miter') {
