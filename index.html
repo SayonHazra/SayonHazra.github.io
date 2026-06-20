@@ -1,17 +1,17 @@
+<!DOCTYPE html>
 <html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salap Factory | Fabrication & Unit Toolkit</title>
     
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#1e293b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
     
-    <!-- Fonts for clean English & Bengali rendering -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -45,12 +45,11 @@
 <body class="bg-slate-50 dark:bg-slate-900 min-h-screen font-sans transition-colors duration-200 print:bg-white text-base">
 
     <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Navigation Sidebar -->
         <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col print:hidden">
             <div class="p-6 flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.4 PWA</p>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.6 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
@@ -66,10 +65,10 @@
             <div class="flex flex-col space-y-1">
                 <button onclick="switchMainTab('units')" id="nav-units" class="nav-btn px-6 py-4 text-left font-semibold active-tab transition dark:text-slate-300" data-i18n="nav_units">📏 Unit Converter</button>
                 <button onclick="switchMainTab('weight')" id="nav-weight" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_fab">⚖️ Fabrication BOM</button>
-                <button onclick="switchMainTab('about')" id="nav-about" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_about">ℹ️ About Us</button>
+                <button onclick="switchMainTab('about')" id="nav-about" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_about">ℹ️ About Developer</button>
             </div>
 
-            <div class="p-6 mt-6 border-t border-slate-100 dark:border-slate-700 flex-1">
+            <div id="material-preset-section" class="hidden p-6 mt-6 border-t border-slate-100 dark:border-slate-700 flex-1">
                 <div class="mb-6">
                     <label data-i18n="lbl_mat_preset">Material Preset</label>
                     <select id="materialSelect" onchange="updateDensity()" class="w-full mt-1 text-sm mb-4">
@@ -88,7 +87,6 @@
 
         <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto print:p-0 relative">
             
-            <!-- SECTION 1: Unit Converter -->
             <div id="section-units" class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
                 <h2 class="text-xl font-bold mb-6" data-i18n="title_converter">Precision Length Converter</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
@@ -123,26 +121,31 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
                 <div class="hidden print:block text-center mb-8 border-b-2 border-slate-800 pb-4">
-                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">NSNWW</h1>
+                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">NEW SATYA NARAYAN WELDING WORKS</h1>
+                    <h2 class="text-xl font-bold text-slate-700 tracking-tighter mt-1">UNITED FABRICATORS</h2>
                     <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Project Bill of Materials</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Sidebar Profiles -->
                     <div class="lg:col-span-3 space-y-2 print:hidden">
                         <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter" data-i18n="lbl_fab_profiles">Fabrication Profiles</p>
                         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-3">
                             <button onclick="loadShape('plate')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
                                 <span class="text-center text-xs" data-i18n="sh_plate">Plate / Blank</span>
                             </button>
-                            <button onclick="loadShape('shell')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
-                                <span class="text-center text-xs" data-i18n="sh_shell">Cylindrical Shell</span>
+                            <button onclick="loadShape('hollow')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_hollow">Hollow Section</span>
+                            </button>
+                            <button onclick="loadShape('solid')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_solid">Solid Section</span>
                             </button>
                             <button onclick="loadShape('cone')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
-                                <span class="text-center text-xs" data-i18n="sh_cone">Cone (Truncated/Full)</span>
+                                <span class="text-center text-xs" data-i18n="sh_cone">Cone</span>
+                            </button>
+                            <button onclick="loadShape('pyramid')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_pyramid">Pyramid</span>
                             </button>
                             <button onclick="loadShape('sq2rnd')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
                                 <span class="text-center text-xs" data-i18n="sh_sq2rnd">Sq/Rect to Round</span>
@@ -168,7 +171,6 @@
                         </div>
                     </div>
 
-                    <!-- Main Content Area -->
                     <div class="lg:col-span-9 space-y-6 print:space-y-2">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
                             <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase italic">Steel Plate</h2>
@@ -191,7 +193,6 @@
                             </div>
                         </div>
 
-                        <!-- BOM Table Area -->
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 print:border-none print:shadow-none overflow-hidden transition-colors duration-200">
                             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
@@ -200,7 +201,7 @@
                                     <button onclick="window.print()" class="text-sm px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-2">
                                         🖨️ <span data-i18n="btn_print">Save PDF</span>
                                     </button>
-
+                                    
                                     <button onclick="shareWhatsApp()" class="text-sm px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-md font-bold transition flex items-center gap-2">
                                         💬 <span data-i18n="btn_wa">WhatsApp</span>
                                     </button>
@@ -234,42 +235,22 @@
                 </div>
             </div>
 
-            <!-- SECTION 3: About Us -->
-            <div id="section-about" class="hidden max-w-6xl mx-auto space-y-6">
-                
-                <!-- Description Card -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200">
-                    <h2 class="text-2xl font-black mb-4 text-slate-800 dark:text-white uppercase tracking-tight" data-i18n="about_title">About The Application</h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg" id="aboutDesc" data-i18n="about_desc">
-                        This professional toolkit was collaboratively developed by <strong>United Fabricators</strong> and <strong>New Satya Narayan Welding Works</strong>. It is designed as an internal utility to empower our shop-floor employees, streamline fabrication estimates, and ensure absolute precision in our engineering workflows.
-                    </p>
-                </div>
-
-                <!-- Maps Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- UF Map -->
-                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-colors duration-200">
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
-                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">United Fabricators</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Workshop Location</p>
-                        </div>
-                        <div class="w-full h-80">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d387.84360249462475!2d88.2675696!3d22.6158926!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f883b10762a3db%3A0xe410b712b44c4efd!2sUnited%20Fabricators!5e1!3m2!1sen!2sin!4v1781846301087!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+            <div id="section-about" class="hidden max-w-3xl mx-auto space-y-8">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-10 transition-colors">
+                    <h2 class="text-3xl font-black mb-6 text-slate-900 dark:text-white uppercase tracking-tighter" data-i18n="about_title">About This Project</h2>
+                    <div class="prose dark:prose-invert max-w-none text-lg text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="about_desc">
+                        <p>This fabrication toolkit was developed by <strong>Sayon Hazra</strong> as a comprehensive solution for modern engineering workflows. The primary objective of this application is to streamline complex metal fabrication calculations, minimize human error, and enhance shop-floor efficiency.</p>
+                        <p class="mt-4">By digitizing material weight estimations and unit conversions, this tool enables engineers, fabricators, and project managers to generate precise Bill of Materials (BOM) rapidly. It is built to bridge the gap between technical design and practical execution, ensuring that accurate data is accessible at any stage of the production lifecycle.</p>
                     </div>
 
-                    <!-- NSNWW Map -->
-                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col transition-colors duration-200">
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
-                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">New Satya Narayan Welding Works</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Workshop Location</p>
-                        </div>
-                        <div class="w-full h-80">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4916.202458506584!2d88.26579711441862!3d22.616830201851105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8830034457161%3A0x6582fabc7670dd4e!2sNew%20Satya%20Narayan%20Welding%20Works!5e0!3m2!1sen!2sin!4v1781846367224!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+                    <div class="mt-10 p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center">
+                        <h3 class="font-bold text-slate-800 dark:text-white mb-4" data-i18n="about_connect">Connect with Developer</h3>
+                        <a href="https://youtube.com/@sayonhazra?si=__aIxHVP7is1onna" target="_blank" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all flex items-center gap-2 shadow-md">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            Visit Sayon Hazra on YouTube
+                        </a>
                     </div>
                 </div>
-
             </div>
 
         </main>
@@ -281,7 +262,7 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
                     .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                        console.log('ServiceWorker registration successful');
                     }, err => {
                         console.log('ServiceWorker registration failed: ', err);
                     });
@@ -292,63 +273,99 @@
         const dict = {
             en: {
                 app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
-                app_version: "VERSION 3.4 PWA",
-                nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Us",
+                app_version: "VERSION 3.6 PWA",
+                nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Developer",
                 lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
                 mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
                 title_converter: "Precision Length Converter", lbl_input_val: "Input Value", lbl_from_unit: "From Unit", lbl_to_unit: "To Unit", lbl_result_meas: "Resulting Measurement",
                 lbl_fab_profiles: "Fabrication Profiles",
                 
-                sh_plate: "Plate / Blank", sh_shell: "Cylindrical Shell", sh_cone: "Cone (Truncated/Full)", sh_sq2rnd: "Sq/Rect to Round", sh_miter: "Miter Bend", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
+                sh_plate: "Plate / Blank", 
+                sh_hollow: "Hollow Section",
+                sh_solid: "Solid Section",
+                sh_cone: "Cone (Truncated/Full)", 
+                sh_pyramid: "Pyramid (Truncated/Full)",
+                sh_sq2rnd: "Sq/Rect to Round", 
+                sh_miter: "Miter Bend", 
+                sh_dishend: "Dish End", 
+                sh_ring: "Circular Ring", 
+                sh_ismb: "ISMB Beam", 
+                sh_ismc: "ISMC Channel", 
+                sh_isa: "ISA Angle",
                 
                 lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass",
                 lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_print: "Save PDF", btn_wa: "WhatsApp",
                 th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
                 
-                // About Section
-                about_title: "About The Application",
-                about_desc: "This professional toolkit was collaboratively developed by <strong>United Fabricators</strong> and <strong>New Satya Narayan Welding Works</strong>. It is designed as an internal utility to empower our shop-floor employees, streamline fabrication estimates, and ensure absolute precision in our engineering workflows.",
+                about_title: "About This Project",
+                about_desc: "<p>This fabrication toolkit was developed by <strong>Sayon Hazra</strong> as a comprehensive solution for modern engineering workflows. The primary objective of this application is to streamline complex metal fabrication calculations, minimize human error, and enhance shop-floor efficiency.</p><p class='mt-4'>By digitizing material weight estimations and unit conversions, this tool enables engineers, fabricators, and project managers to generate precise Bill of Materials (BOM) rapidly. It is built to bridge the gap between technical design and practical execution, ensuring that accurate data is accessible at any stage of the production lifecycle.</p>",
+                about_connect: "Connect with Developer",
                 
-                // Form Labels
                 f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity",
+                
                 f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
+                
+                f_type_hollow: "Section Type", f_opt_cyl_shell: "Cylindrical Shell", f_opt_sq_tube: "Square Tube", f_opt_rect_tube: "Rectangular Tube",
+                f_type_solid: "Section Type", f_opt_sq_bar: "Square Bar", f_opt_rect_bar: "Rectangular Bar", f_opt_rnd_bar: "Round Bar",
+                
                 f_type_cone: "Cone Type", f_opt_trunc: "Truncated Cone", f_opt_full: "Full Cone",
+                f_type_pyramid: "Pyramid Type", f_opt_trunc_pyr: "Truncated Pyramid", f_opt_full_pyr: "Full Pyramid",
+                
                 f_type_sq2rnd: "Transition Type", f_opt_square: "Square to Round", f_opt_rect_rnd: "Rectangle to Round",
-                f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (OD) (mm)",
+                f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)",
+                f_side_a: "Side A (mm)", f_side_b: "Side B (mm)",
                 f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)",
                 f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)",
                 f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)",
-                f_base_dim: "Base Dimension (A) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)",
+                f_base_dim: "Base Dimension (A) (mm)", f_top_dim: "Top Dimension (B) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)",
                 f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
                 app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
-                app_version: "সংস্করণ ৩.৪ PWA",
-                nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ আমাদের সম্পর্কে",
+                app_version: "সংস্করণ ৩.৬ PWA",
+                nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ ডেভেলপার সম্পর্কে",
                 lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
                 mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
                 title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ",
                 lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
                 
-                sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_shell: "নলাকার শেল", sh_cone: "শঙ্কু (ট্রাঙ্কেটেড/ফুল)", sh_sq2rnd: "স্কয়ার/রেক্ট টু রাউন্ড", sh_miter: "মাইটার বেন্ড", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
+                sh_plate: "প্লেট / ব্ল্যাঙ্ক", 
+                sh_hollow: "ফাঁপা বিভাগ (Hollow)",
+                sh_solid: "নিটোল বিভাগ (Solid)",
+                sh_cone: "শঙ্কু (ট্রাঙ্কেটেড/ফুল)", 
+                sh_pyramid: "পিরামিড (ট্রাঙ্কেটেড/ফুল)",
+                sh_sq2rnd: "স্কয়ার/রেক্ট টু রাউন্ড", 
+                sh_miter: "মাইটার বেন্ড", 
+                sh_dishend: "ডিশ এন্ড", 
+                sh_ring: "গোলাকার রিং", 
+                sh_ismb: "আইএসএমবি বিম", 
+                sh_ismc: "আইএসএমসি চ্যানেল", 
+                sh_isa: "আইএসএ অ্যাঙ্গেল",
                 
                 lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন",
                 lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp",
                 th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
                 
-                // About Section
-                about_title: "অ্যাপ্লিকেশন সম্পর্কে",
-                about_desc: "এই টুলকিটটি <strong>ইউনাইটেড ফ্যাব্রিকেটরস</strong> এবং <strong>নিউ সত্যনারায়ণ ওয়েল্ডিং ওয়ার্কস</strong>-এর যৌথ উদ্যোগে তৈরি করা হয়েছে। এটি আমাদের কারখানার কর্মীদের সাহায্য করতে, ফ্যাব্রিকেশন এস্টিমেট সহজ করতে এবং ইঞ্জিনিয়ারিং কাজে নিখুঁত নির্ভুলতা নিশ্চিত করতে ডিজাইন করা হয়েছে।",
+                about_title: "প্রকল্প সম্পর্কে",
+                about_desc: "<p>আধুনিক ইঞ্জিনিয়ারিং কাজের সুবিধার্থে এই ফ্যাব্রিকেশন টুলকিটটি তৈরি করেছেন <strong>সায়ন হাজরা</strong>। এই অ্যাপ্লিকেশনটির মূল উদ্দেশ্য হল জটিল মেটাল ফ্যাব্রিকেশন হিসাবগুলি সহজ করা, মানুষের ভুল কমানো এবং কারখানার কাজে গতি আনা।</p><p class='mt-4'>মেটেরিয়াল ওজন এবং ইউনিট কনভার্সন ডিজিটাল করার মাধ্যমে, এই টুলটি ইঞ্জিনিয়ার, ফ্যাব্রিকেটর এবং প্রোজেক্ট ম্যানেজারদের দ্রুত ও নির্ভুল Bill of Materials (BOM) তৈরি করতে সাহায্য করে। এটি প্রযুক্তিগত নকশা এবং বাস্তব কাজের মধ্যে ব্যবধান মেটাতে ডিজাইন করা হয়েছে।</p>",
+                about_connect: "ডেভেলপারের সাথে যোগাযোগ করুন",
 
                 f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ",
                 f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার (ফ্ল্যাট প্লেট)", f_opt_circ: "গোলাকার (ব্ল্যাঙ্ক/ডিস্ক)",
+                
+                f_type_hollow: "ফাঁপার ধরন", f_opt_cyl_shell: "নলাকার শেল", f_opt_sq_tube: "স্কয়ার টিউব", f_opt_rect_tube: "রেক্ট্যাঙ্গুলার টিউব",
+                f_type_solid: "নিটোল ধরন", f_opt_sq_bar: "স্কয়ার বার", f_opt_rect_bar: "রেক্ট্যাঙ্গুলার বার", f_opt_rnd_bar: "রাউন্ড বার",
+                
                 f_type_cone: "শঙ্কুর ধরন", f_opt_trunc: "ট্রাঙ্কেটেড শঙ্কু", f_opt_full: "ফুল শঙ্কু",
+                f_type_pyramid: "পিরামিডের ধরন", f_opt_trunc_pyr: "ট্রাঙ্কেটেড পিরামিড", f_opt_full_pyr: "ফুল পিরামিড",
+
                 f_type_sq2rnd: "ট্রানজিশন প্রকার", f_opt_square: "স্কয়ার টু রাউন্ড", f_opt_rect_rnd: "রেক্ট্যাঙ্গেল টু রাউন্ড",
-                f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (OD) (mm)",
+                f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (mm)",
+                f_side_a: "বাহু A (mm)", f_side_b: "বাহু B (mm)",
                 f_d1: "শীর্ষ ব্যাস (D1) (mm)", f_d2: "নিচের ব্যাস (D2) (mm)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)",
                 f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)",
                 f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)",
-                f_base_dim: "বেস পরিমাপ (A) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)",
+                f_base_dim: "বেস পরিমাপ (A) (mm)", f_top_dim: "শীর্ষ পরিমাপ (B) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)",
                 f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R) (mm)", f_pieces: "মোট পিস (N)"
             }
         };
@@ -373,7 +390,6 @@
 
         function t(key) { return dict[currentLang][key] || key; }
 
-        // --- Core Toggles (Theme with LocalStorage) ---
         function toggleDarkMode() {
             const html = document.documentElement;
             const icon = document.getElementById('theme-icon');
@@ -387,7 +403,6 @@
                 icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
             }
             
-            // Save preference to LocalStorage
             localStorage.setItem('salap_theme', isDark ? 'dark' : 'light');
         }
 
@@ -399,11 +414,18 @@
         }
 
         function switchMainTab(tab) {
+            // Hide/Show main content sections
             document.getElementById('section-units').classList.toggle('hidden', tab !== 'units');
             document.getElementById('section-weight').classList.toggle('hidden', tab !== 'weight');
             document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
+            
+            // Hide/Show Material Preset depending on whether the BOM tab is active
+            document.getElementById('material-preset-section').classList.toggle('hidden', tab !== 'weight');
+            
+            // Update Active Styling on Sidebar Buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
             document.getElementById('nav-' + tab).classList.add('active-tab');
+            
             if(tab === 'weight') loadShape(activeShape);
         }
 
@@ -442,12 +464,44 @@
             document.getElementById('wrap_OD').classList.toggle('hidden', type === 'rect');
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
+
+        function toggleHollowInputs() {
+            const type = document.getElementById('inp_hollow_type').value;
+            document.getElementById('wrap_hollow_OD').classList.toggle('hidden', type !== 'cyl');
+            document.getElementById('wrap_hollow_A').classList.toggle('hidden', type === 'cyl');
+            document.getElementById('wrap_hollow_B').classList.toggle('hidden', type !== 'rect');
+            
+            let imgName = 'shell-ref.jpg';
+            if(type === 'sq') imgName = 'sq_tube-ref.jpg';
+            if(type === 'rect') imgName = 'rect_tube-ref.jpg';
+            
+            document.getElementById('diagramBox').innerHTML = `<img src="${imgName}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_HOLLOW'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
+
+        function toggleSolidInputs() {
+            const type = document.getElementById('inp_solid_type').value;
+            document.getElementById('wrap_solid_OD').classList.toggle('hidden', type !== 'rnd');
+            document.getElementById('wrap_solid_A').classList.toggle('hidden', type === 'rnd');
+            document.getElementById('wrap_solid_B').classList.toggle('hidden', type !== 'rect');
+            
+            let imgName = 'sq_bar-ref.jpg';
+            if(type === 'rect') imgName = 'rect_bar-ref.jpg';
+            if(type === 'rnd') imgName = 'rnd_bar-ref.jpg';
+            
+            document.getElementById('diagramBox').innerHTML = `<img src="${imgName}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_SOLID'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
         
         function toggleConeInputs() {
             const type = document.getElementById('inp_cone_type').value;
             document.getElementById('wrap_D2').classList.toggle('hidden', type !== 'truncated');
             document.getElementById('lbl_D1').innerText = type === 'truncated' ? t('f_d1') : t('f_base_od');
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'frustum-ref.jpg' : 'roof_cone-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_CONE'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
+
+        function togglePyramidInputs() {
+            const type = document.getElementById('inp_pyramid_type').value;
+            document.getElementById('wrap_pyr_B').classList.toggle('hidden', type !== 'truncated');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'trunc_pyr-ref.jpg' : 'full_pyr-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_PYRAMID'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
         function toggleSq2RndInputs() {
@@ -467,7 +521,7 @@
                 if(btn.getAttribute('onclick').includes(`('${shape}')`)) btn.classList.add('shape-btn-active');
             });
 
-            if (shape !== 'plate' && shape !== 'cone' && shape !== 'sq2rnd') {
+            if (!['plate', 'cone', 'pyramid', 'sq2rnd', 'hollow', 'solid'].includes(shape)) {
                 document.getElementById('diagramBox').innerHTML = `<img src="${shape}-ref.jpg" onerror="this.src='https://placehold.co/300x200?text=${shape.toUpperCase()}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
             }
 
@@ -479,9 +533,21 @@
                 html = `<div class="input-group sm:col-span-2"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group hidden"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
                 setTimeout(togglePlateInputs, 10);
             } 
+            else if(shape === 'hollow') {
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_hollow')}</label><select id="inp_hollow_type" onchange="toggleHollowInputs()"><option value="cyl">${t('f_opt_cyl_shell')}</option><option value="sq">${t('f_opt_sq_tube')}</option><option value="rect">${t('f_opt_rect_tube')}</option></select></div><div id="wrap_hollow_OD" class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_hollow_OD" min="0"></div><div id="wrap_hollow_A" class="input-group hidden"><label>${t('f_side_a')}</label><input type="number" id="inp_hollow_A" min="0"></div><div id="wrap_hollow_B" class="input-group hidden"><label>${t('f_side_b')}</label><input type="number" id="inp_hollow_B" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                setTimeout(toggleHollowInputs, 10);
+            }
+            else if(shape === 'solid') {
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_solid')}</label><select id="inp_solid_type" onchange="toggleSolidInputs()"><option value="sq">${t('f_opt_sq_bar')}</option><option value="rect">${t('f_opt_rect_bar')}</option><option value="rnd">${t('f_opt_rnd_bar')}</option></select></div><div id="wrap_solid_OD" class="input-group hidden"><label>${t('f_dia')}</label><input type="number" id="inp_solid_OD" min="0"></div><div id="wrap_solid_A" class="input-group"><label>${t('f_side_a')}</label><input type="number" id="inp_solid_A" min="0"></div><div id="wrap_solid_B" class="input-group hidden"><label>${t('f_side_b')}</label><input type="number" id="inp_solid_B" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                setTimeout(toggleSolidInputs, 10);
+            }
             else if(shape === 'cone') {
                 html = `<div class="input-group sm:col-span-2"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="truncated">${t('f_opt_trunc')}</option><option value="full">${t('f_opt_full')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(toggleConeInputs, 10);
+            }
+            else if(shape === 'pyramid') {
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_dim')}</label><input type="number" id="inp_pyr_A" min="0"></div><div id="wrap_pyr_B" class="input-group"><label>${t('f_top_dim')}</label><input type="number" id="inp_pyr_B" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                setTimeout(togglePyramidInputs, 10);
             }
             else if(shape === 'sq2rnd') {
                 html = `<div class="input-group sm:col-span-2"><label>${t('f_type_sq2rnd')}</label><select id="inp_sq2rnd_type" onchange="toggleSq2RndInputs()"><option value="square">${t('f_opt_square')}</option><option value="rect">${t('f_opt_rect_rnd')}</option></select></div><div class="input-group"><label id="lbl_A">${t('f_base_dim')}</label><input type="number" id="inp_A" min="0"></div><div id="wrap_B" class="input-group hidden"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
@@ -490,7 +556,6 @@
             else if(shape === 'miter') {
                 html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
             }
-            else if(shape === 'shell') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + L + Qty; }
             else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
             else if(shape === 'dishend') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
             else if(['ismb','ismc'].includes(shape)) { html = `<div class="input-group"><label>${t('f_h_sec')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_w_fl')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_tw')}</label><input type="number" id="inp_tw" min="0"></div><div class="input-group"><label>${t('f_tf')}</label><input type="number" id="inp_tf" min="0"></div>` + L + Qty; }
@@ -519,6 +584,46 @@
                     volume = (Math.PI / 4) * Math.pow(OD, 2) * T; name = "Circular Blank";
                 }
             } 
+            else if(activeShape === 'hollow') {
+                const type = document.getElementById('inp_hollow_type').value;
+                const T = getVal('inp_T'), L = getVal('inp_L');
+                if (type === 'cyl') {
+                    const OD = getVal('inp_hollow_OD');
+                    if (!OD || !T || !L) return showError("Fields missing.", ['inp_hollow_OD','inp_T','inp_L'], 'errorBox', 'inputGrid');
+                    volume = Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2)) * L;
+                    name = "Cylindrical Shell";
+                } else if (type === 'sq') {
+                    const A = getVal('inp_hollow_A');
+                    if (!A || !T || !L) return showError("Fields missing.", ['inp_hollow_A','inp_T','inp_L'], 'errorBox', 'inputGrid');
+                    volume = (Math.pow(A, 2) - Math.pow(A - 2*T, 2)) * L;
+                    name = "Square Tube";
+                } else if (type === 'rect') {
+                    const A = getVal('inp_hollow_A'), B = getVal('inp_hollow_B');
+                    if (!A || !B || !T || !L) return showError("Fields missing.", ['inp_hollow_A','inp_hollow_B','inp_T','inp_L'], 'errorBox', 'inputGrid');
+                    volume = ((A * B) - ((A - 2*T) * (B - 2*T))) * L;
+                    name = "Rectangular Tube";
+                }
+            }
+            else if(activeShape === 'solid') {
+                const type = document.getElementById('inp_solid_type').value;
+                const L = getVal('inp_L');
+                if (type === 'sq') {
+                    const A = getVal('inp_solid_A');
+                    if (!A || !L) return showError("Fields missing.", ['inp_solid_A','inp_L'], 'errorBox', 'inputGrid');
+                    volume = Math.pow(A, 2) * L;
+                    name = "Square Bar";
+                } else if (type === 'rect') {
+                    const A = getVal('inp_solid_A'), B = getVal('inp_solid_B');
+                    if (!A || !B || !L) return showError("Fields missing.", ['inp_solid_A','inp_solid_B','inp_L'], 'errorBox', 'inputGrid');
+                    volume = A * B * L;
+                    name = "Rectangular Bar";
+                } else if (type === 'rnd') {
+                    const OD = getVal('inp_solid_OD');
+                    if (!OD || !L) return showError("Fields missing.", ['inp_solid_OD','inp_L'], 'errorBox', 'inputGrid');
+                    volume = Math.PI * Math.pow(OD/2, 2) * L;
+                    name = "Round Bar";
+                }
+            }
             else if(activeShape === 'cone') {
                 const D1 = getVal('inp_D1'), H = getVal('inp_H'), T = getVal('inp_T');
                 
@@ -538,6 +643,30 @@
                     
                     volume = Math.PI * (meanD1/2) * Math.sqrt(Math.pow(meanD1/2, 2) + Math.pow(H, 2)) * T; 
                     name = "Full Cone";
+                }
+            }
+            else if(activeShape === 'pyramid') {
+                const type = document.getElementById('inp_pyramid_type').value;
+                const A = getVal('inp_pyr_A'), H = getVal('inp_H'), T = getVal('inp_T');
+                
+                if (type === 'truncated') {
+                    const B = getVal('inp_pyr_B');
+                    if (A===null || B===null || !H || !T) return showError("Fields missing.", ['inp_pyr_A','inp_pyr_B','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    
+                    const meanA = A > T ? A - T : A;
+                    const meanB = B > T ? B - T : B;
+                    
+                    const slantH = Math.sqrt(Math.pow((meanA - meanB)/2, 2) + Math.pow(H, 2));
+                    volume = 2 * (meanA + meanB) * slantH * T; 
+                    name = "Truncated Pyramid";
+                } else {
+                    if (A===null || !H || !T) return showError("Fields missing.", ['inp_pyr_A','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    
+                    const meanA = A > T ? A - T : A;
+                    
+                    const slantH = Math.sqrt(Math.pow(meanA/2, 2) + Math.pow(H, 2));
+                    volume = 2 * meanA * slantH * T; 
+                    name = "Full Pyramid";
                 }
             }
             else if(activeShape === 'sq2rnd') {
@@ -565,11 +694,6 @@
                 const crossArea = Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2));
                 volume = crossArea * centerlineLength;
                 name = "Miter Bend";
-            }
-            else if(activeShape === 'shell') {
-                const OD = getVal('inp_OD'), T = getVal('inp_T'), L = getVal('inp_L');
-                if (!OD || !T || !L) return showError("Fields missing.", ['inp_OD','inp_T','inp_L'], 'errorBox', 'inputGrid');
-                volume = Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2)) * L;
             }
             else if(activeShape === 'ring') {
                 const OD = getVal('inp_OD'), ID = getVal('inp_ID'), T = getVal('inp_T');
