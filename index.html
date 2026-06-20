@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
@@ -135,8 +135,7 @@
             <!-- SECTION 2: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
                 <div class="hidden print:block text-center mb-8 border-b-2 border-slate-800 pb-4">
-                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">NEW SATYA NARAYAN WELDING WORKS</h1>
-                    <h2 class="text-xl font-bold text-slate-700 tracking-tighter mt-1">UNITED FABRICATORS</h2>
+                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">FABRICATION WEIGHT CALCULATOR</h1>
                     <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Project Bill of Materials</p>
                 </div>
 
@@ -155,7 +154,7 @@
                                 <span class="text-center text-xs" data-i18n="sh_solid">Solid Section</span>
                             </button>
                             <button onclick="loadShape('cone')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
-                                <span class="text-center text-xs" data-i18n="sh_cone">Cone</span>
+                                <span class="text-center text-xs" data-i18n="sh_cone">Cone (Truncated/Full)</span>
                             </button>
                             <button onclick="loadShape('pyramid')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
                                 <span class="text-center text-xs" data-i18n="sh_pyramid">Pyramid</span>
@@ -791,11 +790,11 @@
 
         function shareWhatsApp() {
             if (totalAssemblyWeight === 0) {
-                alert("BOM is empty. Please add items first.");
+                alert(currentLang === 'bn' ? "বিওএম খালি। আগে উপাদান যোগ করুন।" : "BOM is empty. Please add items first.");
                 return;
             }
 
-            let text = "*Project BOM:*\n\n";
+            let text = currentLang === 'bn' ? "*প্রজেক্ট বিওএম (BOM):*\n\n" : "*Project BOM:*\n\n";
             const rows = document.querySelectorAll('#historyBody tr');
             
             rows.forEach((row, index) => {
@@ -807,7 +806,8 @@
                 text += `${index + 1}. ${shape} | ${mat} | ${qty} | ${weight}\n`;
             });
 
-            text += `\n*Total Weight:* ${totalAssemblyWeight.toFixed(3)} kg`;
+            text += currentLang === 'bn' ? `\n*মোট ওজন:* ${totalAssemblyWeight.toFixed(3)} kg` : `\n*Total Weight:* ${totalAssemblyWeight.toFixed(3)} kg`;
+            
             const encodedText = encodeURIComponent(text);
             window.open(`https://wa.me/?text=${encodedText}`, '_blank');
         }
