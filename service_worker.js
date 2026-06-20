@@ -1,36 +1,34 @@
-const CACHE_NAME = 'salap-factory-v2'; // <-- Changed to v2 to force the update
+const CACHE_NAME = 'salap-factory-dynamic-v2';
 const ASSETS = [
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './logo.png'
 ];
 
-// Install Event - caches the files
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
-  // Force the waiting service worker to become the active service worker.
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
   self.skipWaiting(); 
 });
 
-// Fetch Event - serves the files offline
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
-  );
+self.addEventListener('activate', event => {
+  event.waitUntil(clients.claim());
 });
 
-// Activate Event - cleans up old caches (like v1)
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
+// Network First, fallback to cache
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // If the internet fetch is successful, update the cache with the new version
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      })
+      .catch(() => {
+        // If there is no internet (fetch fails), load the file from the offline cache
+        return caches.match(event.request);
+      })
   );
 });

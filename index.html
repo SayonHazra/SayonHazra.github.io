@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +50,7 @@
             <div class="p-6 flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.2 PWA</p>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.4 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
@@ -143,7 +142,13 @@
                                 <span class="text-center text-xs" data-i18n="sh_shell">Cylindrical Shell</span>
                             </button>
                             <button onclick="loadShape('cone')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
-                                <span class="text-center text-xs" data-i18n="sh_cone">Cone (Frustum/Roof)</span>
+                                <span class="text-center text-xs" data-i18n="sh_cone">Cone (Truncated/Full)</span>
+                            </button>
+                            <button onclick="loadShape('sq2rnd')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_sq2rnd">Sq/Rect to Round</span>
+                            </button>
+                            <button onclick="loadShape('miter')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
+                                <span class="text-center text-xs" data-i18n="sh_miter">Miter Bend</span>
                             </button>
                             <button onclick="loadShape('dishend')" class="shape-item w-full flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 dark:text-white rounded-xl shadow-sm border-2 border-transparent hover:border-blue-200 transition text-sm font-bold gap-2">
                                 <span class="text-center text-xs" data-i18n="sh_dishend">Dish End</span>
@@ -188,15 +193,19 @@
 
                         <!-- BOM Table Area -->
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 print:border-none print:shadow-none overflow-hidden transition-colors duration-200">
-                            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
                                 
-                                <div class="flex gap-4 items-center">
-                                    <button onclick="shareWhatsApp()" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold hover:underline flex items-center gap-1 print:hidden">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.802.372-.282.297-1.089 1.066-1.089 2.603 0 1.537 1.114 3.024 1.268 3.222.154.198 2.197 3.354 5.32 4.708 2.056.89 2.76.993 3.693.846.932-.148 2.873-1.173 3.27-2.308.397-1.135.397-2.107.278-2.308-.12-.201-.417-.325-.714-.474zM12 22.37A10.323 10.323 0 0 1 6.705 21l-.38-.225-3.924 1.026 1.05-3.826-.247-.393A10.33 10.33 0 0 1 1.63 12c0-5.713 4.654-10.37 10.37-10.37 5.715 0 10.37 4.657 10.37 10.37 0 5.713-4.655 10.37-10.37 10.37zM12 0C5.373 0 0 5.373 0 12c0 2.13.558 4.21 1.624 6.035L.036 24l6.096-1.603A11.936 11.936 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-                                        <span data-i18n="btn_wa">Share</span>
+                                <div class="flex flex-wrap gap-4 items-center print:hidden">
+                                    <button onclick="window.print()" class="text-sm px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-2">
+                                        🖨️ <span data-i18n="btn_print">Save PDF</span>
                                     </button>
-                                    <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline print:hidden" data-i18n="btn_clear">Clear All</button>
+
+                                    <button onclick="shareWhatsApp()" class="text-sm px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-md font-bold transition flex items-center gap-2">
+                                        💬 <span data-i18n="btn_wa">WhatsApp</span>
+                                    </button>
+                                    
+                                    <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline" data-i18n="btn_clear">Clear All</button>
                                 </div>
                             </div>
                             <div class="overflow-x-auto">
@@ -283,17 +292,17 @@
         const dict = {
             en: {
                 app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
-                app_version: "VERSION 3.2 PWA",
+                app_version: "VERSION 3.4 PWA",
                 nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Us",
                 lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
                 mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
                 title_converter: "Precision Length Converter", lbl_input_val: "Input Value", lbl_from_unit: "From Unit", lbl_to_unit: "To Unit", lbl_result_meas: "Resulting Measurement",
                 lbl_fab_profiles: "Fabrication Profiles",
                 
-                sh_plate: "Plate / Blank", sh_shell: "Cylindrical Shell", sh_cone: "Cone (Frustum/Roof)", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
+                sh_plate: "Plate / Blank", sh_shell: "Cylindrical Shell", sh_cone: "Cone (Truncated/Full)", sh_sq2rnd: "Sq/Rect to Round", sh_miter: "Miter Bend", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
                 
                 lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass",
-                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_wa: "Share",
+                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_print: "Save PDF", btn_wa: "WhatsApp",
                 th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
                 
                 // About Section
@@ -303,25 +312,28 @@
                 // Form Labels
                 f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity",
                 f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
-                f_type_cone: "Cone Type", f_opt_frust: "Frustum Cone (Taper)", f_opt_roof: "Roof Cone",
+                f_type_cone: "Cone Type", f_opt_trunc: "Truncated Cone", f_opt_full: "Full Cone",
+                f_type_sq2rnd: "Transition Type", f_opt_square: "Square to Round", f_opt_rect_rnd: "Rectangle to Round",
                 f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (OD) (mm)",
-                f_d1: "Top OD (mm)", f_d2: "Bottom OD (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)",
+                f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)",
                 f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)",
-                f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)"
+                f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)",
+                f_base_dim: "Base Dimension (A) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)",
+                f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
                 app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
-                app_version: "সংস্করণ ৩.২ PWA",
+                app_version: "সংস্করণ ৩.৪ PWA",
                 nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ আমাদের সম্পর্কে",
                 lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
                 mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
                 title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ",
                 lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
                 
-                sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_shell: "নলাকার শেল", sh_cone: "শঙ্কু (ফ্রাস্টাম/রুফ)", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
+                sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_shell: "নলাকার শেল", sh_cone: "শঙ্কু (ট্রাঙ্কেটেড/ফুল)", sh_sq2rnd: "স্কয়ার/রেক্ট টু রাউন্ড", sh_miter: "মাইটার বেন্ড", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
                 
                 lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন",
-                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_wa: "শেয়ার",
+                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp",
                 th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
                 
                 // About Section
@@ -330,11 +342,14 @@
 
                 f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ",
                 f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার (ফ্ল্যাট প্লেট)", f_opt_circ: "গোলাকার (ব্ল্যাঙ্ক/ডিস্ক)",
-                f_type_cone: "শঙ্কুর ধরন", f_opt_frust: "ফ্রাস্টাম শঙ্কু (টেপার)", f_opt_roof: "রুফ শঙ্কু",
+                f_type_cone: "শঙ্কুর ধরন", f_opt_trunc: "ট্রাঙ্কেটেড শঙ্কু", f_opt_full: "ফুল শঙ্কু",
+                f_type_sq2rnd: "ট্রানজিশন প্রকার", f_opt_square: "স্কয়ার টু রাউন্ড", f_opt_rect_rnd: "রেক্ট্যাঙ্গেল টু রাউন্ড",
                 f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (OD) (mm)",
-                f_d1: "শীর্ষ ব্যাস (OD) (mm)", f_d2: "নিচের ব্যাস (OD) (mm)", f_base_od: "বেস ব্যাস (OD) (mm)", f_h: "উল্লম্ব উচ্চতা (mm)",
+                f_d1: "শীর্ষ ব্যাস (D1) (mm)", f_d2: "নিচের ব্যাস (D2) (mm)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)",
                 f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)",
-                f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)"
+                f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)",
+                f_base_dim: "বেস পরিমাপ (A) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)",
+                f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R) (mm)", f_pieces: "মোট পিস (N)"
             }
         };
 
@@ -427,11 +442,19 @@
             document.getElementById('wrap_OD').classList.toggle('hidden', type === 'rect');
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
+        
         function toggleConeInputs() {
             const type = document.getElementById('inp_cone_type').value;
-            document.getElementById('wrap_D2').classList.toggle('hidden', type !== 'frustum');
-            document.getElementById('lbl_D1').innerText = type === 'frustum' ? t('f_d1') : t('f_base_od');
-            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'frustum' ? 'frustum-ref.jpg' : 'roof_cone-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=CONE'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+            document.getElementById('wrap_D2').classList.toggle('hidden', type !== 'truncated');
+            document.getElementById('lbl_D1').innerText = type === 'truncated' ? t('f_d1') : t('f_base_od');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'frustum-ref.jpg' : 'roof_cone-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}_CONE'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
+        }
+
+        function toggleSq2RndInputs() {
+            const type = document.getElementById('inp_sq2rnd_type').value;
+            document.getElementById('wrap_B').classList.toggle('hidden', type !== 'rect');
+            document.getElementById('lbl_A').innerText = type === 'square' ? t('f_base_dim') : t('f_base_l');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'square' ? 'sq2rnd-ref.jpg' : 'rect2rnd-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}2RND'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
         function loadShape(shape) {
@@ -443,7 +466,8 @@
                 btn.classList.remove('shape-btn-active');
                 if(btn.getAttribute('onclick').includes(`('${shape}')`)) btn.classList.add('shape-btn-active');
             });
-            if (shape !== 'plate' && shape !== 'cone') {
+
+            if (shape !== 'plate' && shape !== 'cone' && shape !== 'sq2rnd') {
                 document.getElementById('diagramBox').innerHTML = `<img src="${shape}-ref.jpg" onerror="this.src='https://placehold.co/300x200?text=${shape.toUpperCase()}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
             }
 
@@ -456,8 +480,15 @@
                 setTimeout(togglePlateInputs, 10);
             } 
             else if(shape === 'cone') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="frustum">${t('f_opt_frust')}</option><option value="roof">${t('f_opt_roof')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="truncated">${t('f_opt_trunc')}</option><option value="full">${t('f_opt_full')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(toggleConeInputs, 10);
+            }
+            else if(shape === 'sq2rnd') {
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_sq2rnd')}</label><select id="inp_sq2rnd_type" onchange="toggleSq2RndInputs()"><option value="square">${t('f_opt_square')}</option><option value="rect">${t('f_opt_rect_rnd')}</option></select></div><div class="input-group"><label id="lbl_A">${t('f_base_dim')}</label><input type="number" id="inp_A" min="0"></div><div id="wrap_B" class="input-group hidden"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                setTimeout(toggleSq2RndInputs, 10);
+            }
+            else if(shape === 'miter') {
+                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
             }
             else if(shape === 'shell') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + L + Qty; }
             else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
@@ -490,14 +521,50 @@
             } 
             else if(activeShape === 'cone') {
                 const D1 = getVal('inp_D1'), H = getVal('inp_H'), T = getVal('inp_T');
-                if (document.getElementById('inp_cone_type').value === 'frustum') {
+                
+                if (document.getElementById('inp_cone_type').value === 'truncated') {
                     const D2 = getVal('inp_D2');
                     if (D1===null || D2===null || !H || !T) return showError("Fields missing.", ['inp_D1','inp_D2','inp_H','inp_T'], 'errorBox', 'inputGrid');
-                    volume = Math.PI * ((D1/2) + (D2/2)) * Math.sqrt(Math.pow((D1/2)-(D2/2), 2) + Math.pow(H, 2)) * T; name = "Frustum Cone";
+                    
+                    const meanD1 = D1 > T ? D1 - T : D1;
+                    const meanD2 = D2 > T ? D2 - T : D2;
+                    
+                    volume = Math.PI * ((meanD1/2) + (meanD2/2)) * Math.sqrt(Math.pow((meanD1/2)-(meanD2/2), 2) + Math.pow(H, 2)) * T; 
+                    name = "Truncated Cone";
                 } else {
-                    if (!D1 || !H || !T) return showError("Fields missing.", ['inp_D1','inp_H','inp_T'], 'errorBox', 'inputGrid');
-                    volume = Math.PI * (D1/2) * Math.sqrt(Math.pow(D1/2, 2) + Math.pow(H, 2)) * T; name = "Roof Cone";
+                    if (D1===null || !H || !T) return showError("Fields missing.", ['inp_D1','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    
+                    const meanD1 = D1 > T ? D1 - T : D1;
+                    
+                    volume = Math.PI * (meanD1/2) * Math.sqrt(Math.pow(meanD1/2, 2) + Math.pow(H, 2)) * T; 
+                    name = "Full Cone";
                 }
+            }
+            else if(activeShape === 'sq2rnd') {
+                const type = document.getElementById('inp_sq2rnd_type').value;
+                const A = getVal('inp_A'), D = getVal('inp_D'), H = getVal('inp_H'), T = getVal('inp_T');
+                let B = A;
+                
+                if (type === 'rect') {
+                    B = getVal('inp_B');
+                    if (!A || !B || !D || !H || !T) return showError("Fields missing.", ['inp_A','inp_B','inp_D','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    name = "Rectangle to Round";
+                } else {
+                    if (!A || !D || !H || !T) return showError("Fields missing.", ['inp_A','inp_D','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    name = "Square to Round";
+                }
+                
+                const meanPerimeter = (2 * (A + B) + (Math.PI * D)) / 2;
+                const slantHeightApprox = Math.sqrt(Math.pow(H, 2) + Math.pow(((A+B)/2 - D)/2, 2));
+                volume = meanPerimeter * slantHeightApprox * T;
+            }
+            else if(activeShape === 'miter') {
+                const OD = getVal('inp_OD'), T = getVal('inp_T'), R = getVal('inp_R'), Ang = getVal('inp_Ang');
+                if (!OD || !T || !R || !Ang) return showError("Fields missing.", ['inp_OD','inp_T','inp_R','inp_Ang'], 'errorBox', 'inputGrid');
+                const centerlineLength = R * (Ang * (Math.PI / 180));
+                const crossArea = Math.PI * (Math.pow(OD/2, 2) - Math.pow((OD - 2*T)/2, 2));
+                volume = crossArea * centerlineLength;
+                name = "Miter Bend";
             }
             else if(activeShape === 'shell') {
                 const OD = getVal('inp_OD'), T = getVal('inp_T'), L = getVal('inp_L');
