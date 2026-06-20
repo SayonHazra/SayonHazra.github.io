@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salap Factory | Fabrication & Unit Toolkit</title>
+    <title>Fabrication Weight Calculator</title>
     
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#1e293b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,6 +13,7 @@
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="icon" type="image/png" href="logo.png">
     
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -48,13 +50,21 @@
         <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col print:hidden">
             <div class="p-6 flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tight" data-i18n="app_name">SALAP <span class="text-slate-800 dark:text-white">FACTORY</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 3.7 PWA</p>
+                    <h1 class="text-xl font-black text-blue-600 dark:text-blue-400 tracking-tight leading-none mb-1" data-i18n="app_name">FABRICATION <br><span class="text-slate-800 dark:text-white">WEIGHT CALCULATOR</span></h1>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 4.0 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
                         <option value="en">EN</option>
                         <option value="bn">BN</option>
+                        <option value="hi">HI</option>
+                        <option value="ta">TA</option>
+                        <option value="ml">ML</option>
+                        <option value="te">TE</option>
+                        <option value="or">OR</option>
+                        <option value="pa">PA</option>
+                        <option value="ur">UR</option>
+                        <option value="as">AS</option>
                     </select>
                     <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
                         <svg id="theme-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -62,7 +72,7 @@
                 </div>
             </div>
             
-            <div class="flex flex-col space-y-1">
+            <div class="flex flex-col space-y-1 mt-2">
                 <button onclick="switchMainTab('units')" id="nav-units" class="nav-btn px-6 py-4 text-left font-semibold active-tab transition dark:text-slate-300" data-i18n="nav_units">📏 Unit Converter</button>
                 <button onclick="switchMainTab('weight')" id="nav-weight" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_fab">⚖️ Fabrication BOM</button>
                 <button onclick="switchMainTab('about')" id="nav-about" class="nav-btn px-6 py-4 text-left font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition" data-i18n="nav_about">ℹ️ About Developer</button>
@@ -87,6 +97,7 @@
 
         <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto print:p-0 relative">
             
+            <!-- SECTION 1: Unit Converter -->
             <div id="section-units" class="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
                 <h2 class="text-xl font-bold mb-6" data-i18n="title_converter">Precision Length Converter</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
@@ -121,6 +132,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 2: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
                 <div class="hidden print:block text-center mb-8 border-b-2 border-slate-800 pb-4">
                     <h1 class="text-4xl font-black text-slate-900 tracking-tighter">NEW SATYA NARAYAN WELDING WORKS</h1>
@@ -129,6 +141,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Sidebar Profiles -->
                     <div class="lg:col-span-3 space-y-2 print:hidden">
                         <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter" data-i18n="lbl_fab_profiles">Fabrication Profiles</p>
                         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-3">
@@ -171,6 +184,7 @@
                         </div>
                     </div>
 
+                    <!-- Main Content Area -->
                     <div class="lg:col-span-9 space-y-6 print:space-y-2">
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 transition-colors duration-200 print:hidden">
                             <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase italic">Steel Plate</h2>
@@ -193,6 +207,7 @@
                             </div>
                         </div>
 
+                        <!-- BOM Table Area -->
                         <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 print:border-none print:shadow-none overflow-hidden transition-colors duration-200">
                             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700/50 print:bg-white print:border-b-2 print:border-slate-800 border-b border-slate-100 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
@@ -201,11 +216,9 @@
                                     <button onclick="window.print()" class="text-sm px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-2">
                                         🖨️ <span data-i18n="btn_print">Save PDF</span>
                                     </button>
-                                    
                                     <button onclick="shareWhatsApp()" class="text-sm px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-md font-bold transition flex items-center gap-2">
                                         💬 <span data-i18n="btn_wa">WhatsApp</span>
                                     </button>
-                                    
                                     <button onclick="clearHistory()" class="text-xs text-red-500 font-bold hover:underline" data-i18n="btn_clear">Clear All</button>
                                 </div>
                             </div>
@@ -235,6 +248,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 3: About Us -->
             <div id="section-about" class="hidden max-w-3xl mx-auto space-y-8">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-10 transition-colors">
                     <h2 class="text-3xl font-black mb-6 text-slate-900 dark:text-white uppercase tracking-tighter" data-i18n="about_title">About This Project</h2>
@@ -260,113 +274,151 @@
         // --- PWA REGISTRATION ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful');
-                    }, err => {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed: ', err));
             });
         }
 
-        // --- i18n Dictionary ---
+        // --- Multi-Language Dictionary (10 Languages) ---
         const dict = {
             en: {
-                app_name: "SALAP <span class=\"text-slate-800 dark:text-white\">FACTORY</span>",
-                app_version: "VERSION 3.7 PWA",
+                app_name: "FABRICATION <br><span class=\"text-slate-800 dark:text-white\">WEIGHT CALCULATOR</span>", app_version: "VERSION 4.0 PWA",
                 nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Developer",
-                lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)",
-                mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
-                title_converter: "Precision Length Converter", lbl_input_val: "Input Value", lbl_from_unit: "From Unit", lbl_to_unit: "To Unit", lbl_result_meas: "Resulting Measurement",
-                lbl_fab_profiles: "Fabrication Profiles",
-                
-                sh_plate: "Plate / Blank", 
-                sh_hollow: "Hollow Section",
-                sh_solid: "Solid Section",
-                sh_cone: "Cone (Truncated/Full)", 
-                sh_pyramid: "Pyramid (Truncated/Full)",
-                sh_sq2rnd: "Sq/Rect to Round", 
-                sh_miter: "Miter Bend", 
-                sh_dishend: "Dish End", 
-                sh_ring: "Circular Ring", 
-                sh_ismb: "ISMB Beam", 
-                sh_ismc: "ISMC Channel", 
-                sh_isa: "ISA Angle",
-                
-                lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass",
-                lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_print: "Save PDF", btn_wa: "WhatsApp",
-                th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
-                
-                about_title: "About This Project",
-                about_desc: "<p>This fabrication toolkit was developed by <strong>Sayon Hazra</strong> as a comprehensive solution for modern engineering workflows. The primary objective of this application is to streamline complex metal fabrication calculations, minimize human error, and enhance shop-floor efficiency.</p><p class='mt-4'>By digitizing material weight estimations and unit conversions, this tool enables engineers, fabricators, and project managers to generate precise Bill of Materials (BOM) rapidly. It is built to bridge the gap between technical design and practical execution, ensuring that accurate data is accessible at any stage of the production lifecycle.</p>",
-                about_connect: "Connect with Developer",
-                
-                f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity",
-                
-                f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
-                
-                f_type_hollow: "Section Type", f_opt_cyl_shell: "Cylindrical Shell", f_opt_sq_tube: "Square Tube", f_opt_rect_tube: "Rectangular Tube",
-                f_type_solid: "Section Type", f_opt_sq_bar: "Square Bar", f_opt_rect_bar: "Rectangular Bar", f_opt_rnd_bar: "Round Bar",
-                
-                f_type_cone: "Cone Type", f_opt_trunc: "Truncated Cone", f_opt_full: "Full Cone",
-                f_type_pyramid: "Pyramid Type", f_opt_trunc_pyr: "Truncated Pyramid", f_opt_full_pyr: "Full Pyramid",
-                
+                lbl_mat_preset: "Material Preset", lbl_density: "Density (kg/m³)", mat_cs: "Carbon Steel (7850)", mat_ss: "Stainless Steel (8000)", mat_al: "Aluminum (2700)", mat_cu: "Copper (8960)", mat_custom: "Custom Density",
+                title_converter: "Precision Length Converter", lbl_input_val: "Input Value", lbl_from_unit: "From Unit", lbl_to_unit: "To Unit", lbl_result_meas: "Resulting Measurement", lbl_fab_profiles: "Fabrication Profiles",
+                sh_plate: "Plate / Blank", sh_hollow: "Hollow Section", sh_solid: "Solid Section", sh_cone: "Cone (Truncated/Full)", sh_pyramid: "Pyramid (Truncated/Full)", sh_sq2rnd: "Sq/Rect to Round", sh_miter: "Miter Bend", sh_dishend: "Dish End", sh_ring: "Circular Ring", sh_ismb: "ISMB Beam", sh_ismc: "ISMC Channel", sh_isa: "ISA Angle",
+                lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass", lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_print: "Save PDF", btn_wa: "WhatsApp", th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
+                about_title: "About This Project", about_desc: "<p>This fabrication toolkit was developed by <strong>Sayon Hazra</strong> as a comprehensive solution for modern engineering workflows. The primary objective of this application is to streamline complex metal fabrication calculations, minimize human error, and enhance shop-floor efficiency.</p><p class='mt-4'>By digitizing material weight estimations and unit conversions, this tool enables engineers, fabricators, and project managers to generate precise Bill of Materials (BOM) rapidly. It is built to bridge the gap between technical design and practical execution, ensuring that accurate data is accessible at any stage of the production lifecycle.</p>", about_connect: "Connect with Developer",
+                f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity", f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
+                f_type_hollow: "Section Type", f_opt_cyl_shell: "Cylindrical Shell", f_opt_sq_tube: "Square Tube", f_opt_rect_tube: "Rectangular Tube", f_type_solid: "Section Type", f_opt_sq_bar: "Square Bar", f_opt_rect_bar: "Rectangular Bar", f_opt_rnd_bar: "Round Bar",
+                f_type_cone: "Cone Type", f_opt_trunc: "Truncated Cone", f_opt_full: "Full Cone", f_type_pyramid: "Pyramid Type", f_opt_trunc_pyr: "Truncated Pyramid", f_opt_full_pyr: "Full Pyramid",
                 f_type_sq2rnd: "Transition Type", f_opt_square: "Square to Round", f_opt_rect_rnd: "Rectangle to Round",
-                f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)",
-                f_side_a: "Side A (mm)", f_side_b: "Side B (mm)",
-                f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)",
-                f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)",
-                f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)",
-                f_base_dim: "Base Dimension (A) (mm)", f_top_dim: "Top Dimension (B) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)",
-                f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
+                f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)", f_side_a: "Side A (mm)", f_side_b: "Side B (mm)", f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)", f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)", f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)", f_base_dim: "Base Dimension (A) (mm)", f_top_dim: "Top Dimension (B) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)", f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
-                app_name: "সালাপ <span class=\"text-slate-800 dark:text-white\">ফ্যাক্টরি</span>",
-                app_version: "সংস্করণ ৩.৭ PWA",
+                app_name: "ফ্যাব্রিকেশন <br><span class=\"text-slate-800 dark:text-white\">ওজন ক্যালকুলেটর</span>", app_version: "সংস্করণ ৪.০ PWA",
                 nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ ডেভেলপার সম্পর্কে",
-                lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)",
-                mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
-                title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ",
-                lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
-                
-                sh_plate: "প্লেট / ব্ল্যাঙ্ক", 
-                sh_hollow: "ফাঁপা বিভাগ (Hollow)",
-                sh_solid: "নিটোল বিভাগ (Solid)",
-                sh_cone: "শঙ্কু (ট্রাঙ্কেটেড/ফুল)", 
-                sh_pyramid: "পিরামিড (ট্রাঙ্কেটেড/ফুল)",
-                sh_sq2rnd: "স্কয়ার/রেক্ট টু রাউন্ড", 
-                sh_miter: "মাইটার বেন্ড", 
-                sh_dishend: "ডিশ এন্ড", 
-                sh_ring: "গোলাকার রিং", 
-                sh_ismb: "আইএসএমবি বিম", 
-                sh_ismc: "আইএসএমসি চ্যানেল", 
-                sh_isa: "আইএসএ অ্যাঙ্গেল",
-                
-                lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন",
-                lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp",
-                th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
-                
-                about_title: "প্রকল্প সম্পর্কে",
-                about_desc: "<p>আধুনিক ইঞ্জিনিয়ারিং কাজের সুবিধার্থে এই ফ্যাব্রিকেশন টুলকিটটি তৈরি করেছেন <strong>সায়ন হাজরা</strong>। এই অ্যাপ্লিকেশনটির মূল উদ্দেশ্য হল জটিল মেটাল ফ্যাব্রিকেশন হিসাবগুলি সহজ করা, মানুষের ভুল কমানো এবং কারখানার কাজে গতি আনা।</p><p class='mt-4'>মেটেরিয়াল ওজন এবং ইউনিট কনভার্সন ডিজিটাল করার মাধ্যমে, এই টুলটি ইঞ্জিনিয়ার, ফ্যাব্রিকেটর এবং প্রোজেক্ট ম্যানেজারদের দ্রুত ও নির্ভুল Bill of Materials (BOM) তৈরি করতে সাহায্য করে। এটি প্রযুক্তিগত নকশা এবং বাস্তব কাজের মধ্যে ব্যবধান মেটাতে ডিজাইন করা হয়েছে।</p>",
-                about_connect: "ডেভেলপারের সাথে যোগাযোগ করুন",
-
-                f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ",
-                f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার (ফ্ল্যাট প্লেট)", f_opt_circ: "গোলাকার (ব্ল্যাঙ্ক/ডিস্ক)",
-                
-                f_type_hollow: "ফাঁপার ধরন", f_opt_cyl_shell: "নলাকার শেল", f_opt_sq_tube: "স্কয়ার টিউব", f_opt_rect_tube: "রেক্ট্যাঙ্গুলার টিউব",
-                f_type_solid: "নিটোল ধরন", f_opt_sq_bar: "স্কয়ার বার", f_opt_rect_bar: "রেক্ট্যাঙ্গুলার বার", f_opt_rnd_bar: "রাউন্ড বার",
-                
-                f_type_cone: "শঙ্কুর ধরন", f_opt_trunc: "ট্রাঙ্কেটেড শঙ্কু", f_opt_full: "ফুল শঙ্কু",
-                f_type_pyramid: "পিরামিডের ধরন", f_opt_trunc_pyr: "ট্রাঙ্কেটেড পিরামিড", f_opt_full_pyr: "ফুল পিরামিড",
-
+                lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)", mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
+                title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ", lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
+                sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_hollow: "ফাঁপা বিভাগ (Hollow)", sh_solid: "নিটোল বিভাগ (Solid)", sh_cone: "শঙ্কু (ট্রাঙ্কেটেড/ফুল)", sh_pyramid: "পিরামিড (ট্রাঙ্কেটেড/ফুল)", sh_sq2rnd: "স্কয়ার/রেক্ট টু রাউন্ড", sh_miter: "মাইটার বেন্ড", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি বিম", sh_ismc: "আইএসএমসি চ্যানেল", sh_isa: "আইএসএ অ্যাঙ্গেল",
+                lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন", lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp", th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
+                about_title: "প্রকল্প সম্পর্কে", about_desc: "<p>আধুনিক ইঞ্জিনিয়ারিং কাজের সুবিধার্থে এই ফ্যাব্রিকেশন টুলকিটটি তৈরি করেছেন <strong>সায়ন হাজরা</strong>। এই অ্যাপ্লিকেশনটির মূল উদ্দেশ্য হল জটিল মেটাল ফ্যাব্রিকেশন হিসাবগুলি সহজ করা, মানুষের ভুল কমানো এবং কারখানার কাজে গতি আনা।</p><p class='mt-4'>মেটেরিয়াল ওজন এবং ইউনিট কনভার্সন ডিজিটাল করার মাধ্যমে, এই টুলটি ইঞ্জিনিয়ার, ফ্যাব্রিকেটর এবং প্রোজেক্ট ম্যানেজারদের দ্রুত ও নির্ভুল Bill of Materials (BOM) তৈরি করতে সাহায্য করে। এটি প্রযুক্তিগত নকশা এবং বাস্তব কাজের মধ্যে ব্যবধান মেটাতে ডিজাইন করা হয়েছে।</p>", about_connect: "ডেভেলপারের সাথে যোগাযোগ করুন",
+                f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ", f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার (ফ্ল্যাট প্লেট)", f_opt_circ: "গোলাকার (ব্ল্যাঙ্ক/ডিস্ক)",
+                f_type_hollow: "ফাঁপার ধরন", f_opt_cyl_shell: "নলাকার শেল", f_opt_sq_tube: "স্কয়ার টিউব", f_opt_rect_tube: "রেক্ট্যাঙ্গুলার টিউব", f_type_solid: "নিটোল ধরন", f_opt_sq_bar: "স্কয়ার বার", f_opt_rect_bar: "রেক্ট্যাঙ্গুলার বার", f_opt_rnd_bar: "রাউন্ড বার",
+                f_type_cone: "শঙ্কুর ধরন", f_opt_trunc: "ট্রাঙ্কেটেড শঙ্কু", f_opt_full: "ফুল শঙ্কু", f_type_pyramid: "পিরামিডের ধরন", f_opt_trunc_pyr: "ট্রাঙ্কেটেড পিরামিড", f_opt_full_pyr: "ফুল পিরামিড",
                 f_type_sq2rnd: "ট্রানজিশন প্রকার", f_opt_square: "স্কয়ার টু রাউন্ড", f_opt_rect_rnd: "রেক্ট্যাঙ্গেল টু রাউন্ড",
-                f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (mm)",
-                f_side_a: "বাহু A (mm)", f_side_b: "বাহু B (mm)",
-                f_d1: "শীর্ষ ব্যাস (D1) (mm)", f_d2: "নিচের ব্যাস (D2) (mm)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)",
-                f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)",
-                f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)",
-                f_base_dim: "বেস পরিমাপ (A) (mm)", f_top_dim: "শীর্ষ পরিমাপ (B) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)",
-                f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R) (mm)", f_pieces: "মোট পিস (N)"
+                f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (mm)", f_side_a: "বাহু A (mm)", f_side_b: "বাহু B (mm)", f_d1: "শীর্ষ ব্যাস (D1) (mm)", f_d2: "নিচের ব্যাস (D2) (mm)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)", f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)", f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)", f_base_dim: "বেস পরিমাপ (A) (mm)", f_top_dim: "শীর্ষ পরিমাপ (B) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)", f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R) (mm)", f_pieces: "মোট পিস (N)"
+            },
+            hi: {
+                app_name: "फैब्रिकेशन <br><span class=\"text-slate-800 dark:text-white\">वजन कैलकुलेटर</span>", app_version: "संस्करण 4.0 PWA",
+                nav_units: "📏 इकाई कनवर्टर", nav_fab: "⚖️ फैब्रिकेशन BOM", nav_about: "ℹ️ डेवलपर के बारे में",
+                lbl_mat_preset: "सामग्री प्रीसेट", lbl_density: "घनत्व (kg/m³)", mat_cs: "कार्बन स्टील (7850)", mat_ss: "स्टेनलेस स्टील (8000)", mat_al: "एल्युमिनियम (2700)", mat_cu: "तांबा (8960)", mat_custom: "कस्टम घनत्व",
+                title_converter: "सटीक लंबाई कनवर्टर", lbl_input_val: "इनपुट मान", lbl_from_unit: "से (इकाई)", lbl_to_unit: "तक (इकाई)", lbl_result_meas: "परिणाम माप", lbl_fab_profiles: "फैब्रिकेशन प्रोफाइल",
+                sh_plate: "प्लेट / ब्लैंक", sh_hollow: "खोखला अनुभाग", sh_solid: "ठोस अनुभाग", sh_cone: "शंकु (Cone)", sh_pyramid: "पिरामिड (Pyramid)", sh_sq2rnd: "स्क्वायर/रेक्ट टू राउंड", sh_miter: "माइटर बेंड", sh_dishend: "डिश एंड", sh_ring: "सर्कुलर रिंग", sh_ismb: "ISMB बीम", sh_ismc: "ISMC चैनल", sh_isa: "ISA एंगल",
+                lbl_prof_ref: "प्रोफाइल संदर्भ", btn_calc: "गणना करें और जोड़ें", lbl_current_mass: "वर्तमान भाग का वजन", lbl_bom: "सामग्री का बिल (BOM)", btn_clear: "सभी मिटाएं", btn_print: "PDF सहेजें", btn_wa: "WhatsApp", th_shape: "आकार", th_material: "सामग्री", th_qty: "मात्रा", th_result: "कुल वजन", lbl_total: "कुल असेंबली:",
+                about_title: "इस प्रोजेक्ट के बारे में", about_desc: "<p>इस फैब्रिकेशन टूलकिट को <strong>सायोन हाजरा</strong> द्वारा आधुनिक इंजीनियरिंग वर्कफ्लो के लिए विकसित किया गया था। इस एप्लिकेशन का मुख्य उद्देश्य जटिल धातु निर्माण गणनाओं को सुव्यवस्थित करना, मानवीय त्रुटि को कम करना और कारखाने की दक्षता को बढ़ाना है।</p><p class='mt-4'>यह उपकरण इंजीनियरों और फैब्रिकेटरों को तेजी से सटीक Bill of Materials (BOM) उत्पन्न करने में सक्षम बनाता है।</p>", about_connect: "डेवलपर से जुड़ें",
+                f_len: "लंबाई (mm)", f_wid: "चौड़ाई (mm)", f_thk: "मोटाई (mm)", f_qty: "मात्रा", f_type_plate: "प्रोफाइल प्रकार", f_opt_rect: "आयताकार (फ्लैट प्लेट)", f_opt_circ: "गोलाकार (ब्लैंक)",
+                f_type_hollow: "अनुभाग प्रकार", f_opt_cyl_shell: "सिलिंड्रिकल शेल", f_opt_sq_tube: "स्क्वायर ट्यूब", f_opt_rect_tube: "आयताकार ट्यूब", f_type_solid: "अनुभाग प्रकार", f_opt_sq_bar: "स्क्वायर बार", f_opt_rect_bar: "आयताकार बार", f_opt_rnd_bar: "राउंड बार",
+                f_type_cone: "शंकु प्रकार", f_opt_trunc: "कटा हुआ शंकु", f_opt_full: "पूर्ण शंकु", f_type_pyramid: "पिरामिड प्रकार", f_opt_trunc_pyr: "कटा हुआ पिरामिड", f_opt_full_pyr: "पूर्ण पिरामिड",
+                f_type_sq2rnd: "ट्रांज़िशन प्रकार", f_opt_square: "स्क्वायर टू राउंड", f_opt_rect_rnd: "रेक्टेंगल टू राउंड",
+                f_od: "बाहरी व्यास (OD) (mm)", f_id: "आंतरिक व्यास (ID) (mm)", f_dia: "व्यास (mm)", f_side_a: "साइड A (mm)", f_side_b: "साइड B (mm)", f_d1: "शीर्ष OD (D1) (mm)", f_d2: "निचला OD (D2) (mm)", f_base_od: "बेस OD (mm)", f_h: "ऊर्ध्वाधर ऊंचाई (mm)", f_sf: "सीधा चेहरा (SF) (mm)", f_h_sec: "अनुभाग की गहराई (h) (mm)", f_w_fl: "फ्लेंज की चौड़ाई (b) (mm)", f_tw: "वेब मोटाई (tw) (mm)", f_tf: "फ्लेंज मोटाई (tf) (mm)", f_leg_a: "लेग A (mm)", f_leg_b: "लेग B (mm)", f_base_dim: "बेस आयाम (A) (mm)", f_top_dim: "शीर्ष आयाम (B) (mm)", f_base_l: "बेस लंबाई (mm)", f_base_w: "बेस चौड़ाई (mm)", f_top_od: "शीर्ष राउंड OD (mm)", f_bend_ang: "कुल बेंड कोण (°)", f_bend_rad: "सेंटरलाइन त्रिज्या (R) (mm)", f_pieces: "कुल टुकड़े (N)"
+            },
+            ta: {
+                app_name: "ஃபேப்ரிகேஷன் <br><span class=\"text-slate-800 dark:text-white\">எடை கால்குலேட்டர்</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 அலகு மாற்றி", nav_fab: "⚖️ ஃபேப்ரிகேஷன் BOM", nav_about: "ℹ️ டெவலப்பர் பற்றி",
+                lbl_mat_preset: "பொருள் முன்னமைவு", lbl_density: "அடர்த்தி (kg/m³)", mat_cs: "கார்பன் ஸ்டீல் (7850)", mat_ss: "ஸ்டெயின்லெஸ் ஸ்டீல் (8000)", mat_al: "அலுமினியம் (2700)", mat_cu: "தாமிரம் (8960)", mat_custom: "தனிப்பயன் அடர்த்தி",
+                title_converter: "துல்லிய நீள மாற்றி", lbl_input_val: "உள்ளீட்டு மதிப்பு", lbl_from_unit: "இருந்து (அலகு)", lbl_to_unit: "வரை (அலகு)", lbl_result_meas: "முடிவு", lbl_fab_profiles: "ஃபேப்ரிகேஷன் விவரங்கள்",
+                sh_plate: "தட்டு / பிளாங்க்", sh_hollow: "வெற்றுப் பகுதி", sh_solid: "திடப் பகுதி", sh_cone: "கூம்பு", sh_pyramid: "பிரமிடு", sh_sq2rnd: "சதுரம்/செவ்வகம் முதல் வட்டம்", sh_miter: "மைட்டர் வளைவு", sh_dishend: "டிஷ் எண்ட்", sh_ring: "வளையம்", sh_ismb: "ISMB பீம்", sh_ismc: "ISMC சேனல்", sh_isa: "ISA ஆங்கிள்",
+                lbl_prof_ref: "விவரக் குறிப்பு", btn_calc: "கணக்கிட்டு சேர்க்கவும்", lbl_current_mass: "தற்போதைய எடை", lbl_bom: "பொருட்களின் பட்டியல் (BOM)", btn_clear: "அனைத்தையும் அழி", btn_print: "PDF சேமி", btn_wa: "WhatsApp", th_shape: "வடிவம்", th_material: "பொருள்", th_qty: "அளவு", th_result: "மொத்த எடை", lbl_total: "மொத்த அசெம்பிளி:",
+                about_title: "இந்த திட்டம் பற்றி", about_desc: "<p>இந்த ஃபேப்ரிகேஷன் டூல்கிட் <strong>சயோன் ஹாஸ்ராவால்</strong> உருவாக்கப்பட்டது. சிக்கலான உலோக ஃபேப்ரிகேஷன் கணக்கீடுகளை எளிதாக்குவதும் துல்லியத்தை அதிகரிப்பதும் இதன் நோக்கமாகும்.</p>", about_connect: "டெவலப்பரை தொடர்பு கொள்ள",
+                f_len: "நீளம் (mm)", f_wid: "அகலம் (mm)", f_thk: "தடிமன் (mm)", f_qty: "அளவு", f_type_plate: "வகை", f_opt_rect: "செவ்வகம்", f_opt_circ: "வட்டம்",
+                f_type_hollow: "வகை", f_opt_cyl_shell: "உருளை ஷெல்", f_opt_sq_tube: "சதுர குழாய்", f_opt_rect_tube: "செவ்வக குழாய்", f_type_solid: "வகை", f_opt_sq_bar: "சதுர பார்", f_opt_rect_bar: "செவ்வக பார்", f_opt_rnd_bar: "வட்ட பார்",
+                f_type_cone: "கூம்பு வகை", f_opt_trunc: "வெட்டப்பட்ட கூம்பு", f_opt_full: "முழு கூம்பு", f_type_pyramid: "பிரமிடு வகை", f_opt_trunc_pyr: "வெட்டப்பட்ட பிரமிடு", f_opt_full_pyr: "முழு பிரமிடு",
+                f_type_sq2rnd: "வகை", f_opt_square: "சதுரம் முதல் வட்டம்", f_opt_rect_rnd: "செவ்வகம் முதல் வட்டம்",
+                f_od: "வெளிப்புற விட்டம் (OD)", f_id: "உட்புற விட்டம் (ID)", f_dia: "விட்டம் (mm)", f_side_a: "பக்கம் A (mm)", f_side_b: "பக்கம் B (mm)", f_d1: "மேல் OD (D1)", f_d2: "கீழ் OD (D2)", f_base_od: "அடிப்படை OD", f_h: "செங்குத்து உயரம் (mm)", f_sf: "நேரான முகம் (SF)", f_h_sec: "ஆழம் (h)", f_w_fl: "ஃபிளேன்ஜ் அகலம் (b)", f_tw: "வெப் தடிமன் (tw)", f_tf: "ஃபிளேன்ஜ் தடிமன் (tf)", f_leg_a: "கால் A", f_leg_b: "கால் B", f_base_dim: "அடிப்படை அளவு (A)", f_top_dim: "மேல் அளவு (B)", f_base_l: "அடிப்படை நீளம்", f_base_w: "அடிப்படை அகலம்", f_top_od: "மேல் வட்ட OD", f_bend_ang: "வளைவு கோணம் (°)", f_bend_rad: "மையப்பகுதி ஆரம் (R)", f_pieces: "மொத்த துண்டுகள் (N)"
+            },
+            ml: {
+                app_name: "ഫാബ്രിക്കേഷൻ <br><span class=\"text-slate-800 dark:text-white\">ഭാരം കാൽക്കുലേറ്റർ</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "⚖️ ഫാബ്രിക്കേഷൻ BOM", nav_about: "ℹ️ ഡെവലപ്പറെക്കുറിച്ച്",
+                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാന്ദ്രത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
+                title_converter: "കൃത്യമായ നീള കൺവെർട്ടർ", lbl_input_val: "ഇൻപുട്ട് മൂല്യം", lbl_from_unit: "ഏതിൽനിന്ന്", lbl_to_unit: "ഏതിലേക്ക്", lbl_result_meas: "ഫലം", lbl_fab_profiles: "ഫാബ്രിക്കേഷൻ പ്രൊഫൈലുകൾ",
+                sh_plate: "പ്ലേറ്റ് / ബ്ലാങ്ക്", sh_hollow: "പൊള്ളയായ വിഭാഗം", sh_solid: "സോളിഡ് വിഭാഗം", sh_cone: "കോൺ", sh_pyramid: "പിരമിഡ്", sh_sq2rnd: "സ്ക്വയർ/റെക്റ്റ് ടു റൗണ്ട്", sh_miter: "മൈറ്റർ ബെൻഡ്", sh_dishend: "ഡിഷ് എൻഡ്", sh_ring: "റിംഗ്", sh_ismb: "ISMB ബീം", sh_ismc: "ISMC ചാനൽ", sh_isa: "ISA ആംഗിൾ",
+                lbl_prof_ref: "പ്രൊഫൈൽ റഫറൻസ്", btn_calc: "കണക്കാക്കി ചേർക്കുക", lbl_current_mass: "നിലവിലെ ഭാരം", lbl_bom: "BOM", btn_clear: "എല്ലാം മായ്ക്കുക", btn_print: "PDF സേവ് ചെയ്യുക", btn_wa: "WhatsApp", th_shape: "ആകൃതി", th_material: "മെറ്റീരിയൽ", th_qty: "അളവ്", th_result: "മൊത്തം ഭാരം", lbl_total: "മൊത്തം അസംബ്ലി:",
+                about_title: "ഈ പ്രോജക്റ്റിനെക്കുറിച്ച്", about_desc: "<p>ഈ ടൂൾകിറ്റ് <strong>സയോൺ ഹസ്ര</strong> വികസിപ്പിച്ചതാണ്. ഫാബ്രിക്കേഷൻ കണക്കുകൂട്ടലുകൾ എളുപ്പമാക്കാനും കൃത്യത വർദ്ധിപ്പിക്കാനും ഇത് സഹായിക്കുന്നു.</p>", about_connect: "ഡെവലപ്പറെ ബന്ധപ്പെടുക",
+                f_len: "നീളം (mm)", f_wid: "വീതി (mm)", f_thk: "കനം (mm)", f_qty: "അളവ്", f_type_plate: "തരം", f_opt_rect: "ചതുരം", f_opt_circ: "വൃത്തം",
+                f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
+                f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
+                f_type_sq2rnd: "തരം", f_opt_square: "സ്ക്വയർ ടു റൗണ്ട്", f_opt_rect_rnd: "റെക്റ്റ് ടു റൗണ്ട്",
+                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ലംബ ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "സെന്റർലൈൻ റേഡിയസ് (R)", f_pieces: "ആകെ കഷണങ്ങൾ (N)"
+            },
+            te: {
+                app_name: "ఫ్యాబ్రికేషన్ <br><span class=\"text-slate-800 dark:text-white\">బరువు కాలిక్యులేటర్</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 యూనిట్ కన్వర్టర్", nav_fab: "⚖️ ఫ్యాబ్రికేషన్ BOM", nav_about: "ℹ️ డెవలపర్ గురించి",
+                lbl_mat_preset: "మెటీరియల్ ప్రీసెట్", lbl_density: "సాంద్రత (kg/m³)", mat_cs: "కార్బన్ స్టీల్ (7850)", mat_ss: "స్టెయిన్లెస్ స్టీల్ (8000)", mat_al: "అల్యూమినియం (2700)", mat_cu: "రాగి (8960)", mat_custom: "కస్టమ్ సాంద్రత",
+                title_converter: "ఖచ్చితమైన పొడవు కన్వర్టర్", lbl_input_val: "ఇన్‌పుట్ విలువ", lbl_from_unit: "నుండి (యూనిట్)", lbl_to_unit: "వరకు (యూనిట్)", lbl_result_meas: "ఫలితం", lbl_fab_profiles: "ఫ్యాబ్రికేషన్ ప్రొఫైల్స్",
+                sh_plate: "ప్లేట్ / బ్లాంక్", sh_hollow: "హాలో విభాగం", sh_solid: "ఘన విభాగం", sh_cone: "కోన్", sh_pyramid: "పిరమిడ్", sh_sq2rnd: "చతురస్రం/దీర్ఘచతురస్రం నుండి వృత్తం", sh_miter: "మైటర్ బెండ్", sh_dishend: "డిష్ ఎండ్", sh_ring: "వృత్తాకార రింగ్", sh_ismb: "ISMB బీమ్", sh_ismc: "ISMC ఛానల్", sh_isa: "ISA యాంగిల్",
+                lbl_prof_ref: "ప్రొఫైల్ రిఫరెన్స్", btn_calc: "లెక్కించి జోడించండి", lbl_current_mass: "ప్రస్తుత భాగం బరువు", lbl_bom: "మెటీరియల్స్ జాబితా (BOM)", btn_clear: "అన్నింటినీ క్లియర్ చేయి", btn_print: "PDF సేవ్ చేయి", btn_wa: "WhatsApp", th_shape: "ఆకారం", th_material: "మెటీరియల్", th_qty: "పరిమాణం", th_result: "మొత్తం బరువు", lbl_total: "మొత్తం అసెంబ్లీ:",
+                about_title: "ఈ ప్రాజెక్ట్ గురించి", about_desc: "<p>ఈ టూల్‌కిట్ <strong>సాయోన్ హజ్రా</strong>చే అభివృద్ధి చేయబడింది. ఫ్యాబ్రికేషన్ లెక్కలను సులభతరం చేయడం దీని ఉద్దేశ్యం.</p>", about_connect: "డెవలపర్‌ను సంప్రదించండి",
+                f_len: "పొడవు (mm)", f_wid: "వెడల్పు (mm)", f_thk: "మందం (mm)", f_qty: "పరిమాణం", f_type_plate: "రకం", f_opt_rect: "దీర్ఘచతురస్రం", f_opt_circ: "వృత్తం",
+                f_type_hollow: "రకం", f_opt_cyl_shell: "సిలిండ్రికల్ షెల్", f_opt_sq_tube: "స్క్వేర్ ట్యూబ్", f_opt_rect_tube: "దీర్ఘచతురస్ర ట్యూబ్", f_type_solid: "రకం", f_opt_sq_bar: "స్క్వేర్ బార్", f_opt_rect_bar: "దీర్ఘచతురస్ర బార్", f_opt_rnd_bar: "రౌండ్ బార్",
+                f_type_cone: "కోన్ రకం", f_opt_trunc: "కత్తిరించిన కోన్", f_opt_full: "పూర్తి కోన్", f_type_pyramid: "పిరమిడ్ రకం", f_opt_trunc_pyr: "కత్తిరించిన పిరమిడ్", f_opt_full_pyr: "పూర్తి పిరమిడ్",
+                f_type_sq2rnd: "రకం", f_opt_square: "స్క్వేర్ టు రౌండ్", f_opt_rect_rnd: "రెక్టాంగిల్ టు రౌండ్",
+                f_od: "వెలుపలి వ్యాసం (OD)", f_id: "లోపలి వ్యాసం (ID)", f_dia: "వ్యాసం (mm)", f_side_a: "సైడ్ A", f_side_b: "సైడ్ B", f_d1: "పై OD (D1)", f_d2: "క్రింది OD (D2)", f_base_od: "బేస్ OD", f_h: "నిలువు ఎత్తు", f_sf: "స్ట్రెయిట్ ఫేస్ (SF)", f_h_sec: "లోతు (h)", f_w_fl: "ఫ్లాంజ్ వెడల్పు (b)", f_tw: "వెబ్ మందం (tw)", f_tf: "ఫ్లాంజ్ మందం (tf)", f_leg_a: "లెగ్ A", f_leg_b: "లెగ్ B", f_base_dim: "బేస్ కొలత (A)", f_top_dim: "పై కొలత (B)", f_base_l: "బేస్ పొడవు", f_base_w: "బేస్ వెడల్పు", f_top_od: "పై రౌండ్ OD", f_bend_ang: "బెండ్ యాంగిల్ (°)", f_bend_rad: "సెంటర్‌లైన్ రేడియస్ (R)", f_pieces: "మొత్తం ముక్కలు (N)"
+            },
+            or: {
+                app_name: "ଫ୍ୟାବ୍ରିକେସନ୍ <br><span class=\"text-slate-800 dark:text-white\">ଓଜନ କାଲକୁଲେଟର</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 ୟୁନିଟ୍ କନଭର୍ଟର", nav_fab: "⚖️ ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_about: "ℹ️ ଡେଭଲପର୍ ବିଷୟରେ",
+                lbl_mat_preset: "ସାମଗ୍ରୀ ପ୍ରିସେଟ୍", lbl_density: "ଘନତ୍ୱ (kg/m³)", mat_cs: "କାର୍ବନ୍ ଷ୍ଟିଲ୍ (7850)", mat_ss: "ଷ୍ଟେନଲେସ୍ ଷ୍ଟିଲ୍ (8000)", mat_al: "ଆଲୁମିନିୟମ୍ (2700)", mat_cu: "ତମ୍ବା (8960)", mat_custom: "କଷ୍ଟମ୍ ଘନତ୍ୱ",
+                title_converter: "ଲମ୍ବ କନଭର୍ଟର", lbl_input_val: "ଇନପୁଟ୍ ମୂଲ୍ୟ", lbl_from_unit: "ରୁ (ୟୁନିଟ୍)", lbl_to_unit: "ପର୍ଯ୍ୟନ୍ତ (ୟୁନିଟ୍)", lbl_result_meas: "ଫଳାଫଳ", lbl_fab_profiles: "ଫ୍ୟାବ୍ରିକେସନ୍ ପ୍ରୋଫାଇଲ୍",
+                sh_plate: "ପ୍ଲେଟ୍ / ବ୍ଲାଙ୍କ୍", sh_hollow: "ଫମ୍ପା ବିଭାଗ (Hollow)", sh_solid: "କଠିନ ବିଭାଗ (Solid)", sh_cone: "ଶଙ୍କୁ (Cone)", sh_pyramid: "ପିରାମିଡ୍ (Pyramid)", sh_sq2rnd: "ବର୍ଗ/ଆୟତକାର ରୁ ଗୋଲ୍", sh_miter: "ମାଇଟର୍ ବେଣ୍ଡ୍", sh_dishend: "ଡିସ୍ ଏଣ୍ଡ୍", sh_ring: "ରିଙ୍ଗ୍", sh_ismb: "ISMB ବିମ୍", sh_ismc: "ISMC ଚ୍ୟାନେଲ୍", sh_isa: "ISA ଆଙ୍ଗେଲ୍",
+                lbl_prof_ref: "ପ୍ରୋଫାଇଲ୍ ରେଫରେନ୍ସ", btn_calc: "ହିସାବ କରନ୍ତୁ", lbl_current_mass: "ବର୍ତ୍ତମାନର ଓଜନ", lbl_bom: "ସାମଗ୍ରୀ ତାଲିକା (BOM)", btn_clear: "ସବୁ ସଫା କରନ୍ତୁ", btn_print: "PDF ସେଭ୍", btn_wa: "WhatsApp", th_shape: "ଆକାର", th_material: "ସାମଗ୍ରୀ", th_qty: "ପରିମାଣ", th_result: "ମୋଟ ଓଜନ", lbl_total: "ମୋଟ ଆସେମ୍ବଲି:",
+                about_title: "ଏହି ପ୍ରୋଜେକ୍ଟ ବିଷୟରେ", about_desc: "<p>ଏହି ଫ୍ୟାବ୍ରିକେସନ୍ ଟୁଲକିଟ୍ <strong>ସାୟୋନ୍ ହାଜରା</strong>ଙ୍କ ଦ୍ୱାରା ପ୍ରସ୍ତୁତ ହୋଇଛି।</p>", about_connect: "ଡେଭଲପରଙ୍କ ସହ ଯୋଗାଯୋଗ କରନ୍ତୁ",
+                f_len: "ଲମ୍ବ (mm)", f_wid: "ପ୍ରସ୍ଥ (mm)", f_thk: "ମୋଟେଇ (mm)", f_qty: "ପରିମାଣ", f_type_plate: "ପ୍ରକାର", f_opt_rect: "ଆୟତକାର", f_opt_circ: "ଗୋଲାକାର",
+                f_type_hollow: "ପ୍ରକାର", f_opt_cyl_shell: "ସିଲିଣ୍ଡ୍ରିକାଲ୍ ସେଲ୍", f_opt_sq_tube: "ବର୍ଗାକାର ଟ୍ୟୁବ୍", f_opt_rect_tube: "ଆୟତକାର ଟ୍ୟୁବ୍", f_type_solid: "ପ୍ରକାର", f_opt_sq_bar: "ବର୍ଗାକାର ବାର୍", f_opt_rect_bar: "ଆୟତକାର ବାର୍", f_opt_rnd_bar: "ରାଉଣ୍ଡ ବାର୍",
+                f_type_cone: "ଶଙ୍କୁ ପ୍ରକାର", f_opt_trunc: "କଟା ଶଙ୍କୁ", f_opt_full: "ପୂର୍ଣ୍ଣ ଶଙ୍କୁ", f_type_pyramid: "ପିରାମିଡ୍ ପ୍ରକାର", f_opt_trunc_pyr: "କଟା ପିରାମିଡ୍", f_opt_full_pyr: "ପୂର୍ଣ୍ଣ ପିରାମିଡ୍",
+                f_type_sq2rnd: "ପ୍ରକାର", f_opt_square: "ବର୍ଗ ରୁ ଗୋଲ୍", f_opt_rect_rnd: "ଆୟତକାର ରୁ ଗୋଲ୍",
+                f_od: "ବାହାର ବ୍ୟାସ (OD)", f_id: "ଭିତର ବ୍ୟାସ (ID)", f_dia: "ବ୍ୟାସ (mm)", f_side_a: "ପାର୍ଶ୍ୱ A", f_side_b: "ପାର୍ଶ୍ୱ B", f_d1: "ଉପର OD (D1)", f_d2: "ତଳ OD (D2)", f_base_od: "ବେସ୍ OD", f_h: "ଉଚ୍ଚତା (mm)", f_sf: "ଷ୍ଟ୍ରେଟ୍ ଫେସ୍ (SF)", f_h_sec: "ଗଭୀରତା (h)", f_w_fl: "ଫ୍ଲାଞ୍ଜ ପ୍ରସ୍ଥ (b)", f_tw: "ୱେବ୍ ମୋଟେଇ (tw)", f_tf: "ଫ୍ଲାଞ୍ଜ ମୋଟେଇ (tf)", f_leg_a: "ଲେଗ୍ A", f_leg_b: "ଲେଗ୍ B", f_base_dim: "ବେସ୍ ପରିମାପ (A)", f_top_dim: "ଉପର ପରିମାପ (B)", f_base_l: "ବେସ୍ ଲମ୍ବ", f_base_w: "ବେସ୍ ପ୍ରସ୍ଥ", f_top_od: "ଉପର ରାଉଣ୍ଡ OD", f_bend_ang: "ବେଣ୍ଡ୍ ଆଙ୍ଗେଲ୍ (°)", f_bend_rad: "ସେଣ୍ଟର୍ ଲାଇନ୍ ରେଡିଅସ୍ (R)", f_pieces: "ମୋଟ ପିସ୍ (N)"
+            },
+            pa: {
+                app_name: "ਫੈਬਰੀਕੇਸ਼ਨ <br><span class=\"text-slate-800 dark:text-white\">ਭਾਰ ਕੈਲਕੁਲੇਟਰ</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 ਯੂਨਿਟ ਕਨਵਰਟਰ", nav_fab: "⚖️ ਫੈਬਰੀਕੇਸ਼ਨ BOM", nav_about: "ℹ️ ਡਿਵੈਲਪਰ ਬਾਰੇ",
+                lbl_mat_preset: "ਸਮੱਗਰੀ ਪ੍ਰੀਸੈਟ", lbl_density: "ਘਣਤਾ (kg/m³)", mat_cs: "ਕਾਰਬਨ ਸਟੀਲ (7850)", mat_ss: "ਸਟੇਨਲੈਸ ਸਟੀਲ (8000)", mat_al: "ਐਲੂਮੀਨੀਅਮ (2700)", mat_cu: "ਤਾਂਬਾ (8960)", mat_custom: "ਕਸਟਮ ਘਣਤਾ",
+                title_converter: "ਲੰਬਾਈ ਕਨਵਰਟਰ", lbl_input_val: "ਇਨਪੁਟ ਮੁੱਲ", lbl_from_unit: "ਤੋਂ (ਯੂਨਿਟ)", lbl_to_unit: "ਤੱਕ (ਯੂਨਿਟ)", lbl_result_meas: "ਨਤੀਜਾ", lbl_fab_profiles: "ਫੈਬਰੀਕੇਸ਼ਨ ਪ੍ਰੋਫਾਈਲ",
+                sh_plate: "ਪਲੇਟ / ਬਲੈਂਕ", sh_hollow: "ਖੋਖਲਾ ਭਾਗ", sh_solid: "ਠੋਸ ਭਾਗ", sh_cone: "ਕੋਨ", sh_pyramid: "ਪਿਰਾਮਿਡ", sh_sq2rnd: "ਸਕੁਏਅਰ/ਰੈਕਟ ਟੂ ਰਾਊਂਡ", sh_miter: "ਮਾਈਟਰ ਬੈਂਡ", sh_dishend: "ਡਿਸ਼ ਐਂਡ", sh_ring: "ਸਰਕੂਲਰ ਰਿੰਗ", sh_ismb: "ISMB ਬੀਮ", sh_ismc: "ISMC ਚੈਨਲ", sh_isa: "ISA ਐਂਗਲ",
+                lbl_prof_ref: "ਪ੍ਰੋਫਾਈਲ ਹਵਾਲਾ", btn_calc: "ਹਿਸਾਬ ਲਗਾਓ", lbl_current_mass: "ਮੌਜੂਦਾ ਭਾਰ", lbl_bom: "ਬਿੱਲ ਆਫ਼ ਮਟੀਰੀਅਲ (BOM)", btn_clear: "ਸਭ ਸਾਫ਼ ਕਰੋ", btn_print: "PDF ਸੇਵ ਕਰੋ", btn_wa: "WhatsApp", th_shape: "ਆਕਾਰ", th_material: "ਸਮੱਗਰੀ", th_qty: "ਮਾਤਰਾ", th_result: "ਕੁੱਲ ਭਾਰ", lbl_total: "ਕੁੱਲ ਅਸੈਂਬਲੀ:",
+                about_title: "ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ", about_desc: "<p>ਇਹ ਫੈਬਰੀਕੇਸ਼ਨ ਟੂਲਕਿੱਟ <strong>ਸਾਇਓਨ ਹਾਜ਼ਰਾ</strong> ਦੁਆਰਾ ਤਿਆਰ ਕੀਤੀ ਗਈ ਹੈ।</p>", about_connect: "ਡਿਵੈਲਪਰ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+                f_len: "ਲੰਬਾਈ (mm)", f_wid: "ਚੌੜਾਈ (mm)", f_thk: "ਮੋਟਾਈ (mm)", f_qty: "ਮਾਤਰਾ", f_type_plate: "ਕਿਸਮ", f_opt_rect: "ਆਇਤਾਕਾਰ", f_opt_circ: "ਗੋਲਾਕਾਰ",
+                f_type_hollow: "ਕਿਸਮ", f_opt_cyl_shell: "ਸਿਲੰਡਰੀਕਲ ਸ਼ੈੱਲ", f_opt_sq_tube: "ਸਕੁਏਅਰ ਟਿਊਬ", f_opt_rect_tube: "ਆਇਤਾਕਾਰ ਟਿਊਬ", f_type_solid: "ਕਿਸਮ", f_opt_sq_bar: "ਸਕੁਏਅਰ ਬਾਰ", f_opt_rect_bar: "ਆਇਤਾਕਾਰ ਬਾਰ", f_opt_rnd_bar: "ਰਾਊਂਡ ਬਾਰ",
+                f_type_cone: "ਕੋਨ ਕਿਸਮ", f_opt_trunc: "ਕੱਟਿਆ ਹੋਇਆ ਕੋਨ", f_opt_full: "ਪੂਰਾ ਕੋਨ", f_type_pyramid: "ਪਿਰਾਮਿਡ ਕਿਸਮ", f_opt_trunc_pyr: "ਕੱਟਿਆ ਹੋਇਆ ਪਿਰਾਮਿਡ", f_opt_full_pyr: "ਪੂਰਾ ਪਿਰਾਮਿਡ",
+                f_type_sq2rnd: "ਕਿਸਮ", f_opt_square: "ਸਕੁਏਅਰ ਟੂ ਰਾਊਂਡ", f_opt_rect_rnd: "ਰੈਕਟੈਂਗਲ ਟੂ ਰਾਊਂਡ",
+                f_od: "ਬਾਹਰੀ ਵਿਆਸ (OD)", f_id: "ਅੰਦਰੂਨੀ ਵਿਆਸ (ID)", f_dia: "ਵਿਆਸ (mm)", f_side_a: "ਸਾਈਡ A", f_side_b: "ਸਾਈਡ B", f_d1: "ਉੱਪਰਲਾ OD (D1)", f_d2: "ਹੇਠਲਾ OD (D2)", f_base_od: "ਬੇਸ OD", f_h: "ਉਚਾਈ (mm)", f_sf: "ਸਿੱਧਾ ਫੇਸ (SF)", f_h_sec: "ਡੂੰਘਾਈ (h)", f_w_fl: "ਫਲੈਂਜ ਚੌੜਾਈ (b)", f_tw: "ਵੈੱਬ ਮੋਟਾਈ (tw)", f_tf: "ਫਲੈਂਜ ਮੋਟਾਈ (tf)", f_leg_a: "ਲੈੱਗ A", f_leg_b: "ਲੈੱਗ B", f_base_dim: "ਬੇਸ ਮਾਪ (A)", f_top_dim: "ਉੱਪਰਲਾ ਮਾਪ (B)", f_base_l: "ਬੇਸ ਲੰਬਾਈ", f_base_w: "ਬੇਸ ਚੌੜਾਈ", f_top_od: "ਉੱਪਰਲਾ ਰਾਊਂਡ OD", f_bend_ang: "ਬੈਂਡ ਐਂਗਲ (°)", f_bend_rad: "ਸੈਂਟਰਲਾਈਨ ਰੇਡੀਅਸ (R)", f_pieces: "ਕੁੱਲ ਪੀਸ (N)"
+            },
+            ur: {
+                app_name: "فیبریکیشن <br><span class=\"text-slate-800 dark:text-white\">وزن کیلکولیٹر</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 یونٹ کنورٹر", nav_fab: "⚖️ فیبریکیشن BOM", nav_about: "ℹ️ ڈیولپر کے بارے میں",
+                lbl_mat_preset: "مواد پریسیٹ", lbl_density: "کثافت (kg/m³)", mat_cs: "کاربن اسٹیل (7850)", mat_ss: "سٹینلیس اسٹیل (8000)", mat_al: "ایلومینیم (2700)", mat_cu: "تانبا (8960)", mat_custom: "اپنی مرضی کی کثافت",
+                title_converter: "لمبائی کنورٹر", lbl_input_val: "ان پٹ ویلیو", lbl_from_unit: "سے (یونٹ)", lbl_to_unit: "تک (یونٹ)", lbl_result_meas: "نتیجہ", lbl_fab_profiles: "فیبریکیشن پروفائلز",
+                sh_plate: "پلیٹ / بلینک", sh_hollow: "کھوکھلا حصہ", sh_solid: "ٹھوس حصہ", sh_cone: "کون (Cone)", sh_pyramid: "اہرام (Pyramid)", sh_sq2rnd: "مربع/مستطیل سے گول", sh_miter: "مائٹر بینڈ", sh_dishend: "ڈش اینڈ", sh_ring: "رنگ", sh_ismb: "ISMB بیم", sh_ismc: "ISMC چینل", sh_isa: "ISA اینگل",
+                lbl_prof_ref: "پروفائل کا حوالہ", btn_calc: "حساب کریں", lbl_current_mass: "موجودہ وزن", lbl_bom: "بل آف میٹریلز (BOM)", btn_clear: "سب صاف کریں", btn_print: "PDF محفوظ کریں", btn_wa: "WhatsApp", th_shape: "شکل", th_material: "مواد", th_qty: "مقدار", th_result: "کل وزن", lbl_total: "کل اسمبلی:",
+                about_title: "اس پروجیکٹ کے بارے میں", about_desc: "<p>یہ فیبریکیشن ٹول کٹ <strong>سایون ہاجرا</strong> نے تیار کی ہے۔</p>", about_connect: "ڈیولپر سے رابطہ کریں",
+                f_len: "لمبائی (mm)", f_wid: "چوڑائی (mm)", f_thk: "موٹائی (mm)", f_qty: "مقدار", f_type_plate: "قسم", f_opt_rect: "مستطیل", f_opt_circ: "گول",
+                f_type_hollow: "قسم", f_opt_cyl_shell: "سلنڈریکل شیل", f_opt_sq_tube: "مربع ٹیوب", f_opt_rect_tube: "مستطیل ٹیوب", f_type_solid: "قسم", f_opt_sq_bar: "مربع بار", f_opt_rect_bar: "مستطیل بار", f_opt_rnd_bar: "گول بار",
+                f_type_cone: "کون کی قسم", f_opt_trunc: "کٹا ہوا کون", f_opt_full: "مکمل کون", f_type_pyramid: "اہرام کی قسم", f_opt_trunc_pyr: "کٹا ہوا اہرام", f_opt_full_pyr: "مکمل اہرام",
+                f_type_sq2rnd: "قسم", f_opt_square: "مربع سے گول", f_opt_rect_rnd: "مستطیل سے گول",
+                f_od: "بیرونی قطر (OD)", f_id: "اندرونی قطر (ID)", f_dia: "قطر (mm)", f_side_a: "سائیڈ A", f_side_b: "سائیڈ B", f_d1: "اوپری OD (D1)", f_d2: "نچلا OD (D2)", f_base_od: "بیس OD", f_h: "اونچائی (mm)", f_sf: "سیدھا چہرہ (SF)", f_h_sec: "گہرائی (h)", f_w_fl: "فلینج کی چوڑائی (b)", f_tw: "ویب کی موٹائی (tw)", f_tf: "فلینج کی موٹائی (tf)", f_leg_a: "لیگ A", f_leg_b: "لیگ B", f_base_dim: "بیس کی پیمائش (A)", f_top_dim: "اوپری پیمائش (B)", f_base_l: "بیس کی لمبائی", f_base_w: "بیس کی چوڑائی", f_top_od: "اوپری گول OD", f_bend_ang: "بینڈ اینگل (°)", f_bend_rad: "سینٹرلائن ریڈیس (R)", f_pieces: "کل ٹکڑے (N)"
+            },
+            as: {
+                app_name: "ফেব্ৰিকেচন <br><span class=\"text-slate-800 dark:text-white\">ওজন কেলকুলেটৰ</span>", app_version: "VERSION 4.0 PWA",
+                nav_units: "📏 একক ৰূপান্তৰকাৰী", nav_fab: "⚖️ ফেব্ৰিকেচন BOM", nav_about: "ℹ️ ডেভেলপাৰৰ বিষয়ে",
+                lbl_mat_preset: "উপাদান প্ৰিছেট", lbl_density: "ঘনত্ব (kg/m³)", mat_cs: "কাৰ্বন ষ্টীল (7850)", mat_ss: "ষ্টেইনলেছ ষ্টীল (8000)", mat_al: "এলুমিনিয়াম (2700)", mat_cu: "তাম (8960)", mat_custom: "কাষ্টম ঘনত্ব",
+                title_converter: "দৈৰ্ঘ্য ৰূপান্তৰকাৰী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "পৰা (একক)", lbl_to_unit: "লৈ (একক)", lbl_result_meas: "ফলাফল পৰিমাপ", lbl_fab_profiles: "ফেব্ৰিকেচন প্ৰোফাইল",
+                sh_plate: "প্লেট / ব্লেংক", sh_hollow: "ফোঁপোলা অংশ", sh_solid: "গোটা অংশ", sh_cone: "শংকু (Cone)", sh_pyramid: "পিৰামিড (Pyramid)", sh_sq2rnd: "স্কোৱাৰ/ৰেক্ট টু ৰাউণ্ড", sh_miter: "মাইটৰ বেণ্ড", sh_dishend: "ডিছ এণ্ড", sh_ring: "বৃত্তাকাৰ ৰিং", sh_ismb: "ISMB বীম", sh_ismc: "ISMC চেনেল", sh_isa: "ISA এংগেল",
+                lbl_prof_ref: "প্ৰোফাইল ৰেফাৰেন্স", btn_calc: "হিচাপ কৰক", lbl_current_mass: "বৰ্তমান ওজন", lbl_bom: "উপাদানৰ তালিকা (BOM)", btn_clear: "সকলো মচি পেলাওক", btn_print: "PDF চেভ", btn_wa: "WhatsApp", th_shape: "আকাৰ", th_material: "উপাদান", th_qty: "পৰিমাণ", th_result: "মুঠ ওজন", lbl_total: "মুঠ এছেম্বলি:",
+                about_title: "এই প্ৰকল্পৰ বিষয়ে", about_desc: "<p>এই ফেব্ৰিকেচন টুলকিটটো <strong>সায়ন হাজৰা</strong> দ্বাৰা বিকশিত কৰা হৈছে।</p>", about_connect: "ডেভেলপাৰৰ সৈতে সংযোগ কৰক",
+                f_len: "দৈৰ্ঘ্য (mm)", f_wid: "প্ৰস্থ (mm)", f_thk: "ডাঠ (mm)", f_qty: "পৰিমাণ", f_type_plate: "প্ৰকাৰ", f_opt_rect: "আয়তাকাৰ", f_opt_circ: "গোলাকাৰ",
+                f_type_hollow: "প্ৰকাৰ", f_opt_cyl_shell: "চিলিণ্ড্ৰিকেল শ্বেল", f_opt_sq_tube: "স্কোৱাৰ টিউব", f_opt_rect_tube: "আয়তাকাৰ টিউব", f_type_solid: "প্ৰকাৰ", f_opt_sq_bar: "স্কোৱাৰ বাৰ", f_opt_rect_bar: "আয়তাকাৰ বাৰ", f_opt_rnd_bar: "ৰাউণ্ড বাৰ",
+                f_type_cone: "শংকু প্ৰকাৰ", f_opt_trunc: "কটা শংকু", f_opt_full: "সম্পূৰ্ণ শংকু", f_type_pyramid: "পিৰামিড প্ৰকাৰ", f_opt_trunc_pyr: "কটা পিৰামিড", f_opt_full_pyr: "সম্পূৰ্ণ পিৰামিড",
+                f_type_sq2rnd: "প্ৰকাৰ", f_opt_square: "স্কোৱাৰ টু ৰাউণ্ড", f_opt_rect_rnd: "ৰেক্ট টু ৰাউণ্ড",
+                f_od: "বাহিৰৰ ব্যাস (OD)", f_id: "ভিতৰৰ ব্যাস (ID)", f_dia: "ব্যাস (mm)", f_side_a: "কাষ A", f_side_b: "কাষ B", f_d1: "ওপৰৰ OD (D1)", f_d2: "তলৰ OD (D2)", f_base_od: "বেচ OD", f_h: "উচ্চতা (mm)", f_sf: "ষ্ট্ৰেইট ফেচ (SF)", f_h_sec: "গভীৰতা (h)", f_w_fl: "ফ্লেঞ্জ প্ৰস্থ (b)", f_tw: "ৱেব ডাঠ (tw)", f_tf: "ফ্লেঞ্জ ডাঠ (tf)", f_leg_a: "লেগ A", f_leg_b: "লেগ B", f_base_dim: "বেচ পৰিমাপ (A)", f_top_dim: "ওপৰৰ পৰিমাপ (B)", f_base_l: "বেচ দৈৰ্ঘ্য", f_base_w: "বেচ প্ৰস্থ", f_top_od: "ওপৰৰ ৰাউণ্ড OD", f_bend_ang: "বেণ্ড এংগেল (°)", f_bend_rad: "চেণ্টাৰলাইন ৰেডিয়াছ (R)", f_pieces: "মুঠ টুকুৰা (N)"
             }
         };
 
@@ -374,6 +426,13 @@
         
         function changeLanguage() {
             currentLang = document.getElementById('langToggle').value;
+            
+            // RTL handling for Urdu so the text flows correctly without breaking Tailwind
+            if(currentLang === 'ur') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
             
             // Save preference to LocalStorage
             localStorage.setItem('salap_lang', currentLang);
@@ -414,22 +473,18 @@
         }
 
         function switchMainTab(tab) {
-            // Hide/Show main content sections
             document.getElementById('section-units').classList.toggle('hidden', tab !== 'units');
             document.getElementById('section-weight').classList.toggle('hidden', tab !== 'weight');
             document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
             
-            // Hide/Show Material Preset depending on whether the BOM tab is active
             document.getElementById('material-preset-section').classList.toggle('hidden', tab !== 'weight');
             
-            // Update Active Styling on Sidebar Buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
             document.getElementById('nav-' + tab).classList.add('active-tab');
             
             if(tab === 'weight') loadShape(activeShape);
         }
 
-        // --- Extracted Helpers ---
         const factors = { mm: 1, cm: 10, m: 1000, in: 25.4, ft: 304.8 };
         function convert() {
             const val = parseFloat(document.getElementById('uInput').value) || 0;
@@ -451,19 +506,14 @@
             errorElementIds.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('error-border'); });
         }
 
-        // ==========================================
-        // SECTION: WEIGHT BOM ESTIMATOR
-        // ==========================================
         let totalAssemblyWeight = 0;
         let activeShape = 'plate';
 
         function togglePlateInputs() {
             const type = document.getElementById('inp_plate_type').value;
-            // Explicitly force style.display instead of Tailwind's hidden class
             document.getElementById('wrap_L').style.display = type === 'rect' ? 'flex' : 'none';
             document.getElementById('wrap_W').style.display = type === 'rect' ? 'flex' : 'none';
             document.getElementById('wrap_OD').style.display = type === 'circle' ? 'flex' : 'none';
-            
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'rect' ? 'plate-ref.jpg' : 'circle-ref.jpg'}" onerror="this.src='https://placehold.co/300x200?text=${type.toUpperCase()}'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal">`;
         }
 
@@ -739,14 +789,13 @@
             document.getElementById('wResult').innerHTML = `0.000 <span class="text-xl text-slate-400 font-sans">kg</span>`; 
         }
 
-        // --- WhatsApp Share Feature ---
         function shareWhatsApp() {
             if (totalAssemblyWeight === 0) {
-                alert(currentLang === 'bn' ? "বিওএম খালি। আগে উপাদান যোগ করুন।" : "BOM is empty. Please add items first.");
+                alert("BOM is empty. Please add items first.");
                 return;
             }
 
-            let text = currentLang === 'bn' ? "*প্রজেক্ট বিওএম (BOM):*\n\n" : "*Project BOM:*\n\n";
+            let text = "*Project BOM:*\n\n";
             const rows = document.querySelectorAll('#historyBody tr');
             
             rows.forEach((row, index) => {
@@ -758,27 +807,23 @@
                 text += `${index + 1}. ${shape} | ${mat} | ${qty} | ${weight}\n`;
             });
 
-            text += currentLang === 'bn' ? `\n*মোট ওজন:* ${totalAssemblyWeight.toFixed(3)} kg` : `\n*Total Weight:* ${totalAssemblyWeight.toFixed(3)} kg`;
-            
+            text += `\n*Total Weight:* ${totalAssemblyWeight.toFixed(3)} kg`;
             const encodedText = encodeURIComponent(text);
             window.open(`https://wa.me/?text=${encodedText}`, '_blank');
         }
 
-        // --- Memory / LocalStorage Initialization ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Apply saved theme
             const savedTheme = localStorage.getItem('salap_theme');
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
                 document.getElementById('theme-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
             }
             
-            // Apply saved language
             const savedLang = localStorage.getItem('salap_lang');
-            if (savedLang === 'en' || savedLang === 'bn') {
+            if (savedLang) {
                 currentLang = savedLang;
                 document.getElementById('langToggle').value = currentLang;
-                changeLanguage(); // This automatically triggers loadShape()
+                changeLanguage(); 
             } else {
                 loadShape('plate'); 
             }
