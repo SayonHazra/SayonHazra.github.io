@@ -24,7 +24,7 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: '#2563eb', // Standard Blue-600
+                        brand: 'rgb(var(--brand-rgb) / <alpha-value>)',
                     },
                     fontFamily: {
                         sans: ['Inter', '"Hind Siliguri"', 'sans-serif'],
@@ -34,12 +34,16 @@
         }
     </script>
     <style type="text/tailwindcss">
+        :root {
+            --brand-rgb: 37 99 235; 
+        }
+        
         body { 
             background-color: #f8fafc; 
+            transition: background-image 0.5s ease-in-out;
         }
         html.dark body { background-color: #0f172a; }
         
-        /* Smooth window entrance animation */
         .animate-tab { animation: windowPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes windowPop { 
             0% { opacity: 0; transform: scale(0.96) translateY(15px); } 
@@ -54,8 +58,7 @@
         input, select { @apply p-3 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 leading-relaxed; }
         input[readonly] { @apply bg-slate-100/50 dark:bg-slate-900/30 text-slate-500 dark:text-slate-500 cursor-not-allowed border-transparent dark:border-transparent focus:ring-0; }
         
-        /* UI styles for the square shape boxes */
-        .shape-btn-active { @apply border-brand bg-blue-50 text-brand dark:bg-blue-900/30 dark:text-blue-400 scale-95 shadow-inner; }
+        .shape-btn-active { @apply border-brand bg-brand/10 text-brand dark:bg-brand/20 dark:text-brand scale-95 shadow-inner; }
         .error-border { @apply border-red-500 focus:ring-red-400 dark:border-red-500; }
         select option { font-family: 'Inter', 'Hind Siliguri', sans-serif; background-color: #fff; color: #000; }
         html.dark select option { background-color: #1e293b; color: #fff; }
@@ -65,6 +68,7 @@
 
     <div class="flex flex-col md:flex-row min-h-screen relative z-10">
         
+        <!-- Minimal Sidebar -->
         <nav class="w-full md:w-72 glass-panel shadow-2xl z-20 transition-all duration-300 flex flex-col print:hidden">
             <div class="p-6 flex flex-col items-center md:items-start cursor-pointer hover:opacity-80 transition-opacity" onclick="switchMainTab('home')" title="Go to Dashboard">
                 <div class="text-center md:text-left">
@@ -95,13 +99,14 @@
 
         <main class="flex-1 p-4 md:p-8 lg:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto print:p-0 relative">
             
+            <!-- SECTION 0: HOME DASHBOARD -->
             <div id="section-home" class="max-w-5xl mx-auto space-y-6 print:hidden animate-tab">
                 <div class="glass-panel rounded-3xl p-8 md:p-12 transition-colors border border-white/40 dark:border-slate-600/30">
-                    <h2 id="welcomeTitle" class="text-3xl md:text-5xl font-black mb-3 text-slate-900 dark:text-white tracking-tight">Welcome to the Toolkit</h2>
+                    <h2 id="welcomeTitle" class="text-3xl md:text-5xl font-black mb-3 text-slate-900 dark:text-white tracking-tight">Welcome</h2>
                     <p class="text-slate-500 dark:text-slate-400 mb-10 text-lg font-medium" data-i18n="welcome_sub">Select a module below to get started.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div onclick="switchMainTab('weight')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-300 ease-out group">
+                        <div onclick="switchMainTab('weight')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
                             </div>
@@ -109,7 +114,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_fab">Calculate weights for plates, pipes, and profiles.</p>
                         </div>
                         
-                        <div onclick="switchMainTab('units')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-300 ease-out group">
+                        <div onclick="switchMainTab('units')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
                             </div>
@@ -117,7 +122,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_unit">Convert length measurements quickly.</p>
                         </div>
 
-                        <div onclick="switchMainTab('settings')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-300 ease-out group">
+                        <div onclick="switchMainTab('settings')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             </div>
@@ -128,15 +133,20 @@
                 </div>
             </div>
 
+            <!-- SECTION 1: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
                 <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline print:hidden transition-transform hover:-translate-x-1" data-i18n="btn_back">⬅ Back to Dashboard</button>
                 
+                <!-- PDF / Print Header -->
                 <div class="hidden print:block text-center mb-8 border-b-2 border-slate-800 pb-4">
-                    <h1 class="text-4xl font-black text-slate-900 tracking-tighter">FABRICATION WEIGHT CALCULATOR</h1>
-                    <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Project Bill of Materials</p>
+                    <h1 id="printCompanyName" class="text-4xl font-black text-slate-900 tracking-tighter uppercase">FABRICATION WEIGHT CALCULATOR</h1>
+                    <h2 id="printCompanyAddr" class="text-lg font-bold text-slate-700 mt-1 hidden"></h2>
+                    <p id="printCompanyContact" class="text-sm font-semibold text-slate-600 mt-1 hidden"></p>
+                    <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-2">Project Bill of Materials</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Sidebar Profiles -->
                     <div class="lg:col-span-3 print:hidden">
                         <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter" data-i18n="lbl_fab_profiles">Fabrication Profiles</p>
                         
@@ -145,57 +155,46 @@
                                 <img src="icon-plate.jpg" onerror="this.src='plate-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Plate">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_plate">Plate</span>
                             </button>
-                            
                             <button onclick="loadShape('hollow')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-hollow.jpg" onerror="this.src='shell-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Hollow">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_hollow">Hollow</span>
                             </button>
-                            
                             <button onclick="loadShape('solid')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-solid.jpg" onerror="this.src='sq_bar-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Solid">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_solid">Solid</span>
                             </button>
-                            
                             <button onclick="loadShape('cone')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-cone.jpg" onerror="this.src='frustum-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Cone">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_cone">Cone</span>
                             </button>
-                            
                             <button onclick="loadShape('pyramid')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-pyramid.jpg" onerror="this.src='trunc_pyr-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Pyramid">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_pyramid">Pyramid</span>
                             </button>
-                            
                             <button onclick="loadShape('sq2rnd')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-sq2rnd.jpg" onerror="this.src='sq2rnd-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Sq2Rnd">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_sq2rnd">Sq to Rnd</span>
                             </button>
-                            
                             <button onclick="loadShape('miter')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-miter.jpg" onerror="this.src='miter-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Miter">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_miter">Miter</span>
                             </button>
-                            
                             <button onclick="loadShape('dishend')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-dishend.jpg" onerror="this.src='dishend-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Dish">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_dishend">Dish End</span>
                             </button>
-                            
                             <button onclick="loadShape('ring')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-ring.jpg" onerror="this.src='ring-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Ring">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ring">Ring</span>
                             </button>
-                            
                             <button onclick="loadShape('ismb')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-ismb.jpg" onerror="this.src='ismb-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISMB">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ismb">ISMB</span>
                             </button>
-                            
                             <button onclick="loadShape('ismc')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-ismc.jpg" onerror="this.src='ismc-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISMC">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ismc">ISMC</span>
                             </button>
-                            
                             <button onclick="loadShape('isa')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
                                 <img src="icon-isa.jpg" onerror="this.src='isa-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISA">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_isa">ISA Angle</span>
@@ -203,6 +202,7 @@
                         </div>
                     </div>
 
+                    <!-- Main Content Area -->
                     <div class="lg:col-span-9 space-y-6 print:space-y-2">
                         <div class="glass-panel rounded-2xl p-8 transition-colors duration-200 print:hidden print:border-none print:shadow-none">
                             <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-brand uppercase italic">Steel Plate</h2>
@@ -225,6 +225,7 @@
                             </div>
                         </div>
 
+                        <!-- BOM Table Area -->
                         <div class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200 print:border-none print:shadow-none print:bg-transparent">
                             <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 print:bg-transparent print:border-b-2 print:border-slate-800 border-b border-slate-200 dark:border-slate-700/50 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
@@ -265,6 +266,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 2: Unit Converter -->
             <div id="section-units" class="hidden max-w-4xl mx-auto">
                 <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline print:hidden transition-transform hover:-translate-x-1" data-i18n="btn_back">⬅ Back to Dashboard</button>
                 
@@ -303,6 +305,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 3: Settings -->
             <div id="section-settings" class="hidden max-w-3xl mx-auto space-y-8 print:hidden">
                 <button onclick="switchMainTab('home')" class="mb-2 text-brand font-bold text-sm flex items-center gap-2 hover:underline print:hidden transition-transform hover:-translate-x-1" data-i18n="btn_back">⬅ Back to Dashboard</button>
 
@@ -310,11 +313,13 @@
                     <h2 class="text-3xl font-black mb-8 text-slate-900 dark:text-white uppercase tracking-tighter" data-i18n="nav_settings">Settings</h2>
                     
                     <div class="space-y-8">
+                        <!-- User Name -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_username">Your Name</label>
                             <input type="text" id="prefName" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="Enter your name...">
                         </div>
 
+                        <!-- Language -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_lang">App Language</label>
                             <select id="prefLang" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50">
@@ -331,6 +336,7 @@
                             </select>
                         </div>
 
+                        <!-- Theme -->
                         <div>
                             <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_theme">App Theme</label>
                             <select id="prefTheme" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50">
@@ -340,6 +346,28 @@
                             </select>
                         </div>
 
+                        <!-- PDF Branding -->
+                        <div class="pt-6 border-t border-slate-200 dark:border-slate-700/50">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2" data-i18n="lbl_branding">PDF & Export Branding</h3>
+                            <p class="text-xs text-slate-500 mb-4" data-i18n="desc_branding">These details will appear on your PDF exports and WhatsApp messages.</p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_comp_name">Company Name</label>
+                                    <input type="text" id="prefCompName" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="e.g. United Fabricators">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_comp_addr">Address / Subtitle</label>
+                                    <input type="text" id="prefCompAddr" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="e.g. Salap, Howrah">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_comp_contact">Contact Number</label>
+                                    <input type="text" id="prefCompContact" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="e.g. +91 9876543210">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save Button -->
                         <div class="pt-6 flex items-center border-t border-slate-200 dark:border-slate-700/50 mt-8">
                             <button onclick="savePreferences()" class="w-full max-w-md px-6 py-4 bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-xl shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all flex items-center justify-center gap-2">
                                 💾 <span data-i18n="btn_save_settings">Save Settings</span>
@@ -349,6 +377,7 @@
                     </div>
                 </div>
 
+                <!-- About Developer Card -->
                 <div class="glass-panel rounded-2xl p-8 md:p-10 mt-8">
                     <h3 class="text-xl font-black mb-4 text-slate-900 dark:text-white" data-i18n="about_title">About This Project</h3>
                     <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="about_desc">
@@ -384,6 +413,7 @@
                 lbl_prof_ref: "Profile Reference", btn_calc: "CALCULATE & ADD", lbl_current_mass: "Current Part Mass", lbl_bom: "Bill of Materials (BOM)", btn_clear: "Clear All", btn_print: "Save PDF", btn_wa: "WhatsApp", th_shape: "Shape", th_material: "Material", th_qty: "Qty", th_result: "Result Mass", lbl_total: "TOTAL ASSEMBLY:",
                 about_title: "About This Project", about_desc: "<p>This fabrication toolkit was developed by <strong>Sayon Hazra</strong> as a comprehensive solution for modern engineering workflows.</p><p class='mt-3 text-brand font-bold'>This is a 100% free application designed to support the fabrication community.</p>", about_connect: "Connect on YouTube",
                 lbl_username: "Your Name", lbl_theme: "App Theme", lbl_lang: "App Language", theme_system: "System Default", theme_light: "Light Mode", theme_dark: "Dark Mode", btn_save_settings: "Save Settings", msg_saved: "Settings Saved!",
+                lbl_branding: "PDF & Export Branding", lbl_comp_name: "Company Name", lbl_comp_addr: "Address / Subtitle", lbl_comp_contact: "Contact Number", desc_branding: "These details will appear on your PDF exports and WhatsApp messages.",
                 f_len: "Length (mm)", f_wid: "Width (mm)", f_thk: "Thickness (mm)", f_qty: "Quantity", f_type_plate: "Profile Type", f_opt_rect: "Rectangular (Flat Plate)", f_opt_circ: "Circular (Blank/Disc)",
                 f_type_hollow: "Section Type", f_opt_cyl_shell: "Cylindrical Shell", f_opt_sq_tube: "Square Tube", f_opt_rect_tube: "Rectangular Tube", f_type_solid: "Section Type", f_opt_sq_bar: "Square Bar", f_opt_rect_bar: "Rectangular Bar", f_opt_rnd_bar: "Round Bar",
                 f_type_cone: "Cone Type", f_opt_trunc: "Truncated Cone", f_opt_full: "Full Cone", f_type_pyramid: "Pyramid Type", f_opt_trunc_pyr: "Truncated Pyramid", f_opt_full_pyr: "Full Pyramid",
@@ -401,6 +431,7 @@
                 lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন", lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp", th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:",
                 about_title: "প্রকল্প সম্পর্কে", about_desc: "<p>আধুনিক ইঞ্জিনিয়ারিং কাজের সুবিধার্থে এই ফ্যাব্রিকেশন টুলকিটটি তৈরি করেছেন <strong>সায়ন হাজরা</strong>।</p><p class='mt-3 text-brand font-bold'>ফ্যাব্রিকেশন সম্প্রদায়কে সমর্থন করার জন্য এটি একটি ১০০% বিনামূল্যের অ্যাপ্লিকেশন।</p>", about_connect: "যোগাযোগ করুন",
                 lbl_username: "আপনার নাম", lbl_theme: "অ্যাপ থিম", lbl_lang: "অ্যাপ ভাষা", theme_system: "সিস্টেম ডিফল্ট", theme_light: "লাইট মোড", theme_dark: "ডার্ক মোড", btn_save_settings: "সেটিংস সেভ করুন", msg_saved: "সেভ করা হয়েছে!",
+                lbl_branding: "পিডিএফ এবং এক্সপোর্ট ব্র্যান্ডিং", lbl_comp_name: "কোম্পানির নাম", lbl_comp_addr: "ঠিকানা / সাবটাইটেল", lbl_comp_contact: "যোগাযোগের নম্বর", desc_branding: "এই বিবরণগুলি আপনার PDF এবং WhatsApp মেসেজে দেখানো হবে।",
                 f_len: "দৈর্ঘ্য (mm)", f_wid: "প্রস্থ (mm)", f_thk: "পুরুত্ব (mm)", f_qty: "পরিমাণ", f_type_plate: "প্রোফাইলের ধরন", f_opt_rect: "আয়তক্ষেত্রাকার", f_opt_circ: "গোলাকার",
                 f_type_hollow: "ফাঁপার ধরন", f_opt_cyl_shell: "নলাকার শেল", f_opt_sq_tube: "স্কয়ার টিউব", f_opt_rect_tube: "রেক্ট্যাঙ্গুলার টিউব", f_type_solid: "নিটোল ধরন", f_opt_sq_bar: "স্কয়ার বার", f_opt_rect_bar: "রেক্ট্যাঙ্গুলার বার", f_opt_rnd_bar: "রাউন্ড বার",
                 f_type_cone: "শঙ্কুর ধরন", f_opt_trunc: "ট্রাঙ্কেটেড শঙ্কু", f_opt_full: "ফুল শঙ্কু", f_type_pyramid: "পিরামিডের ধরন", f_opt_trunc_pyr: "ট্রাঙ্কেটেড পিরামিড", f_opt_full_pyr: "ফুল পিরামিড",
@@ -418,6 +449,7 @@
                 lbl_prof_ref: "प्रोफाइल संदर्भ", btn_calc: "गणना करें और जोड़ें", lbl_current_mass: "वर्तमान भाग का वजन", lbl_bom: "सामग्री का बिल (BOM)", btn_clear: "सभी मिटाएं", btn_print: "PDF सहेजें", btn_wa: "WhatsApp", th_shape: "आकार", th_material: "सामग्री", th_qty: "मात्रा", th_result: "कुल वजन", lbl_total: "कुल असेंबली:",
                 about_title: "इस प्रोजेक्ट के बारे में", about_desc: "<p>इस फैब्रिकेशन टूलकिट को <strong>सायोन हाजरा</strong> द्वारा आधुनिक इंजीनियरिंग वर्कफ्लो के लिए विकसित किया गया था।</p><p class='mt-3 text-brand font-bold'>फैब्रिकेशन समुदाय का समर्थन करने के लिए यह 100% मुफ्त एप्लिकेशन है।</p>", about_connect: "संपर्क करें",
                 lbl_username: "आपका नाम", lbl_theme: "ऐप थीम", lbl_lang: "ऐप भाषा", theme_system: "सिस्टम डिफ़ॉल्ट", theme_light: "लाइट मोड", theme_dark: "डार्क मोड", btn_save_settings: "सेटिंग्स सहेजें", msg_saved: "सहेजा गया!",
+                lbl_branding: "पीडीएफ और एक्सपोर्ट ब्रांडिंग", lbl_comp_name: "कंपनी का नाम", lbl_comp_addr: "पता / उपशीर्षक", lbl_comp_contact: "संपर्क नंबर", desc_branding: "ये विवरण आपके PDF और WhatsApp संदेशों पर दिखाई देंगे।",
                 f_len: "लंबाई (mm)", f_wid: "चौड़ाई (mm)", f_thk: "मोटाई (mm)", f_qty: "मात्रा", f_type_plate: "प्रोफाइल प्रकार", f_opt_rect: "आयताकार", f_opt_circ: "गोलाकार",
                 f_type_hollow: "अनुभाग प्रकार", f_opt_cyl_shell: "सिलिंड्रिकल शेल", f_opt_sq_tube: "स्क्वायर ट्यूब", f_opt_rect_tube: "आयताकार ट्यूब", f_type_solid: "अनुभाग प्रकार", f_opt_sq_bar: "स्क्वायर बार", f_opt_rect_bar: "आयताकार बार", f_opt_rnd_bar: "राउंड बार",
                 f_type_cone: "शंकु प्रकार", f_opt_trunc: "कटा हुआ शंकु", f_opt_full: "पूर्ण शंकु", f_type_pyramid: "पिरामिड प्रकार", f_opt_trunc_pyr: "कटा हुआ पिरामिड", f_opt_full_pyr: "पूर्ण पिरामिड",
@@ -435,6 +467,7 @@
                 lbl_prof_ref: "விவரக் குறிப்பு", btn_calc: "கணக்கிட்டு சேர்க்கவும்", lbl_current_mass: "தற்போதைய எடை", lbl_bom: "பொருட்களின் பட்டியல் (BOM)", btn_clear: "அனைத்தையும் அழி", btn_print: "PDF சேமி", btn_wa: "WhatsApp", th_shape: "வடிவம்", th_material: "பொருள்", th_qty: "அளவு", th_result: "மொத்த எடை", lbl_total: "மொத்த அசெம்பிளி:",
                 about_title: "இந்த திட்டம் பற்றி", about_desc: "<p>இந்த ஃபேப்ரிகேஷன் டூல்கிட் <strong>சயோன் ஹாஸ்ராவால்</strong> உருவாக்கப்பட்டது.</p><p class='mt-3 text-brand font-bold'>இது ஃபேப்ரிகேஷன் சமூகத்தை ஆதரிப்பதற்காக வடிவமைக்கப்பட்ட 100% இலவச செயலி.</p>", about_connect: "தொடர்பு கொள்ள",
                 lbl_username: "உங்கள் பெயர்", lbl_theme: "பயன்பாட்டு தீம்", lbl_lang: "பயன்பாட்டு மொழி", theme_system: "சிஸ்டம்", theme_light: "லைட்", theme_dark: "டார்க்", btn_save_settings: "அமைப்புகளைச் சேமி", msg_saved: "சேமிக்கப்பட்டது!",
+                lbl_branding: "PDF மற்றும் ஏற்றுமதி பிராண்டிங்", lbl_comp_name: "நிறுவனத்தின் பெயர்", lbl_comp_addr: "முகவரி / துணைத்தலைப்பு", lbl_comp_contact: "தொடர்பு எண்", desc_branding: "இந்த விவரங்கள் உங்கள் PDF மற்றும் WhatsApp செய்திகளில் தோன்றும்.",
                 f_len: "நீளம் (mm)", f_wid: "அகலம் (mm)", f_thk: "தடிமன் (mm)", f_qty: "அளவு", f_type_plate: "வகை", f_opt_rect: "செவ்வகம்", f_opt_circ: "வட்டம்",
                 f_type_hollow: "வகை", f_opt_cyl_shell: "உருளை ஷெல்", f_opt_sq_tube: "சதுர குழாய்", f_opt_rect_tube: "செவ்வக குழாய்", f_type_solid: "வகை", f_opt_sq_bar: "சதுர பார்", f_opt_rect_bar: "செவ்வக பார்", f_opt_rnd_bar: "வட்ட பார்",
                 f_type_cone: "கூம்பு வகை", f_opt_trunc: "வெட்டப்பட்ட கூம்பு", f_opt_full: "முழு கூம்பு", f_type_pyramid: "பிரமிடு வகை", f_opt_trunc_pyr: "வெட்டப்பட்ட பிரமிடு", f_opt_full_pyr: "முழு பிரமிடு",
@@ -452,6 +485,7 @@
                 lbl_prof_ref: "പ്രൊഫൈൽ റഫറൻസ്", btn_calc: "കണക്കാക്കി ചേർക്കുക", lbl_current_mass: "നിലവിലെ ഭാരം", lbl_bom: "BOM", btn_clear: "എല്ലാം മായ്ക്കുക", btn_print: "PDF സേവ് ചെയ്യുക", btn_wa: "WhatsApp", th_shape: "ആകൃതി", th_material: "മെറ്റീരിയൽ", th_qty: "അളവ്", th_result: "മൊത്തം ഭാരം", lbl_total: "മൊത്തം അസംബ്ലി:",
                 about_title: "ഈ പ്രോജക്റ്റിനെക്കുറിച്ച്", about_desc: "<p>ഈ ടൂൾകിറ്റ് <strong>സയോൺ ഹസ്ര</strong> വികസിപ്പിച്ചതാണ്.</p><p class='mt-3 text-brand font-bold'>ഫാബ്രിക്കേഷൻ കമ്മ്യൂണിറ്റിയെ പിന്തുണയ്ക്കുന്നതിനായി രൂപകൽപ്പന ചെയ്ത 100% സൗജന്യ ആപ്ലിക്കേഷനാണിത്.</p>", about_connect: "ബന്ധപ്പെടുക",
                 lbl_username: "നിങ്ങളുടെ പേര്", lbl_theme: "ആപ്പ് തീം", lbl_lang: "ഭാഷ", theme_system: "സിസ്റ്റം", theme_light: "ലൈറ്റ്", theme_dark: "ഡാർക്ക്", btn_save_settings: "ക്രമീകരണങ്ങൾ സംരക്ഷിക്കുക", msg_saved: "സംരക്ഷിച്ചു!",
+                lbl_branding: "PDF & എക്‌സ്‌പോർട്ട് ബ്രാൻഡിംഗ്", lbl_comp_name: "കമ്പനിയുടെ പേര്", lbl_comp_addr: "വിലാസം / ഉപശീർഷകം", lbl_comp_contact: "ബന്ധപ്പെടേണ്ട നമ്പർ", desc_branding: "ഈ വിവരങ്ങൾ നിങ്ങളുടെ PDF-ലും WhatsApp സന്ദേശങ്ങളിലും ദൃശ്യമാകും.",
                 f_len: "നീളം (mm)", f_wid: "വീതി (mm)", f_thk: "കനം (mm)", f_qty: "അളവ്", f_type_plate: "തരം", f_opt_rect: "ചതുരം", f_opt_circ: "വൃത്തം",
                 f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
                 f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
@@ -469,6 +503,7 @@
                 lbl_prof_ref: "ప్రొఫైల్ రిఫరెన్స్", btn_calc: "లెక్కించి జోడించండి", lbl_current_mass: "ప్రస్తుత భాగం బరువు", lbl_bom: "మెటీరియల్స్ జాబితా (BOM)", btn_clear: "అన్నింటినీ క్లియర్ చేయి", btn_print: "PDF సేవ్ చేయి", btn_wa: "WhatsApp", th_shape: "ఆకారం", th_material: "మెటీరియల్", th_qty: "పరిమాణం", th_result: "మొత్తం బరువు", lbl_total: "మొత్తం అసెంబ్లీ:",
                 about_title: "ఈ ప్రాజెక్ట్ గురించి", about_desc: "<p>ఈ టూల్‌కిట్ <strong>సాయోన్ హజ్రా</strong>చే అభివృద్ధి చేయబడింది.</p><p class='mt-3 text-brand font-bold'>ఇది ఫ్యాబ్రికేషన్ కమ్యూనిటీకి మద్దతు ఇవ్వడానికి రూపొందించబడిన 100% ఉచిత అప్లికేషన్.</p>", about_connect: "సంప్రదించండి",
                 lbl_username: "మీ పేరు", lbl_theme: "యాప్ థీమ్", lbl_lang: "భాష", theme_system: "సిస్టమ్", theme_light: "లైట్ మోడ్", theme_dark: "డార్క్ మోడ్", btn_save_settings: "సెట్టింగులను సేవ్ చేయండి", msg_saved: "సేవ్ చేయబడింది!",
+                lbl_branding: "PDF మరియు ఎగుమతి బ్రాండింగ్", lbl_comp_name: "కంపెనీ పేరు", lbl_comp_addr: "చిరునామా / ఉపశీర్షిక", lbl_comp_contact: "సంప్రదింపు సంఖ్య", desc_branding: "ఈ వివరాలు మీ PDF మరియు WhatsApp సందేశాలలో కనిపిస్తాయి.",
                 f_len: "పొడవు (mm)", f_wid: "వెడల్పు (mm)", f_thk: "మందం (mm)", f_qty: "పరిమాణం", f_type_plate: "రకం", f_opt_rect: "దీర్ఘచతురస్రం", f_opt_circ: "వృత్తం",
                 f_type_hollow: "రకం", f_opt_cyl_shell: "సిలిండ్రికల్ షెల్", f_opt_sq_tube: "స్క్వేర్ ట్యూబ్", f_opt_rect_tube: "దీర్ఘచతురస్ర ట్యూబ్", f_type_solid: "రకం", f_opt_sq_bar: "స్క్వేర్ బార్", f_opt_rect_bar: "దీర్ఘచతురస్ర బార్", f_opt_rnd_bar: "రౌండ్ బార్",
                 f_type_cone: "కోన్ రకం", f_opt_trunc: "కత్తిరించిన కోన్", f_opt_full: "పూర్తి కోన్", f_type_pyramid: "పిరమిడ్ రకం", f_opt_trunc_pyr: "కత్తిరించిన పిరమిడ్", f_opt_full_pyr: "పూర్తి పిరమిడ్",
@@ -486,6 +521,7 @@
                 lbl_prof_ref: "ପ୍ରୋଫାଇଲ୍ ରେଫରେନ୍ସ", btn_calc: "ହିସାବ କରନ୍ତୁ", lbl_current_mass: "ବର୍ତ୍ତମାନର ଓଜନ", lbl_bom: "ସାମଗ୍ରୀ ତାଲିକା (BOM)", btn_clear: "ସବୁ ସଫା କରନ୍ତୁ", btn_print: "PDF ସେଭ୍", btn_wa: "WhatsApp", th_shape: "ଆକାର", th_material: "ସାମଗ୍ରୀ", th_qty: "ପରିମାଣ", th_result: "ମୋଟ ଓଜନ", lbl_total: "ମୋଟ ଆସେମ୍ବଲି:",
                 about_title: "ଏହି ପ୍ରୋଜେକ୍ଟ ବିଷୟରେ", about_desc: "<p>ଏହି ଫ୍ୟାବ୍ରିକେସନ୍ ଟୁଲକିଟ୍ <strong>ସାୟୋନ୍ ହାଜରା</strong>ଙ୍କ ଦ୍ୱାରା ପ୍ରସ୍ତୁତ ହୋଇଛି।</p><p class='mt-3 text-brand font-bold'>ଏହା ଫ୍ୟାବ୍ରିକେସନ୍ ସମ୍ପ୍ରଦାୟକୁ ସମର୍ଥନ କରିବା ପାଇଁ ଡିଜାଇନ୍ ହୋଇଥିବା ୧୦୦% ମାଗଣା ଆପ୍ଲିକେସନ୍।</p>", about_connect: "ଯୋଗାଯୋଗ କରନ୍ତୁ",
                 lbl_username: "ଆପଣଙ୍କ ନାମ", lbl_theme: "ଆପ୍ ଥିମ୍", lbl_lang: "ଭାଷା", theme_system: "ସିଷ୍ଟମ୍", theme_light: "ଲାଇଟ୍", theme_dark: "ଡାର୍କ୍", btn_save_settings: "ସେଟିଂସ୍ ସେଭ୍ କରନ୍ତୁ", msg_saved: "ସେଭ୍ ହେଲା!",
+                lbl_branding: "PDF ଏବଂ ଏକ୍ସପୋର୍ଟ ବ୍ରାଣ୍ଡିଂ", lbl_comp_name: "କମ୍ପାନୀ ନାମ", lbl_comp_addr: "ଠିକଣା / ଉପଶୀର୍ଷକ", lbl_comp_contact: "ଯୋଗାଯୋଗ ନମ୍ବର", desc_branding: "ଏହି ବିବରଣୀଗୁଡ଼ିକ ଆପଣଙ୍କର PDF ଏବଂ WhatsApp ମେସେଜ୍ ରେ ଦେଖାଯିବ।",
                 f_len: "ଲମ୍ବ (mm)", f_wid: "ପ୍ରସ୍ଥ (mm)", f_thk: "ମୋଟେଇ (mm)", f_qty: "ପରିମାଣ", f_type_plate: "ପ୍ରକାର", f_opt_rect: "ଆୟତକାର", f_opt_circ: "ଗୋଲାକାର",
                 f_type_hollow: "ପ୍ରକାର", f_opt_cyl_shell: "ସିଲିଣ୍ଡ୍ରିକାଲ୍ ସେଲ୍", f_opt_sq_tube: "ବର୍ଗାକାର ଟ୍ୟୁବ୍", f_opt_rect_tube: "ଆୟତକାର ଟ୍ୟୁବ୍", f_type_solid: "ପ୍ରକାର", f_opt_sq_bar: "ବର୍ଗାକାର ବାର୍", f_opt_rect_bar: "ଆୟତକାର ବାର୍", f_opt_rnd_bar: "ରାଉଣ୍ଡ ବାର୍",
                 f_type_cone: "ଶଙ୍କୁ ପ୍ରକାର", f_opt_trunc: "କଟା ଶଙ୍କୁ", f_opt_full: "ପୂର୍ଣ୍ଣ ଶଙ୍କୁ", f_type_pyramid: "ପିରାମିଡ୍ ପ୍ରକାର", f_opt_trunc_pyr: "କଟା ପିରାମିଡ୍", f_opt_full_pyr: "ପୂର୍ଣ୍ଣ ପିରାମିଡ୍",
@@ -503,6 +539,7 @@
                 lbl_prof_ref: "ਪ੍ਰੋਫਾਈਲ ਹਵਾਲਾ", btn_calc: "ਹਿਸਾਬ ਲਗਾਓ", lbl_current_mass: "ਮੌਜੂਦਾ ਭਾਰ", lbl_bom: "ਬਿੱਲ ਆਫ਼ ਮਟੀਰੀਅਲ (BOM)", btn_clear: "ਸਭ ਸਾਫ਼ ਕਰੋ", btn_print: "PDF ਸੇਵ ਕਰੋ", btn_wa: "WhatsApp", th_shape: "ਆਕਾਰ", th_material: "ਸਮੱਗਰੀ", th_qty: "ਮਾਤਰਾ", th_result: "ਕੁੱਲ ਭਾਰ", lbl_total: "ਕੁੱਲ ਅਸੈਂਬਲੀ:",
                 about_title: "ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ", about_desc: "<p>ਇਹ ਫੈਬਰੀਕੇਸ਼ਨ ਟੂਲਕਿੱਟ <strong>ਸਾਇਓਨ ਹਾਜ਼ਰਾ</strong> ਦੁਆਰਾ ਤਿਆਰ ਕੀਤੀ ਗਈ ਹੈ।</p><p class='mt-3 text-brand font-bold'>ਇਹ ਫੈਬਰੀਕੇਸ਼ਨ ਭਾਈਚਾਰੇ ਦਾ ਸਮਰਥਨ ਕਰਨ ਲਈ ਤਿਆਰ ਕੀਤੀ ਗਈ 100% ਮੁਫਤ ਐਪਲੀਕੇਸ਼ਨ ਹੈ।</p>", about_connect: "ਸੰਪਰਕ ਕਰੋ",
                 lbl_username: "ਤੁਹਾਡਾ ਨਾਮ", lbl_theme: "ਐਪ ਥੀਮ", lbl_lang: "ਭਾਸ਼ਾ", theme_system: "ਸਿਸਟਮ", theme_light: "ਲਾਈਟ", theme_dark: "ਡਾਰਕ", btn_save_settings: "ਸੈਟਿੰਗਜ਼ ਸੇਵ ਕਰੋ", msg_saved: "ਸੇਵ ਕੀਤਾ ਗਿਆ!",
+                lbl_branding: "PDF ਅਤੇ ਐਕਸਪੋਰਟ ਬ੍ਰਾਂਡਿੰਗ", lbl_comp_name: "ਕੰਪਨੀ ਦਾ ਨਾਮ", lbl_comp_addr: "ਪਤਾ / ਉਪਸਿਰਲੇਖ", lbl_comp_contact: "ਸੰਪਰਕ ਨੰਬਰ", desc_branding: "ਇਹ ਵੇਰਵੇ ਤੁਹਾਡੇ PDF ਅਤੇ WhatsApp ਸੰਦੇਸ਼ਾਂ 'ਤੇ ਦਿਖਾਈ ਦੇਣਗੇ।",
                 f_len: "ਲੰਬਾਈ (mm)", f_wid: "ਚੌੜਾਈ (mm)", f_thk: "ਮੋਟਾਈ (mm)", f_qty: "ਮਾਤਰਾ", f_type_plate: "ਕਿਸਮ", f_opt_rect: "ਆਇਤਾਕਾਰ", f_opt_circ: "ਗੋਲਾਕਾਰ",
                 f_type_hollow: "ਕਿਸਮ", f_opt_cyl_shell: "ਸਿਲੰਡਰੀਕਲ ਸ਼ੈੱਲ", f_opt_sq_tube: "ਸਕੁਏਅਰ ਟਿਊਬ", f_opt_rect_tube: "ਆਇਤਾਕਾਰ ਟਿਊਬ", f_type_solid: "ਕਿਸਮ", f_opt_sq_bar: "ਸਕੁਏਅਰ ਬਾਰ", f_opt_rect_bar: "ਆਇਤਾਕਾਰ ਬਾਰ", f_opt_rnd_bar: "ਰਾਊਂਡ ਬਾਰ",
                 f_type_cone: "ਕੋਨ ਕਿਸਮ", f_opt_trunc: "ਕੱਟਿਆ ਹੋਇਆ ਕੋਨ", f_opt_full: "ਪੂਰਾ ਕੋਨ", f_type_pyramid: "ਪਿਰਾਮਿਡ ਕਿਸਮ", f_opt_trunc_pyr: "ਕੱਟਿਆ ਹੋਇਆ ਪਿਰਾਮਿਡ", f_opt_full_pyr: "ਪੂਰਾ ਪਿਰਾਮਿਡ",
@@ -520,6 +557,7 @@
                 lbl_prof_ref: "پروفائل کا حوالہ", btn_calc: "حساب کریں", lbl_current_mass: "موجودہ وزن", lbl_bom: "بل آف میٹریلز (BOM)", btn_clear: "سب صاف کریں", btn_print: "PDF محفوظ کریں", btn_wa: "WhatsApp", th_shape: "شکل", th_material: "مواد", th_qty: "مقدار", th_result: "کل وزن", lbl_total: "کل اسمبلی:",
                 about_title: "اس پروجیکٹ کے بارے میں", about_desc: "<p>یہ فیبریکیشن ٹول کٹ <strong>سایون ہاجرا</strong> نے تیار کی ہے۔</p><p class='mt-3 text-brand font-bold'>یہ فیبریکیشن کمیونٹی کی مدد کے لیے تیار کی گئی 100% مفت ایپلی کیشن ہے۔</p>", about_connect: "رابطہ کریں",
                 lbl_username: "آپ کا نام", lbl_theme: "ایپ تھیم", lbl_lang: "زبان", theme_system: "سسٹم", theme_light: "لائٹ", theme_dark: "ڈارک", btn_save_settings: "ترتیبات محفوظ کریں", msg_saved: "محفوظ ہو گیا!",
+                lbl_branding: "PDF اور ایکسپورٹ برانڈنگ", lbl_comp_name: "کمپنی کا نام", lbl_comp_addr: "پتہ / ذیلی عنوان", lbl_comp_contact: "رابطہ نمبر", desc_branding: "یہ تفصیلات آپ کے PDF اور WhatsApp پیغامات پر ظاہر ہوں گی۔",
                 f_len: "لمبائی (mm)", f_wid: "چوڑائی (mm)", f_thk: "موٹائی (mm)", f_qty: "مقدار", f_type_plate: "قسم", f_opt_rect: "مستطیل", f_opt_circ: "گول",
                 f_type_hollow: "قسم", f_opt_cyl_shell: "سلنڈریکل شیل", f_opt_sq_tube: "مربع ٹیوب", f_opt_rect_tube: "مستطیل ٹیوب", f_type_solid: "قسم", f_opt_sq_bar: "مربع بار", f_opt_rect_bar: "مستطیل بار", f_opt_rnd_bar: "گول بار",
                 f_type_cone: "کون کی قسم", f_opt_trunc: "کٹا ہوا کون", f_opt_full: "مکمل کون", f_type_pyramid: "اہرام کی قسم", f_opt_trunc_pyr: "کٹا ہوا اہرام", f_opt_full_pyr: "مکمل اہرام",
@@ -537,6 +575,7 @@
                 lbl_prof_ref: "প্ৰোফাইল ৰেফাৰেন্স", btn_calc: "হিচাপ কৰক", lbl_current_mass: "বৰ্তমান ওজন", lbl_bom: "উপাদানৰ তালিকা (BOM)", btn_clear: "সকলো মচি পেলাওক", btn_print: "PDF চেভ", btn_wa: "WhatsApp", th_shape: "আকাৰ", th_material: "উপাদান", th_qty: "পৰিমাণ", th_result: "মুঠ ওজন", lbl_total: "মুঠ এছেম্বলি:",
                 about_title: "এই প্ৰকল্পৰ বিষয়ে", about_desc: "<p>এই ফেব্ৰিকেচন টুলকিটটো <strong>সায়ন হাজৰা</strong> দ্বাৰা বিকশিত কৰা হৈছে।</p><p class='mt-3 text-brand font-bold'>ফেব্ৰিকেচন সম্প্ৰদায়ক সমৰ্থন কৰিবলৈ এইটো ১০০% বিনামূলীয়া এপ্লিকেচন।</p>", about_connect: "সংযোগ কৰক",
                 lbl_username: "আপোনাৰ নাম", lbl_theme: "এপ থীম", lbl_lang: "ভাষা", theme_system: "চিষ্টেম", theme_light: "লাইট", theme_dark: "ডাৰ্ক", btn_save_settings: "ছেটিংছ চেভ কৰক", msg_saved: "চেভ কৰা হ'ল!",
+                lbl_branding: "PDF আৰু এক্সপোৰ্ট ব্ৰেণ্ডিং", lbl_comp_name: "কোম্পানীৰ নাম", lbl_comp_addr: "ঠিকনা / উপশিৰোনাম", lbl_comp_contact: "যোগাযোগৰ নম্বৰ", desc_branding: "এই বিৱৰণবোৰ আপোনাৰ PDF আৰু WhatsApp মেছেজত দেখুওৱা হ'ব।",
                 f_len: "দৈৰ্ঘ্য (mm)", f_wid: "প্ৰস্থ (mm)", f_thk: "ডাঠ (mm)", f_qty: "পৰিমাণ", f_type_plate: "প্ৰকাৰ", f_opt_rect: "আয়তাকাৰ", f_opt_circ: "গোলাকাৰ",
                 f_type_hollow: "প্ৰকাৰ", f_opt_cyl_shell: "চিলিণ্ড্ৰিকেল শ্বেল", f_opt_sq_tube: "স্কোৱাৰ টিউব", f_opt_rect_tube: "আয়তাকাৰ টিউব", f_type_solid: "প্ৰকাৰ", f_opt_sq_bar: "স্কোৱাৰ বাৰ", f_opt_rect_bar: "আয়তাকাৰ বাৰ", f_opt_rnd_bar: "ৰাউণ্ড বাৰ",
                 f_type_cone: "শংকু প্ৰকাৰ", f_opt_trunc: "কটা শংকু", f_opt_full: "সম্পূৰ্ণ শংকু", f_type_pyramid: "পিৰামিড প্ৰকাৰ", f_opt_trunc_pyr: "কটা পিৰামিড", f_opt_full_pyr: "সম্পূৰ্ণ পিৰামিড",
@@ -579,25 +618,40 @@
             const nameEl = document.getElementById('prefName');
             const themeEl = document.getElementById('prefTheme');
             const langEl = document.getElementById('prefLang');
+            const compNameEl = document.getElementById('prefCompName');
+            const compAddrEl = document.getElementById('prefCompAddr');
+            const compContactEl = document.getElementById('prefCompContact');
             
             if(nameEl) nameEl.value = localStorage.getItem('salap_user') || '';
             if(themeEl) themeEl.value = localStorage.getItem('salap_theme_pref') || 'system';
             if(langEl) langEl.value = localStorage.getItem('salap_lang') || 'en';
+            
+            if(compNameEl) compNameEl.value = localStorage.getItem('salap_comp_name') || '';
+            if(compAddrEl) compAddrEl.value = localStorage.getItem('salap_comp_addr') || '';
+            if(compContactEl) compContactEl.value = localStorage.getItem('salap_comp_contact') || '';
         }
 
         function savePreferences() {
             const nameEl = document.getElementById('prefName');
             const themeEl = document.getElementById('prefTheme');
             const langEl = document.getElementById('prefLang');
+            const compNameEl = document.getElementById('prefCompName');
+            const compAddrEl = document.getElementById('prefCompAddr');
+            const compContactEl = document.getElementById('prefCompContact');
             
             if(nameEl) localStorage.setItem('salap_user', nameEl.value);
             if(themeEl) localStorage.setItem('salap_theme_pref', themeEl.value);
             if(langEl) localStorage.setItem('salap_lang', langEl.value);
             
+            if(compNameEl) localStorage.setItem('salap_comp_name', compNameEl.value);
+            if(compAddrEl) localStorage.setItem('salap_comp_addr', compAddrEl.value);
+            if(compContactEl) localStorage.setItem('salap_comp_contact', compContactEl.value);
+            
             if (langEl) currentLang = langEl.value;
             
             applyThemeLogic();
             changeLanguage();
+            applyBranding();
             
             const fb = document.getElementById('saveFeedback');
             if(fb) {
@@ -630,6 +684,28 @@
             
             if(isDark) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
+        }
+
+        function applyBranding() {
+            const name = localStorage.getItem('salap_comp_name');
+            const addr = localStorage.getItem('salap_comp_addr');
+            const contact = localStorage.getItem('salap_comp_contact');
+
+            const printNameEl = document.getElementById('printCompanyName');
+            const printAddrEl = document.getElementById('printCompanyAddr');
+            const printContactEl = document.getElementById('printCompanyContact');
+
+            if(printNameEl) {
+                printNameEl.innerText = name && name.trim() !== '' ? name.trim() : 'FABRICATION WEIGHT CALCULATOR';
+            }
+            if(printAddrEl) {
+                if(addr && addr.trim() !== '') { printAddrEl.innerText = addr.trim(); printAddrEl.classList.remove('hidden'); }
+                else { printAddrEl.classList.add('hidden'); }
+            }
+            if(printContactEl) {
+                if(contact && contact.trim() !== '') { printContactEl.innerText = '📞 ' + contact.trim(); printContactEl.classList.remove('hidden'); }
+                else { printContactEl.classList.add('hidden'); }
+            }
         }
         
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -968,9 +1044,18 @@
                 return;
             }
 
-            let text = "*Project BOM:*\n\n";
-            const rows = document.querySelectorAll('#historyBody tr');
+            const compName = localStorage.getItem('salap_comp_name');
+            const compContact = localStorage.getItem('salap_comp_contact');
             
+            let header = compName && compName.trim() !== '' ? compName.trim() : 'Project';
+            let text = `*${header} BOM:*\n`;
+            if (compContact && compContact.trim() !== '') {
+                text += `Contact: ${compContact.trim()}\n\n`;
+            } else {
+                text += `\n`;
+            }
+
+            const rows = document.querySelectorAll('#historyBody tr');
             rows.forEach((row, index) => {
                 const cols = row.querySelectorAll('td');
                 const shape = cols[0].innerText;
@@ -987,6 +1072,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             applyThemeLogic();
+            applyBranding();
             
             const savedLang = localStorage.getItem('salap_lang');
             if (savedLang) {
