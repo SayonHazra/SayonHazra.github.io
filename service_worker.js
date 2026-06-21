@@ -1,25 +1,35 @@
-const CACHE_NAME = 'salap-factory-dynamic-v2';
-const ASSETS = [
-  './index.html',
-  './manifest.json',
-  './logo.png'
-];
+const CACHE_NAME = 'fab-calc-cache-v6.5';
 
+// Installs the new service worker immediately
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
-  self.skipWaiting(); 
+  self.skipWaiting();
 });
 
+// Automatically deletes old versions of the app from the phone's memory
 self.addEventListener('activate', event => {
   event.waitUntil(clients.claim());
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
 
-// Network First, fallback to cache
+// The "Network-First" Strategy
 self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // If the internet fetch is successful, update the cache with the new version
+        // We have internet: copy the fresh file and update the phone's memory
         const responseClone = response.clone();
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, responseClone);
@@ -27,8 +37,15 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // If there is no internet (fetch fails), load the file from the offline cache
-        return caches.match(event.request);
+        // We are offline: serve the saved file from memory
+        return caches.match(event.request).then(cachedResponse => {
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+            if (event.request.mode === 'navigate') {
+                return caches.match('./index.html');
+            }
+        });
       })
   );
 });
