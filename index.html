@@ -18,6 +18,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- PDF Generation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <script>
@@ -70,6 +71,7 @@
 
     <div class="flex flex-col md:flex-row min-h-screen relative z-10">
         
+        <!-- Minimal Sidebar -->
         <nav class="w-full md:w-72 glass-panel shadow-2xl z-20 transition-all duration-300 flex flex-col">
             <div class="p-6 flex flex-col items-center md:items-start cursor-pointer hover:opacity-80 transition-opacity" onclick="switchMainTab('home')" title="Go to Dashboard">
                 <div class="text-center md:text-left">
@@ -77,10 +79,11 @@
                         <span data-i18n="app_name_part1">FABRICATION</span> <br>
                         <span class="text-slate-800 dark:text-white" data-i18n="app_name_part2">WEIGHT CALCULATOR</span>
                     </h1>
-                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 6.5 PWA</p>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 6.6 PWA</p>
                 </div>
             </div>
             
+            <!-- Material Preset Section (Shown ONLY when inside the BOM tab) -->
             <div id="material-preset-section" class="hidden p-6 mt-auto border-t border-slate-200 dark:border-slate-700/50">
                 <div class="mb-2">
                     <label data-i18n="lbl_mat_preset">Material Preset</label>
@@ -100,12 +103,14 @@
 
         <main class="flex-1 p-4 md:p-8 lg:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto relative">
             
+            <!-- SECTION 0: HOME DASHBOARD -->
             <div id="section-home" class="max-w-5xl mx-auto space-y-6 animate-tab">
                 <div class="glass-panel rounded-3xl p-8 md:p-12 transition-colors border border-white/40 dark:border-slate-600/30">
                     <h2 id="welcomeTitle" class="text-3xl md:text-5xl font-black mb-3 text-slate-900 dark:text-white tracking-tight">Welcome</h2>
                     <p class="text-slate-500 dark:text-slate-400 mb-10 text-lg font-medium" data-i18n="welcome_sub">Select a module below to get started.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card 1: BOM -->
                         <div onclick="switchMainTab('weight')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
@@ -114,6 +119,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_fab">Calculate weights for plates, pipes, and profiles.</p>
                         </div>
                         
+                        <!-- Card 2: Unit Converter -->
                         <div onclick="switchMainTab('units')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
@@ -122,6 +128,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_unit">Convert length measurements quickly.</p>
                         </div>
 
+                        <!-- Card 3: Settings -->
                         <div onclick="switchMainTab('settings')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -133,68 +140,71 @@
                 </div>
             </div>
 
+            <!-- SECTION 1: Fabrication Estimator (Weight BOM) -->
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
-                <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline print:hidden transition-transform hover:-translate-x-1">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     <span data-i18n="btn_back">Back to Dashboard</span>
                 </button>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-3">
+                    <!-- Sidebar Profiles (SQUARE IMAGE BOXES WITH LARGER ICONS) -->
+                    <div class="lg:col-span-3 print:hidden">
                         <p class="text-xs font-black text-slate-400 uppercase mb-4 tracking-tighter" data-i18n="lbl_fab_profiles">Fabrication Profiles</p>
                         
                         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-2 gap-3">
-                            <button onclick="loadShape('plate')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-plate.jpg" onerror="this.src='plate-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Plate">
+                            <button onclick="loadShape('plate')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-plate.jpg" onerror="this.src='plate-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Plate">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_plate">Plate</span>
                             </button>
-                            <button onclick="loadShape('hollow')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-hollow.jpg" onerror="this.src='shell-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Hollow">
+                            <button onclick="loadShape('hollow')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-hollow.jpg" onerror="this.src='shell-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Hollow">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_hollow">Hollow</span>
                             </button>
-                            <button onclick="loadShape('solid')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-solid.jpg" onerror="this.src='sq_bar-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Solid">
+                            <button onclick="loadShape('solid')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-solid.jpg" onerror="this.src='sq_bar-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Solid">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_solid">Solid</span>
                             </button>
-                            <button onclick="loadShape('cone')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-cone.jpg" onerror="this.src='frustum-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Cone">
+                            <button onclick="loadShape('cone')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-cone.jpg" onerror="this.src='frustum-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Cone">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_cone">Cone</span>
                             </button>
-                            <button onclick="loadShape('pyramid')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-pyramid.jpg" onerror="this.src='trunc_pyr-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Pyramid">
+                            <button onclick="loadShape('pyramid')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-pyramid.jpg" onerror="this.src='trunc_pyr-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Pyramid">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_pyramid">Pyramid</span>
                             </button>
-                            <button onclick="loadShape('sq2rnd')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-sq2rnd.jpg" onerror="this.src='sq2rnd-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Sq2Rnd">
+                            <button onclick="loadShape('sq2rnd')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-sq2rnd.jpg" onerror="this.src='sq2rnd-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Sq2Rnd">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_sq2rnd">Sq to Rnd</span>
                             </button>
-                            <button onclick="loadShape('miter')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-miter.jpg" onerror="this.src='miter-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Miter">
+                            <button onclick="loadShape('miter')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-miter.jpg" onerror="this.src='miter-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Miter">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_miter">Miter</span>
                             </button>
-                            <button onclick="loadShape('dishend')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-dishend.jpg" onerror="this.src='dishend-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Dish">
+                            <button onclick="loadShape('dishend')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-dishend.jpg" onerror="this.src='dishend-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Dish">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_dishend">Dish End</span>
                             </button>
-                            <button onclick="loadShape('ring')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-ring.jpg" onerror="this.src='ring-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="Ring">
+                            <button onclick="loadShape('ring')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-ring.jpg" onerror="this.src='ring-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="Ring">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ring">Ring</span>
                             </button>
-                            <button onclick="loadShape('ismb')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-ismb.jpg" onerror="this.src='ismb-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISMB">
+                            <button onclick="loadShape('ismb')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-ismb.jpg" onerror="this.src='ismb-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="ISMB">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ismb">ISMB</span>
                             </button>
-                            <button onclick="loadShape('ismc')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-ismc.jpg" onerror="this.src='ismc-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISMC">
+                            <button onclick="loadShape('ismc')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-ismc.jpg" onerror="this.src='ismc-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="ISMC">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_ismc">ISMC</span>
                             </button>
-                            <button onclick="loadShape('isa')" class="shape-item aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
-                                <img src="icon-isa.jpg" onerror="this.src='isa-ref.jpg'" class="h-10 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten" alt="ISA">
+                            <button onclick="loadShape('isa')" class="shape-item group aspect-square flex flex-col items-center justify-between p-2 glass-panel dark:text-white rounded-xl border-2 border-transparent hover:border-brand/40 transition shadow-sm hover:shadow">
+                                <img src="icon-isa.jpg" onerror="this.src='isa-ref.jpg'" class="h-14 sm:h-16 w-full object-contain mb-1 mix-blend-multiply dark:mix-blend-lighten transform group-hover:scale-110 transition-transform duration-300" alt="ISA">
                                 <span class="text-center text-[10px] sm:text-xs font-bold leading-tight" data-i18n="sh_isa">ISA Angle</span>
                             </button>
                         </div>
                     </div>
 
+                    <!-- Main Content Area -->
                     <div class="lg:col-span-9 space-y-6">
                         <div class="glass-panel rounded-2xl p-8 transition-colors duration-200">
                             <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-brand uppercase italic">Steel Plate</h2>
@@ -217,11 +227,21 @@
                             </div>
                         </div>
 
-                        <div class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200">
+                        <!-- PDF EXPORT CONTAINER -->
+                        <div id="exportBOMContainer" class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200 bg-white dark:bg-slate-800/90">
+                            
+                            <!-- HIDDEN PDF HEADER -->
+                            <div id="printHeader" class="hidden text-center bg-white border-b-2 border-slate-200 pb-4 pt-8 px-8">
+                                <h1 id="printCompanyName" class="text-3xl font-black text-slate-900 tracking-tighter uppercase">FABRICATION WEIGHT CALCULATOR</h1>
+                                <h2 id="printCompanyAddr" class="text-lg font-bold text-slate-700 mt-1 hidden"></h2>
+                                <p id="printCompanyContact" class="text-sm font-semibold text-slate-600 mt-1 hidden"></p>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-2">Project Bill of Materials</p>
+                            </div>
+
                             <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
                                 
-                                <div class="flex flex-wrap gap-4 items-center">
+                                <div id="actionButtons" class="flex flex-wrap gap-4 items-center">
                                     <button onclick="exportToPDF()" class="text-sm px-3 py-1.5 bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-1.5">
                                         <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                         <span id="pdfBtnText" data-i18n="btn_print">Save PDF</span>
@@ -234,7 +254,7 @@
                                 </div>
                             </div>
                             <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm whitespace-nowrap">
+                                <table class="w-full text-left text-sm whitespace-nowrap text-slate-800 dark:text-slate-200">
                                     <thead>
                                         <tr class="text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700/50">
                                             <th class="px-6 py-3 font-semibold" data-i18n="th_shape">Shape</th>
@@ -259,6 +279,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 2: Unit Converter -->
             <div id="section-units" class="hidden max-w-4xl mx-auto">
                 <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -300,6 +321,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 3: Settings -->
             <div id="section-settings" class="hidden max-w-3xl mx-auto space-y-8">
                 <button onclick="switchMainTab('home')" class="mb-2 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -395,7 +417,7 @@
 
         const dict = {
             en: {
-                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 6.6 PWA",
                 nav_home: "Home", nav_units: "Unit Converter", nav_fab: "Fabrication BOM", nav_settings: "Settings", btn_back: "Back to Dashboard",
                 welcome_title: "Welcome to the Toolkit", welcome_name: "Welcome {name}", welcome_sub: "Select a module below to get started.",
                 desc_fab: "Calculate weights for plates, pipes, and profiles.", desc_unit: "Convert length measurements quickly.", desc_settings: "Customize app theme and preferences.",
@@ -413,7 +435,7 @@
                 f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)", f_side_a: "Side A (mm)", f_side_b: "Side B (mm)", f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)", f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)", f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)", f_base_dim: "Base Dimension (A) (mm)", f_top_dim: "Top Dimension (B) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)", f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
-                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৬.৪ PWA",
+                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৬.৬ PWA",
                 nav_home: "হোম", nav_units: "একক রূপান্তরকারী", nav_fab: "ফ্যাব্রিকেশন বিওএম", nav_settings: "সেটিংস", btn_back: "ড্যাশবোর্ডে ফিরে যান",
                 welcome_title: "টুলকিটে স্বাগতম", welcome_name: "স্বাগতম {name}", welcome_sub: "শুরু করতে নিচে থেকে একটি মডিউল নির্বাচন করুন।",
                 desc_fab: "প্লেট, পাইপ এবং প্রোফাইলের ওজন হিসাব করুন।", desc_unit: "দ্রুত দৈর্ঘ্য রূপান্তর করুন।", desc_settings: "অ্যাপের থিম এবং পছন্দ কাস্টমাইজ করুন।",
@@ -431,7 +453,7 @@
                 f_od: "বাইরের ব্যাস (OD)", f_id: "ভিতরের ব্যাস (ID)", f_dia: "ব্যাস (mm)", f_side_a: "বাহু A", f_side_b: "বাহু B", f_d1: "শীর্ষ ব্যাস (D1)", f_d2: "নিচের ব্যাস (D2)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)", f_sf: "সোজা মুখ (SF)", f_h_sec: "গভীরতা (h)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b)", f_tw: "ওয়েব পুরুত্ব (tw)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf)", f_leg_a: "লেগ A", f_leg_b: "লেগ B", f_base_dim: "বেস পরিমাপ (A)", f_top_dim: "শীর্ষ পরিমাপ (B)", f_base_l: "বেস দৈর্ঘ্য", f_base_w: "বেস প্রস্থ", f_top_od: "শীর্ষ রাউন্ড OD", f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R)", f_pieces: "মোট পিস (N)"
             },
             hi: {
-                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 6.4 PWA",
+                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 6.6 PWA",
                 nav_home: "होम", nav_units: "इकाई कनवर्टर", nav_fab: "फैब्रिकेशन BOM", nav_settings: "सेटिंग्स", btn_back: "डैशबोर्ड पर वापस जाएं",
                 welcome_title: "टूलकिट में आपका स्वागत है", welcome_name: "स्वागत है {name}", welcome_sub: "आरंभ करने के लिए नीचे से एक मॉड्यूल चुनें।",
                 desc_fab: "प्लेट, पाइप और प्रोफाइल के वजन की गणना करें।", desc_unit: "लंबाई को जल्दी से बदलें।", desc_settings: "ऐप थीम और प्राथमिकताओं को कस्टमाइज़ करें।",
@@ -449,7 +471,7 @@
                 f_od: "बाहरी व्यास (OD)", f_id: "आंतरिक व्यास (ID)", f_dia: "व्यास (mm)", f_side_a: "साइड A", f_side_b: "साइड B", f_d1: "शीर्ष OD (D1)", f_d2: "निचला OD (D2)", f_base_od: "बेस OD", f_h: "ऊंचाई", f_sf: "सीधा चेहरा (SF)", f_h_sec: "गहराई (h)", f_w_fl: "फ्लेंज चौड़ाई (b)", f_tw: "वेब मोटाई (tw)", f_tf: "फ्लेंज मोटाई (tf)", f_leg_a: "लेग A", f_leg_b: "लेग B", f_base_dim: "बेस आयाम (A)", f_top_dim: "शीर्ष आयाम (B)", f_base_l: "बेस लंबाई", f_base_w: "बेस चौड़ाई", f_top_od: "शीर्ष राउंड OD", f_bend_ang: "बेंड कोण (°)", f_bend_rad: "त्रिज्या (R)", f_pieces: "कुल टुकड़े (N)"
             },
             ta: {
-                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 6.6 PWA",
                 nav_home: "முகப்பு", nav_units: "அலகு மாற்றி", nav_fab: "ஃபேப்ரிகேஷன் BOM", nav_settings: "அமைப்புகள்", btn_back: "டாஷ்போர்டுக்குத் திரும்பு",
                 welcome_title: "வரவேற்கிறோம்", welcome_name: "வரவேற்கிறோம் {name}", welcome_sub: "தொடங்க கீழே உள்ள ஒரு தொகுதியைத் தேர்ந்தெடுக்கவும்.",
                 desc_fab: "தட்டுகள் மற்றும் குழாய்களின் எடையைக் கணக்கிடுங்கள்.", desc_unit: "நீளத்தை விரைவாக மாற்றவும்.", desc_settings: "பயன்பாட்டு தீம் மற்றும் விருப்பங்களை மாற்றவும்.",
@@ -467,11 +489,11 @@
                 f_od: "வெளிப்புற விட்டம் (OD)", f_id: "உட்புற விட்டம் (ID)", f_dia: "விட்டம் (mm)", f_side_a: "பக்கம் A", f_side_b: "பக்கம் B", f_d1: "மேல் OD (D1)", f_d2: "கீழ் OD (D2)", f_base_od: "அடிப்படை OD", f_h: "உயரம்", f_sf: "நேரான முகம் (SF)", f_h_sec: "ஆழம் (h)", f_w_fl: "ஃபிளேன்ஜ் அகலம் (b)", f_tw: "வெப் தடிமன் (tw)", f_tf: "ஃபிளேன்ஜ் தடிமன் (tf)", f_leg_a: "கால் A", f_leg_b: "கால் B", f_base_dim: "அடிப்படை அளவு (A)", f_top_dim: "மேல் அளவு (B)", f_base_l: "அடிப்படை நீளம்", f_base_w: "அடிப்படை அகலம்", f_top_od: "மேல் வட்ட OD", f_bend_ang: "வளைவு கோணம் (°)", f_bend_rad: "ஆரம் (R)", f_pieces: "துண்டுகள் (N)"
             },
             ml: {
-                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 6.6 PWA",
                 nav_home: "ഹോം", nav_units: "യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "ഫാബ്രിക്കേഷൻ BOM", nav_settings: "ക്രമീകരണങ്ങൾ", btn_back: "ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക",
                 welcome_title: "സ്വാഗതം", welcome_name: "സ്വാഗതം {name}", welcome_sub: "ആരംഭിക്കുന്നതിന് താഴെ നിന്ന് ഒരു മൊഡ്യൂൾ തിരഞ്ഞെടുക്കുക.",
                 desc_fab: "പ്ലേറ്റുകൾക്കും പൈപ്പുകൾക്കുമുള്ള ഭാരം കണക്കാക്കുക.", desc_unit: "നീളം വേഗത്തിൽ മാറ്റുക.", desc_settings: "തീമും ഭാഷയും മാറ്റുക.",
-                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാന്ദ്രത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
+                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാంద్రത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
                 title_converter: "കൃത്യമായ നീള കൺവെർട്ടർ", lbl_input_val: "ഇൻപുട്ട് മൂല്യം", lbl_from_unit: "ഏതിൽനിന്ന്", lbl_to_unit: "ഏതിലേക്ക്", lbl_result_meas: "ഫലം", lbl_fab_profiles: "ഫാബ്രിക്കേഷൻ പ്രൊഫൈലുകൾ",
                 sh_plate: "പ്ലേറ്റ് / ബ്ലാങ്ക്", sh_hollow: "പൊള്ളയായ", sh_solid: "സോളിഡ്", sh_cone: "കോൺ", sh_pyramid: "പിരമിഡ്", sh_sq2rnd: "സ്ക്വയർ ടു റൗണ്ട്", sh_miter: "മൈറ്റർ ബെൻഡ്", sh_dishend: "ഡിഷ് എൻഡ്", sh_ring: "റിംഗ്", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA",
                 lbl_prof_ref: "പ്രൊഫൈൽ റഫറൻസ്", btn_calc: "കണക്കാക്കി ചേർക്കുക", lbl_current_mass: "നിലവിലെ ഭാരം", lbl_bom: "BOM", btn_clear: "എല്ലാം മായ്ക്കുക", btn_print: "PDF സേവ് ചെയ്യുക", btn_wa: "WhatsApp", th_shape: "ആകൃതി", th_material: "മെറ്റീരിയൽ", th_qty: "അളവ്", th_result: "മൊത്തം ഭാരം", lbl_total: "മൊത്തം അസംബ്ലി:", msg_empty_bom: "BOM ശൂന്യമാണ്. ദയവായി ആദ്യം ഇനങ്ങൾ ചേർക്കുക.",
@@ -482,10 +504,10 @@
                 f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
                 f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
                 f_type_sq2rnd: "തരം", f_opt_square: "സ്ക്വയർ ടു റൗണ്ട്", f_opt_rect_rnd: "റെക്റ്റ് ടു റൗണ്ട്",
-                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ్యాസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
+                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
             },
             te: {
-                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 6.6 PWA",
                 nav_home: "హోమ్", nav_units: "యూనిట్ కన్వర్టర్", nav_fab: "ఫ్యాబ్రికేషన్ BOM", nav_settings: "సెట్టింగులు", btn_back: "డాష్‌బోర్డ్‌కు తిరిగి వెళ్ళు",
                 welcome_title: "స్వాగతం", welcome_name: "స్వాగతం {name}", welcome_sub: "ప్రారంభించడానికి దిగువ నుండి ఒక మాడ్యూల్‌ని ఎంచుకోండి.",
                 desc_fab: "ప్లేట్లు, పైపులు మరియు ప్రొఫైల్స్ బరువు లెక్కించండి.", desc_unit: "పొడవులను త్వరగా మార్చండి.", desc_settings: "యాప్ థీమ్ మరియు ప్రాధాన్యతలను అనుకూలీకరించండి.",
@@ -503,7 +525,7 @@
                 f_od: "వెలుపలి వ్యాసం (OD)", f_id: "లోపలి వ్యాసం (ID)", f_dia: "వ్యాసం (mm)", f_side_a: "సైడ్ A", f_side_b: "సైడ్ B", f_d1: "పై OD (D1)", f_d2: "క్రింది OD (D2)", f_base_od: "బేస్ OD", f_h: "ఎత్తు", f_sf: "స్ట్రెయిట్ ఫేస్ (SF)", f_h_sec: "లోతు (h)", f_w_fl: "ఫ్లాంజ్ వెడల్పు (b)", f_tw: "వెబ్ మందం (tw)", f_tf: "ఫ్లాంజ్ మందం (tf)", f_leg_a: "లెగ్ A", f_leg_b: "లెగ్ B", f_base_dim: "బేస్ కొలత (A)", f_top_dim: "పై కొలత (B)", f_base_l: "బేస్ పొడవు", f_base_w: "బేస్ వెడల్పు", f_top_od: "పై రౌండ్ OD", f_bend_ang: "బెండ్ యాంగిల్ (°)", f_bend_rad: "రేడియస్ (R)", f_pieces: "ముక్కలు (N)"
             },
             or: {
-                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 6.6 PWA",
                 nav_home: "ହୋମ୍", nav_units: "ୟୁନିଟ୍ କନଭର୍ଟର", nav_fab: "ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_settings: "ସେଟିଂସ୍", btn_back: "ଡ୍ୟାସବୋର୍ଡକୁ ଫେରନ୍ତୁ",
                 welcome_title: "ସ୍ୱାଗତ", welcome_name: "ସ୍ୱାଗତ {name}", welcome_sub: "ଆରମ୍ଭ କରିବା ପାଇଁ ତଳୁ ଗୋଟିଏ ମଡ୍ୟୁଲ୍ ବାଛନ୍ତୁ।",
                 desc_fab: "ପ୍ଲେଟ୍, ପାଇପ୍ ଏବଂ ପ୍ରୋଫାଇଲ୍ ର ଓଜନ ହିସାବ କରନ୍ତୁ।", desc_unit: "ଲମ୍ବ ଶୀଘ୍ର ପରିବର୍ତ୍ତନ କରନ୍ତୁ।", desc_settings: "ଆପ୍ ଥିମ୍ ଏବଂ ଭାଷା ପରିବର୍ତ୍ତନ କରନ୍ତୁ।",
@@ -521,7 +543,7 @@
                 f_od: "ବାହାର ବ୍ୟାସ (OD)", f_id: "ଭିତର ବ୍ୟାସ (ID)", f_dia: "ବ୍ୟାସ (mm)", f_side_a: "ପାର୍ଶ୍ୱ A", f_side_b: "ପାର୍ଶ୍ୱ B", f_d1: "ଉପର OD (D1)", f_d2: "ତଳ OD (D2)", f_base_od: "ବେସ୍ OD", f_h: "ଉଚ୍ଚତା", f_sf: "ଷ୍ଟ୍ରେଟ୍ ଫେସ୍ (SF)", f_h_sec: "ଗଭୀରତା (h)", f_w_fl: "ଫ୍ଲାଞ୍ଜ ପ୍ରସ୍ଥ (b)", f_tw: "ୱେବ୍ ମୋଟେଇ (tw)", f_tf: "ଫ୍ଲାଞ୍ଜ ମୋଟେଇ (tf)", f_leg_a: "ଲେଗ୍ A", f_leg_b: "ଲେଗ୍ B", f_base_dim: "ବେସ୍ ପରିମାପ (A)", f_top_dim: "ଉପର ପରିମାପ (B)", f_base_l: "ବେସ୍ ଲମ୍ବ", f_base_w: "ବେସ୍ ପ୍ରସ୍ଥ", f_top_od: "ଉପର ରାଉଣ୍ଡ OD", f_bend_ang: "ବେଣ୍ଡ୍ ଆଙ୍ଗେଲ୍ (°)", f_bend_rad: "ରେଡିଅସ୍ (R)", f_pieces: "ମୋଟ ପିସ୍ (N)"
             },
             pa: {
-                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 6.6 PWA",
                 nav_home: "ਹੋਮ", nav_units: "ਯੂਨਿਟ ਕਨਵਰਟਰ", nav_fab: "ਫੈਬਰੀਕੇਸ਼ਨ BOM", nav_settings: "ਸੈਟਿੰਗਜ਼", btn_back: "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ",
                 welcome_title: "ਜੀ ਆਇਆਂ ਨੂੰ", welcome_name: "ਜੀ ਆਇਆਂ ਨੂੰ {name}", welcome_sub: "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਮੋਡੀਊਲ ਦੀ ਚੋਣ ਕਰੋ।",
                 desc_fab: "ਪਲੇਟਾਂ, ਪਾਈਪਾਂ ਅਤੇ ਪ੍ਰੋਫਾਈਲਾਂ ਦਾ ਭਾਰ ਕੱਢੋ।", desc_unit: "ਲੰਬਾਈ ਨੂੰ ਜਲਦੀ ਬਦਲੋ।", desc_settings: "ਐਪ ਥੀਮ ਅਤੇ ਤਰਜੀਹਾਂ ਬਦਲੋ।",
@@ -539,10 +561,10 @@
                 f_od: "ਬਾਹਰੀ ਵਿਆਸ (OD)", f_id: "ਅੰਦਰੂਨੀ ਵਿਆਸ (ID)", f_dia: "ਵਿਆਸ (mm)", f_side_a: "ਸਾਈਡ A", f_side_b: "ਸਾਈਡ B", f_d1: "ਉੱਪਰਲਾ OD (D1)", f_d2: "ਹੇਠਲਾ OD (D2)", f_base_od: "ਬੇਸ OD", f_h: "ਉਚਾਈ", f_sf: "ਸਿੱਧਾ ਫੇਸ (SF)", f_h_sec: "ਡੂੰਘਾਈ (h)", f_w_fl: "ਫਲੈਂਜ ਚੌੜਾਈ (b)", f_tw: "ਵੈੱਬ ਮੋਟਾਈ (tw)", f_tf: "ਫਲੈਂਜ ਮੋਟਾਈ (tf)", f_leg_a: "ਲੈੱਗ A", f_leg_b: "ਲੈੱਗ B", f_base_dim: "ਬੇਸ ਮਾਪ (A)", f_top_dim: "ਉੱਪਰਲਾ ਮਾਪ (B)", f_base_l: "ਬੇਸ ਲੰਬਾਈ", f_base_w: "ਬੇਸ ਚੌੜਾਈ", f_top_od: "ਉੱਪਰਲਾ ਰਾਊਂਡ OD", f_bend_ang: "ਬੈਂਡ ਐਂਗਲ (°)", f_bend_rad: "ਰੇਡੀਅਸ (R)", f_pieces: "ਕੁੱਲ ਪੀਸ (N)"
             },
             ur: {
-                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 6.6 PWA",
                 nav_home: "ہوم", nav_units: "یونٹ کنورٹر", nav_fab: "فیبریکیشن BOM", nav_settings: "ترتیبات", btn_back: "ڈیش بورڈ پر واپس جائیں",
                 welcome_title: "خوش آمدید", welcome_name: "خوش آمدید {name}", welcome_sub: "شروع کرنے کے لیے نیچے سے ایک ماڈیول منتخب کریں۔",
-                desc_fab: "پلیٹس، پائپ اور پروفائلز کا وزن معلوم کریں۔", desc_unit: "لمبائی کو جلدی سے تبدیل کریں۔", desc_settings: "ایپ کی ترتیبات تبدیل کریں۔",
+                desc_fab: "پلیٹس، پائپ اور پروفائل کا وزن معلوم کریں۔", desc_unit: "لمبائی کو جلدی سے تبدیل کریں۔", desc_settings: "ایپ کی ترتیبات تبدیل کریں۔",
                 lbl_mat_preset: "مواد پریسیٹ", lbl_density: "کثافت (kg/m³)", mat_cs: "کاربن اسٹیل (7850)", mat_ss: "سٹینلیس اسٹیل (8000)", mat_al: "ایلومینیم (2700)", mat_cu: "تانبا (8960)", mat_custom: "اپنی مرضی کی کثافت",
                 title_converter: "لمبائی کنورٹر", lbl_input_val: "ان پٹ ویلیو", lbl_from_unit: "سے (یونٹ)", lbl_to_unit: "تک (یونٹ)", lbl_result_meas: "نتیجہ", lbl_fab_profiles: "فیبریکیشن پروفائلز",
                 sh_plate: "پلیٹ / بلینک", sh_hollow: "کھوکھلا حصہ", sh_solid: "ٹھوس حصہ", sh_cone: "کون (Cone)", sh_pyramid: "اہرام (Pyramid)", sh_sq2rnd: "مربع سے گول", sh_miter: "مائٹر بینڈ", sh_dishend: "ڈش اینڈ", sh_ring: "رنگ", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA اینگل",
@@ -557,7 +579,7 @@
                 f_od: "بیرونی قطر (OD)", f_id: "اندرونی قطر (ID)", f_dia: "قطر (mm)", f_side_a: "سائیڈ A", f_side_b: "سائیڈ B", f_d1: "اوپری OD (D1)", f_d2: "نچلا OD (D2)", f_base_od: "بیس OD", f_h: "اونچائی", f_sf: "سیدھا چہرہ (SF)", f_h_sec: "گہرائی (h)", f_w_fl: "فلینج کی چوڑائی (b)", f_tw: "ویب کی موٹائی (tw)", f_tf: "فلینج کی موٹائی (tf)", f_leg_a: "لیگ A", f_leg_b: "لیگ B", f_base_dim: "بیس کی پیمائش (A)", f_top_dim: "اوپری پیمائش (B)", f_base_l: "بیس کی لمبائی", f_base_w: "بیس کی چوڑائی", f_top_od: "اوپری گول OD", f_bend_ang: "بینڈ اینگل (°)", f_bend_rad: "ریڈیس (R)", f_pieces: "ٹکڑے (N)"
             },
             as: {
-                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 6.4 PWA",
+                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 6.6 PWA",
                 nav_home: "হোম", nav_units: "একক ৰূপান্তৰকাৰী", nav_fab: "ফেব্ৰিকেচন BOM", nav_settings: "ছেটিংছ", btn_back: "ডেশবৰ্ডলৈ উভতি যাওক",
                 welcome_title: "স্বাগতম", welcome_name: "স্বাগতম {name}", welcome_sub: "আৰম্ভ কৰিবলৈ তলৰ পৰা এটা মডিউল বাছক।",
                 desc_fab: "প্লেট, পাইপ আৰু প্ৰোফাইলৰ ওজন হিচাপ কৰক।", desc_unit: "দৈৰ্ঘ্য দ্ৰুতভাৱে ৰূপান্তৰ কৰক।", desc_settings: "এপৰ থীম আৰু ভাষা সলনি কৰক।",
@@ -643,6 +665,7 @@
             
             applyThemeLogic();
             changeLanguage();
+            applyBranding();
             
             const fb = document.getElementById('saveFeedback');
             if(fb) {
@@ -675,6 +698,28 @@
             
             if(isDark) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
+        }
+
+        function applyBranding() {
+            const name = localStorage.getItem('salap_comp_name');
+            const addr = localStorage.getItem('salap_comp_addr');
+            const contact = localStorage.getItem('salap_comp_contact');
+
+            const printNameEl = document.getElementById('printCompanyName');
+            const printAddrEl = document.getElementById('printCompanyAddr');
+            const printContactEl = document.getElementById('printCompanyContact');
+
+            if(printNameEl) {
+                printNameEl.innerText = name && name.trim() !== '' ? name.trim() : 'FABRICATION WEIGHT CALCULATOR';
+            }
+            if(printAddrEl) {
+                if(addr && addr.trim() !== '') { printAddrEl.innerText = addr.trim(); printAddrEl.classList.remove('hidden'); }
+                else { printAddrEl.classList.add('hidden'); }
+            }
+            if(printContactEl) {
+                if(contact && contact.trim() !== '') { printContactEl.innerText = '📞 ' + contact.trim(); printContactEl.classList.remove('hidden'); }
+                else { printContactEl.classList.add('hidden'); }
+            }
         }
         
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -1121,6 +1166,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             applyThemeLogic();
+            applyBranding();
             
             const savedLang = localStorage.getItem('salap_lang');
             if (savedLang) {
