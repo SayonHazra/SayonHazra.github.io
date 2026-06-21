@@ -52,8 +52,11 @@
         <nav class="w-full md:w-72 bg-white dark:bg-slate-800 shadow-xl z-20 transition-colors duration-200 flex flex-col print:hidden">
             <div class="p-6 flex justify-between items-center md:flex-col md:items-start md:gap-4">
                 <div>
-                    <h1 class="text-xl font-black text-blue-600 dark:text-blue-400 tracking-tight leading-none mb-1" data-i18n="app_name">FABRICATION <br><span class="text-slate-800 dark:text-white">WEIGHT CALCULATOR</span></h1>
-                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 4.3 PWA</p>
+                    <h1 class="text-xl font-black text-blue-600 dark:text-blue-400 tracking-tight leading-none mb-1">
+                        <span data-i18n="app_name_part1">FABRICATION</span> <br>
+                        <span class="text-slate-800 dark:text-white" data-i18n="app_name_part2">WEIGHT CALCULATOR</span>
+                    </h1>
+                    <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 4.4 PWA</p>
                 </div>
                 <div class="flex gap-2">
                     <select id="langToggle" onchange="changeLanguage()" class="p-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded cursor-pointer border-none outline-none focus:ring-0">
@@ -100,31 +103,28 @@
         <main class="flex-1 p-4 md:p-10 text-slate-800 dark:text-slate-100 overflow-y-auto print:p-0 relative">
             
             <!-- SECTION 0: HOME DASHBOARD -->
-            <div id="section-home" class="max-w-6xl mx-auto space-y-6 print:hidden">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-10 transition-colors">
-                    <h2 class="text-3xl font-black mb-2 text-slate-900 dark:text-white uppercase tracking-tighter" data-i18n="welcome_title">Welcome to the Toolkit</h2>
-                    <p class="text-slate-500 dark:text-slate-400 mb-8" data-i18n="welcome_sub">Select a module below to get started.</p>
+            <div id="section-home" class="max-w-5xl mx-auto space-y-6 print:hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 md:p-12 transition-colors">
+                    <h2 class="text-3xl md:text-4xl font-black mb-2 text-slate-900 dark:text-white uppercase tracking-tighter" data-i18n="welcome_title">Welcome to the Toolkit</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mb-10 text-lg" data-i18n="welcome_sub">Select a module below to get started.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Card 1: BOM -->
-                        <div onclick="switchMainTab('weight')" class="cursor-pointer group p-6 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:shadow-md transition-all">
-                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">⚖️</div>
-                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2" data-i18n="nav_fab">Fabrication BOM</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400" data-i18n="desc_fab">Calculate weights for plates, pipes, and profiles.</p>
+                        <div onclick="switchMainTab('weight')" class="cursor-pointer p-8 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:bg-white dark:hover:bg-slate-700 shadow-sm hover:shadow-xl transform hover:-translate-y-1 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-200 ease-in-out">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3" data-i18n="nav_fab">⚖️ Fabrication BOM</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_fab">Calculate weights for plates, pipes, and profiles.</p>
                         </div>
                         
                         <!-- Card 2: Unit Converter -->
-                        <div onclick="switchMainTab('units')" class="cursor-pointer group p-6 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:shadow-md transition-all">
-                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">📏</div>
-                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2" data-i18n="nav_units">Unit Converter</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400" data-i18n="desc_unit">Convert length measurements quickly.</p>
+                        <div onclick="switchMainTab('units')" class="cursor-pointer p-8 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:bg-white dark:hover:bg-slate-700 shadow-sm hover:shadow-xl transform hover:-translate-y-1 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-200 ease-in-out">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3" data-i18n="nav_units">📏 Unit Converter</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_unit">Convert length measurements quickly.</p>
                         </div>
 
                         <!-- Card 3: About -->
-                        <div onclick="switchMainTab('about')" class="cursor-pointer group p-6 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:shadow-md transition-all">
-                            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">ℹ️</div>
-                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2" data-i18n="nav_about">About Developer</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400" data-i18n="desc_about">Learn about the developer.</p>
+                        <div onclick="switchMainTab('about')" class="cursor-pointer p-8 bg-slate-50 dark:bg-slate-700/40 rounded-2xl border border-slate-200 dark:border-slate-600 hover:border-blue-500 hover:bg-white dark:hover:bg-slate-700 shadow-sm hover:shadow-xl transform hover:-translate-y-1 active:scale-95 active:bg-blue-50 dark:active:bg-blue-900/30 transition-all duration-200 ease-in-out">
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3" data-i18n="nav_about">ℹ️ About Developer</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_about">Learn about the developer.</p>
                         </div>
                     </div>
                 </div>
@@ -291,7 +291,7 @@
 
                     <div class="mt-10 p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center">
                         <h3 class="font-bold text-slate-800 dark:text-white mb-4" data-i18n="about_connect">Connect with Developer</h3>
-                        <a href="https://youtube.com/@sayonhazra?si=__aIxHVP7is1onna" target="_blank" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all flex items-center gap-2 shadow-md">
+                        <a href="https://youtube.com/@sayonhazra?si=__aIxHVP7is1onna" target="_blank" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all flex items-center gap-2 shadow-md hover:shadow-lg transform active:scale-95 duration-200">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                             Visit Sayon Hazra on YouTube
                         </a>
@@ -313,7 +313,7 @@
         // --- Multi-Language Dictionary (10 Languages) ---
         const dict = {
             en: {
-                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 Home", nav_units: "📏 Unit Converter", nav_fab: "⚖️ Fabrication BOM", nav_about: "ℹ️ About Developer",
                 welcome_title: "Welcome to the Toolkit", welcome_sub: "Select a module below to get started.",
                 desc_fab: "Calculate weights for plates, pipes, and profiles.", desc_unit: "Convert length measurements quickly.", desc_about: "Learn about the developer.",
@@ -329,7 +329,7 @@
                 f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)", f_side_a: "Side A (mm)", f_side_b: "Side B (mm)", f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)", f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)", f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)", f_base_dim: "Base Dimension (A) (mm)", f_top_dim: "Top Dimension (B) (mm)", f_base_l: "Base Length (A) (mm)", f_base_w: "Base Width (B) (mm)", f_top_od: "Top Round OD (mm)", f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
-                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৪.৩ PWA",
+                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৪.৪ PWA",
                 nav_home: "🏠 হোম", nav_units: "📏 একক রূপান্তরকারী", nav_fab: "⚖️ ফ্যাব্রিকেশন বিওএম", nav_about: "ℹ️ ডেভেলপার সম্পর্কে",
                 welcome_title: "টুলকিটে স্বাগতম", welcome_sub: "শুরু করতে নিচে থেকে একটি মডিউল নির্বাচন করুন।",
                 desc_fab: "প্লেট, পাইপ এবং প্রোফাইলের ওজন হিসাব করুন।", desc_unit: "দ্রুত দৈর্ঘ্য রূপান্তর করুন।", desc_about: "ডেভেলপার সম্পর্কে জানুন।",
@@ -345,7 +345,7 @@
                 f_od: "বাইরের ব্যাস (OD) (mm)", f_id: "ভিতরের ব্যাস (ID) (mm)", f_dia: "ব্যাস (mm)", f_side_a: "বাহু A (mm)", f_side_b: "বাহু B (mm)", f_d1: "শীর্ষ ব্যাস (D1) (mm)", f_d2: "নিচের ব্যাস (D2) (mm)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)", f_sf: "সোজা মুখ (SF) (mm)", f_h_sec: "বিভাগের গভীরতা (h) (mm)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b) (mm)", f_tw: "ওয়েব পুরুত্ব (tw) (mm)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf) (mm)", f_leg_a: "লেগ A (mm)", f_leg_b: "লেগ B (mm)", f_base_dim: "বেস পরিমাপ (A) (mm)", f_top_dim: "শীর্ষ পরিমাপ (B) (mm)", f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_od: "শীর্ষ রাউন্ড OD (mm)", f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R) (mm)", f_pieces: "মোট পিস (N)"
             },
             hi: {
-                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 4.3 PWA",
+                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 4.4 PWA",
                 nav_home: "🏠 होम", nav_units: "📏 इकाई कनवर्टर", nav_fab: "⚖️ फैब्रिकेशन BOM", nav_about: "ℹ️ डेवलपर के बारे में",
                 welcome_title: "टूलकिट में आपका स्वागत है", welcome_sub: "आरंभ करने के लिए नीचे से एक मॉड्यूल चुनें।",
                 desc_fab: "प्लेट, पाइप और प्रोफाइल के वजन की गणना करें।", desc_unit: "लंबाई को जल्दी से बदलें।", desc_about: "डेवलपर के बारे में जानें।",
@@ -361,7 +361,7 @@
                 f_od: "बाहरी व्यास (OD) (mm)", f_id: "आंतरिक व्यास (ID) (mm)", f_dia: "व्यास (mm)", f_side_a: "साइड A (mm)", f_side_b: "साइड B (mm)", f_d1: "शीर्ष OD (D1) (mm)", f_d2: "निचला OD (D2) (mm)", f_base_od: "बेस OD (mm)", f_h: "ऊर्ध्वाधर ऊंचाई (mm)", f_sf: "सीधा चेहरा (SF) (mm)", f_h_sec: "अनुभाग की गहराई (h) (mm)", f_w_fl: "फ्लेंज की चौड़ाई (b) (mm)", f_tw: "वेब मोटाई (tw) (mm)", f_tf: "फ्लेंज मोटाई (tf) (mm)", f_leg_a: "लेग A (mm)", f_leg_b: "लेग B (mm)", f_base_dim: "बेस आयाम (A) (mm)", f_top_dim: "शीर्ष आयाम (B) (mm)", f_base_l: "बेस लंबाई (mm)", f_base_w: "बेस चौड़ाई (mm)", f_top_od: "शीर्ष राउंड OD (mm)", f_bend_ang: "कुल बेंड कोण (°)", f_bend_rad: "सेंटरलाइन त्रिज्या (R) (mm)", f_pieces: "कुल टुकड़े (N)"
             },
             ta: {
-                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 முகப்பு", nav_units: "📏 அலகு மாற்றி", nav_fab: "⚖️ ஃபேப்ரிகேஷன் BOM", nav_about: "ℹ️ டெவலப்பர் பற்றி",
                 welcome_title: "டூல்கிட்டுக்கு வரவேற்கிறோம்", welcome_sub: "தொடங்க கீழே உள்ள ஒரு தொகுதியைத் தேர்ந்தெடுக்கவும்.",
                 desc_fab: "தட்டுகள் மற்றும் குழாய்களின் எடையைக் கணக்கிடுங்கள்.", desc_unit: "நீளத்தை விரைவாக மாற்றவும்.", desc_about: "டெவலப்பரைப் பற்றி அறியுங்கள்.",
@@ -377,7 +377,7 @@
                 f_od: "வெளிப்புற விட்டம் (OD)", f_id: "உட்புற விட்டம் (ID)", f_dia: "விட்டம் (mm)", f_side_a: "பக்கம் A (mm)", f_side_b: "பக்கம் B (mm)", f_d1: "மேல் OD (D1)", f_d2: "கீழ் OD (D2)", f_base_od: "அடிப்படை OD", f_h: "செங்குத்து உயரம் (mm)", f_sf: "நேரான முகம் (SF)", f_h_sec: "ஆழம் (h)", f_w_fl: "ஃபிளேன்ஜ் அகலம் (b)", f_tw: "வெப் தடிமன் (tw)", f_tf: "ஃபிளேன்ஜ் தடிமன் (tf)", f_leg_a: "கால் A", f_leg_b: "கால் B", f_base_dim: "அடிப்படை அளவு (A)", f_top_dim: "மேல் அளவு (B)", f_base_l: "அடிப்படை நீளம்", f_base_w: "அடிப்படை அகலம்", f_top_od: "மேல் வட்ட OD", f_bend_ang: "வளைவு கோணம் (°)", f_bend_rad: "மையப்பகுதி ஆரம் (R)", f_pieces: "மொத்த துண்டுகள் (N)"
             },
             ml: {
-                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 ഹോം", nav_units: "📏 യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "⚖️ ഫാബ്രിക്കേഷൻ BOM", nav_about: "ℹ️ ഡെവലപ്പറെക്കുറിച്ച്",
                 welcome_title: "ടൂൾകിറ്റിലേക്ക് സ്വാഗതം", welcome_sub: "ആരംഭിക്കുന്നതിന് താഴെ നിന്ന് ഒരു മൊഡ്യൂൾ തിരഞ്ഞെടുക്കുക.",
                 desc_fab: "പ്ലേറ്റുകൾക്കും പൈപ്പുകൾക്കുമുള്ള ഭാരം കണക്കാക്കുക.", desc_unit: "നീളം വേഗത്തിൽ മാറ്റുക.", desc_about: "ഡെവലപ്പറെക്കുറിച്ച് അറിയുക.",
@@ -393,7 +393,7 @@
                 f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ലംബ ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "സെന്റർലൈൻ റേഡിയസ് (R)", f_pieces: "ആകെ കഷണങ്ങൾ (N)"
             },
             te: {
-                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 హోమ్", nav_units: "📏 యూనిట్ కన్వర్టర్", nav_fab: "⚖️ ఫ్యాబ్రికేషన్ BOM", nav_about: "ℹ️ డెవలపర్ గురించి",
                 welcome_title: "టూల్‌కిట్‌కు స్వాగతం", welcome_sub: "ప్రారంభించడానికి దిగువ నుండి ఒక మాడ్యూల్‌ని ఎంచుకోండి.",
                 desc_fab: "ప్లేట్లు, పైపులు మరియు ప్రొఫైల్స్ బరువు లెక్కించండి.", desc_unit: "పొడవులను త్వరగా మార్చండి.", desc_about: "డెవలపర్ గురించి తెలుసుకోండి.",
@@ -409,7 +409,7 @@
                 f_od: "వెలుపలి వ్యాసం (OD)", f_id: "లోపలి వ్యాసం (ID)", f_dia: "వ్యాసం (mm)", f_side_a: "సైడ్ A", f_side_b: "సైడ్ B", f_d1: "పై OD (D1)", f_d2: "క్రింది OD (D2)", f_base_od: "బేస్ OD", f_h: "నిలువు ఎత్తు", f_sf: "స్ట్రెయిట్ ఫేస్ (SF)", f_h_sec: "లోతు (h)", f_w_fl: "ఫ్లాంజ్ వెడల్పు (b)", f_tw: "వెబ్ మందం (tw)", f_tf: "ఫ్లాంజ్ మందం (tf)", f_leg_a: "లెగ్ A", f_leg_b: "లెగ్ B", f_base_dim: "బేస్ కొలత (A)", f_top_dim: "పై కొలత (B)", f_base_l: "బేస్ పొడవు", f_base_w: "బేస్ వెడల్పు", f_top_od: "పై రౌండ్ OD", f_bend_ang: "బెండ్ యాంగిల్ (°)", f_bend_rad: "సెంటర్‌లైన్ రేడియస్ (R)", f_pieces: "మొత్తం ముక్కలు (N)"
             },
             or: {
-                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 ହୋମ୍", nav_units: "📏 ୟୁନିଟ୍ କନଭର୍ଟର", nav_fab: "⚖️ ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_about: "ℹ️ ଡେଭଲପର୍ ବିଷୟରେ",
                 welcome_title: "ଟୁଲକିଟ୍ କୁ ସ୍ୱାଗତ", welcome_sub: "ଆରମ୍ଭ କରିବା ପାଇଁ ତଳୁ ଗୋଟିଏ ମଡ୍ୟୁଲ୍ ବାଛନ୍ତୁ।",
                 desc_fab: "ପ୍ଲେଟ୍, ପାଇପ୍ ଏବଂ ପ୍ରୋଫାଇଲ୍ ର ଓଜନ ହିସାବ କରନ୍ତୁ।", desc_unit: "ଲମ୍ବ ଶୀଘ୍ର ପରିବର୍ତ୍ତନ କରନ୍ତୁ।", desc_about: "ଡେଭଲପର୍ ବିଷୟରେ ଜାଣନ୍ତୁ।",
@@ -425,7 +425,7 @@
                 f_od: "ବାହାର ବ୍ୟାସ (OD)", f_id: "ଭିତର ବ୍ୟାସ (ID)", f_dia: "ବ୍ୟାସ (mm)", f_side_a: "ପାର୍ଶ୍ୱ A", f_side_b: "ପାର୍ଶ୍ୱ B", f_d1: "ଉପର OD (D1)", f_d2: "ତଳ OD (D2)", f_base_od: "ବେସ୍ OD", f_h: "ଉଚ୍ଚତା (mm)", f_sf: "ଷ୍ଟ୍ରେଟ୍ ଫେସ୍ (SF)", f_h_sec: "ଗଭୀରତା (h)", f_w_fl: "ଫ୍ଲାଞ୍ଜ ପ୍ରସ୍ଥ (b)", f_tw: "ୱେବ୍ ମୋଟେଇ (tw)", f_tf: "ଫ୍ଲାଞ୍ଜ ମୋଟେଇ (tf)", f_leg_a: "ଲେଗ୍ A", f_leg_b: "ଲେଗ୍ B", f_base_dim: "ବେସ୍ ପରିମାପ (A)", f_top_dim: "ଉପର ପରିମାପ (B)", f_base_l: "ବେସ୍ ଲମ୍ବ", f_base_w: "ବେସ୍ ପ୍ରସ୍ଥ", f_top_od: "ଉପର ରାଉଣ୍ଡ OD", f_bend_ang: "ବେଣ୍ଡ୍ ଆଙ୍ଗେଲ୍ (°)", f_bend_rad: "ସେଣ୍ଟର୍ ଲାଇନ୍ ରେଡିଅସ୍ (R)", f_pieces: "ମୋଟ ପିସ୍ (N)"
             },
             pa: {
-                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 ਹੋਮ", nav_units: "📏 ਯੂਨਿਟ ਕਨਵਰਟਰ", nav_fab: "⚖️ ਫੈਬਰੀਕੇਸ਼ਨ BOM", nav_about: "ℹ️ ਡਿਵੈਲਪਰ ਬਾਰੇ",
                 welcome_title: "ਟੂਲਕਿੱਟ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ", welcome_sub: "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਮੋਡੀਊਲ ਦੀ ਚੋਣ ਕਰੋ।",
                 desc_fab: "ਪਲੇਟਾਂ, ਪਾਈਪਾਂ ਅਤੇ ਪ੍ਰੋਫਾਈਲਾਂ ਦਾ ਭਾਰ ਕੱਢੋ।", desc_unit: "ਲੰਬਾਈ ਨੂੰ ਜਲਦੀ ਬਦਲੋ।", desc_about: "ਡਿਵੈਲਪਰ ਬਾਰੇ ਜਾਣੋ।",
@@ -441,7 +441,7 @@
                 f_od: "ਬਾਹਰੀ ਵਿਆਸ (OD)", f_id: "ਅੰਦਰੂਨੀ ਵਿਆਸ (ID)", f_dia: "ਵਿਆਸ (mm)", f_side_a: "ਸਾਈਡ A", f_side_b: "ਸਾਈਡ B", f_d1: "ਉੱਪਰਲਾ OD (D1)", f_d2: "ਹੇਠਲਾ OD (D2)", f_base_od: "ਬੇਸ OD", f_h: "ਉਚਾਈ (mm)", f_sf: "ਸਿੱਧਾ ਫੇਸ (SF)", f_h_sec: "ਡੂੰਘਾਈ (h)", f_w_fl: "ਫਲੈਂਜ ਚੌੜਾਈ (b)", f_tw: "ਵੈੱਬ ਮੋਟਾਈ (tw)", f_tf: "ਫਲੈਂਜ ਮੋਟਾਈ (tf)", f_leg_a: "ਲੈੱਗ A", f_leg_b: "ਲੈੱਗ B", f_base_dim: "ਬੇਸ ਮਾਪ (A)", f_top_dim: "ਉੱਪਰਲਾ ਮਾਪ (B)", f_base_l: "ਬੇਸ ਲੰਬਾਈ", f_base_w: "ਬੇਸ ਚੌੜਾਈ", f_top_od: "ਉੱਪਰਲਾ ਰਾਊਂਡ OD", f_bend_ang: "ਬੈਂਡ ਐਂਗਲ (°)", f_bend_rad: "ਸੈਂਟਰਲਾਈਨ ਰੇਡੀਅਸ (R)", f_pieces: "ਕੁੱਲ ਪੀਸ (N)"
             },
             ur: {
-                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 ہوم", nav_units: "📏 یونٹ کنورٹر", nav_fab: "⚖️ فیبریکیشن BOM", nav_about: "ℹ️ ڈیولپر کے بارے میں",
                 welcome_title: "ٹول کٹ میں خوش آمدید", welcome_sub: "شروع کرنے کے لیے نیچے سے ایک ماڈیول منتخب کریں۔",
                 desc_fab: "پلیٹس، پائپ اور پروفائلز کا وزن معلوم کریں۔", desc_unit: "لمبائی کو جلدی سے تبدیل کریں۔", desc_about: "ڈیولپر کے بارے میں جانیں۔",
@@ -457,7 +457,7 @@
                 f_od: "بیرونی قطر (OD)", f_id: "اندرونی قطر (ID)", f_dia: "قطر (mm)", f_side_a: "سائیڈ A", f_side_b: "سائیڈ B", f_d1: "اوپری OD (D1)", f_d2: "نچلا OD (D2)", f_base_od: "بیس OD", f_h: "اونچائی (mm)", f_sf: "سیدھا چہرہ (SF)", f_h_sec: "گہرائی (h)", f_w_fl: "فلینج کی چوڑائی (b)", f_tw: "ویب کی موٹائی (tw)", f_tf: "فلینج کی موٹائی (tf)", f_leg_a: "لیگ A", f_leg_b: "لیگ B", f_base_dim: "بیس کی پیمائش (A)", f_top_dim: "اوپری پیمائش (B)", f_base_l: "بیس کی لمبائی", f_base_w: "بیس کی چوڑائی", f_top_od: "اوپری گول OD", f_bend_ang: "بینڈ اینگل (°)", f_bend_rad: "سینٹرلائن ریڈیس (R)", f_pieces: "کل ٹکڑے (N)"
             },
             as: {
-                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 4.3 PWA",
+                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 4.4 PWA",
                 nav_home: "🏠 হোম", nav_units: "📏 একক ৰূপান্তৰকাৰী", nav_fab: "⚖️ ফেব্ৰিকেচন BOM", nav_about: "ℹ️ ডেভেলপাৰৰ বিষয়ে",
                 welcome_title: "টুলকিটলৈ স্বাগতম", welcome_sub: "আৰম্ভ কৰিবলৈ তলৰ পৰা এটা মডিউল বাছক।",
                 desc_fab: "প্লেট, পাইপ আৰু প্ৰোফাইলৰ ওজন হিচাপ কৰক।", desc_unit: "দৈৰ্ঘ্য দ্ৰুতভাৱে ৰূপান্তৰ কৰক।", desc_about: "ডেভেলপাৰৰ বিষয়ে জানক।",
