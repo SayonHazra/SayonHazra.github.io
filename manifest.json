@@ -1,7 +1,7 @@
 {
-  "name": "Salap Factory Toolkit",
-  "short_name": "SalapFactory",
-  "description": "Fabrication Toolkit and Engineering Calculator",
+  "name": "Fabrication Weight Calculator",
+  "short_name": "Weight Calc",
+  "description": "Fabrication Toolkit and Engineering Calculator for NSNWW & United Fabricators",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
