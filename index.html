@@ -77,7 +77,7 @@
                         <span data-i18n="app_name_part1">FABRICATION</span> <br>
                         <span class="text-slate-800 dark:text-white" data-i18n="app_name_part2">WEIGHT CALCULATOR</span>
                     </h1>
-                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 6.4 PWA</p>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 6.5 PWA</p>
                 </div>
             </div>
             
@@ -135,7 +135,7 @@
 
             <div id="section-weight" class="hidden max-w-6xl mx-auto">
                 <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     <span data-i18n="btn_back">Back to Dashboard</span>
                 </button>
 
@@ -217,19 +217,11 @@
                             </div>
                         </div>
 
-                        <div id="exportBOMContainer" class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200 bg-white dark:bg-slate-800/90">
-                            
-                            <div id="printHeader" class="hidden text-center bg-white border-b-2 border-slate-200 pb-4 pt-8 px-8">
-                                <h1 id="printCompanyName" class="text-3xl font-black text-slate-900 tracking-tighter uppercase">FABRICATION WEIGHT CALCULATOR</h1>
-                                <h2 id="printCompanyAddr" class="text-lg font-bold text-slate-700 mt-1 hidden"></h2>
-                                <p id="printCompanyContact" class="text-sm font-semibold text-slate-600 mt-1 hidden"></p>
-                                <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mt-2">Project Bill of Materials</p>
-                            </div>
-
+                        <div class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200">
                             <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-wrap justify-between items-center gap-4">
                                 <h3 class="font-bold text-slate-700 dark:text-slate-200 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
                                 
-                                <div id="actionButtons" class="flex flex-wrap gap-4 items-center">
+                                <div class="flex flex-wrap gap-4 items-center">
                                     <button onclick="exportToPDF()" class="text-sm px-3 py-1.5 bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-1.5">
                                         <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                         <span id="pdfBtnText" data-i18n="btn_print">Save PDF</span>
@@ -242,7 +234,7 @@
                                 </div>
                             </div>
                             <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm whitespace-nowrap text-slate-800 dark:text-slate-200">
+                                <table class="w-full text-left text-sm whitespace-nowrap">
                                     <thead>
                                         <tr class="text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700/50">
                                             <th class="px-6 py-3 font-semibold" data-i18n="th_shape">Shape</th>
@@ -363,7 +355,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" data-i18n="lbl_comp_contact">Contact Number</label>
-                                    <input type="text" id="prefCompContact" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="e.g. +91 9999999">
+                                    <input type="text" id="prefCompContact" class="w-full max-w-md p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-brand outline-none bg-white/50 dark:bg-slate-900/50" placeholder="+91 9999999">
                                 </div>
                             </div>
                         </div>
@@ -479,7 +471,7 @@
                 nav_home: "ഹോം", nav_units: "യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "ഫാബ്രിക്കേഷൻ BOM", nav_settings: "ക്രമീകരണങ്ങൾ", btn_back: "ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക",
                 welcome_title: "സ്വാഗതം", welcome_name: "സ്വാഗതം {name}", welcome_sub: "ആരംഭിക്കുന്നതിന് താഴെ നിന്ന് ഒരു മൊഡ്യൂൾ തിരഞ്ഞെടുക്കുക.",
                 desc_fab: "പ്ലേറ്റുകൾക്കും പൈപ്പുകൾക്കുമുള്ള ഭാരം കണക്കാക്കുക.", desc_unit: "നീളം വേഗത്തിൽ മാറ്റുക.", desc_settings: "തീമും ഭാഷയും മാറ്റുക.",
-                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാంద్రത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
+                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാന്ദ്രത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
                 title_converter: "കൃത്യമായ നീള കൺവെർട്ടർ", lbl_input_val: "ഇൻപുട്ട് മൂല്യം", lbl_from_unit: "ഏതിൽനിന്ന്", lbl_to_unit: "ഏതിലേക്ക്", lbl_result_meas: "ഫലം", lbl_fab_profiles: "ഫാബ്രിക്കേഷൻ പ്രൊഫൈലുകൾ",
                 sh_plate: "പ്ലേറ്റ് / ബ്ലാങ്ക്", sh_hollow: "പൊള്ളയായ", sh_solid: "സോളിഡ്", sh_cone: "കോൺ", sh_pyramid: "പിരമിഡ്", sh_sq2rnd: "സ്ക്വയർ ടു റൗണ്ട്", sh_miter: "മൈറ്റർ ബെൻഡ്", sh_dishend: "ഡിഷ് എൻഡ്", sh_ring: "റിംഗ്", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA",
                 lbl_prof_ref: "പ്രൊഫൈൽ റഫറൻസ്", btn_calc: "കണക്കാക്കി ചേർക്കുക", lbl_current_mass: "നിലവിലെ ഭാരം", lbl_bom: "BOM", btn_clear: "എല്ലാം മായ്ക്കുക", btn_print: "PDF സേവ് ചെയ്യുക", btn_wa: "WhatsApp", th_shape: "ആകൃതി", th_material: "മെറ്റീരിയൽ", th_qty: "അളവ്", th_result: "മൊത്തം ഭാരം", lbl_total: "മൊത്തം അസംബ്ലി:", msg_empty_bom: "BOM ശൂന്യമാണ്. ദയവായി ആദ്യം ഇനങ്ങൾ ചേർക്കുക.",
@@ -490,7 +482,7 @@
                 f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
                 f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
                 f_type_sq2rnd: "തരം", f_opt_square: "സ്ക്വയർ ടു റൗണ്ട്", f_opt_rect_rnd: "റെക്റ്റ് ടു റൗണ്ട്",
-                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
+                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ్యాസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_base_dim: "ബേസ് അളവ് (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_base_l: "ബേസ് നീളം", f_base_w: "ബേസ് വീതി", f_top_od: "മുകളിലെ റൗണ്ട് OD", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
             },
             te: {
                 app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 6.4 PWA",
@@ -651,7 +643,6 @@
             
             applyThemeLogic();
             changeLanguage();
-            applyBranding();
             
             const fb = document.getElementById('saveFeedback');
             if(fb) {
@@ -684,28 +675,6 @@
             
             if(isDark) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
-        }
-
-        function applyBranding() {
-            const name = localStorage.getItem('salap_comp_name');
-            const addr = localStorage.getItem('salap_comp_addr');
-            const contact = localStorage.getItem('salap_comp_contact');
-
-            const printNameEl = document.getElementById('printCompanyName');
-            const printAddrEl = document.getElementById('printCompanyAddr');
-            const printContactEl = document.getElementById('printCompanyContact');
-
-            if(printNameEl) {
-                printNameEl.innerText = name && name.trim() !== '' ? name.trim() : 'FABRICATION WEIGHT CALCULATOR';
-            }
-            if(printAddrEl) {
-                if(addr && addr.trim() !== '') { printAddrEl.innerText = addr.trim(); printAddrEl.classList.remove('hidden'); }
-                else { printAddrEl.classList.add('hidden'); }
-            }
-            if(printContactEl) {
-                if(contact && contact.trim() !== '') { printContactEl.innerText = '📞 ' + contact.trim(); printContactEl.classList.remove('hidden'); }
-                else { printContactEl.classList.add('hidden'); }
-            }
         }
         
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -839,7 +808,7 @@
             }
 
             let html = '';
-            const L = `<div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div></div>`;
+            const L = `<div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>`;
             const Qty = `<div class="input-group"><label>${t('f_qty')}</label><input type="number" id="inp_Qty" value="1" min="1"></div>`;
 
             if(shape === 'plate') {
@@ -1048,36 +1017,72 @@
             const originalText = pdfBtnText.innerText;
             pdfBtnText.innerText = "..."; 
 
-            const element = document.getElementById('exportBOMContainer');
-            const printHeader = document.getElementById('printHeader');
-            const actionBtns = document.getElementById('actionButtons');
+            const compName = localStorage.getItem('salap_comp_name') || 'FABRICATION WEIGHT CALCULATOR';
+            const compAddr = localStorage.getItem('salap_comp_addr') || '';
+            const compContact = localStorage.getItem('salap_comp_contact') || '';
 
-            printHeader.classList.remove('hidden');
-            actionBtns.style.display = 'none';
-            
-            const htmlElement = document.documentElement;
-            const wasDark = htmlElement.classList.contains('dark');
-            if (wasDark) htmlElement.classList.remove('dark');
+            let tableRows = '';
+            const rows = document.querySelectorAll('#historyBody tr');
+            rows.forEach((row, i) => {
+                const cols = row.querySelectorAll('td');
+                tableRows += `
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px 8px; color: #475569;">${i+1}</td>
+                        <td style="padding: 10px 8px; font-weight: 600; color: #1e293b;">${cols[0].innerText}</td>
+                        <td style="padding: 10px 8px; color: #64748b;">${cols[1].innerText}</td>
+                        <td style="padding: 10px 8px; text-align: center; font-weight: 600; color: #475569;">${cols[2].innerText}</td>
+                        <td style="padding: 10px 8px; text-align: right; font-weight: 700; color: #2563eb;">${cols[3].innerText}</td>
+                    </tr>
+                `;
+            });
+
+            const htmlContent = `
+                <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: white; padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1e293b; padding-bottom: 20px;">
+                        <h1 style="margin: 0; font-size: 26px; font-weight: 900; color: #0f172a; text-transform: uppercase;">${compName}</h1>
+                        ${compAddr ? `<p style="margin: 5px 0 0 0; font-size: 14px; color: #475569;">${compAddr}</p>` : ''}
+                        ${compContact ? `<p style="margin: 5px 0 0 0; font-size: 14px; font-weight: 600; color: #475569;">📞 ${compContact}</p>` : ''}
+                        <p style="margin: 15px 0 0 0; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8;">Project Bill of Materials</p>
+                    </div>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                        <thead>
+                            <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left; color: #64748b;">
+                                <th style="padding: 12px 8px;">#</th>
+                                <th style="padding: 12px 8px;">Shape</th>
+                                <th style="padding: 12px 8px;">Material</th>
+                                <th style="padding: 12px 8px; text-align: center;">Qty</th>
+                                <th style="padding: 12px 8px; text-align: right;">Total Mass</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                        <tfoot>
+                            <tr style="border-top: 3px solid #2563eb;">
+                                <td colspan="4" style="padding: 15px 8px; text-align: right; font-weight: 800; font-size: 16px; color: #1e293b; letter-spacing: 1px;">TOTAL ASSEMBLY:</td>
+                                <td style="padding: 15px 8px; text-align: right; font-weight: 900; font-size: 18px; color: #2563eb;">${totalAssemblyWeight.toFixed(3)} kg</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            `;
 
             const opt = {
                 margin:       0.4,
                 filename:     'Fabrication_BOM.pdf',
                 image:        { type: 'jpeg', quality: 1 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
 
-            html2pdf().set(opt).from(element).save().then(() => {
-                printHeader.classList.add('hidden');
-                actionBtns.style.display = 'flex';
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+
+            html2pdf().set(opt).from(tempDiv).save().then(() => {
                 pdfBtnText.innerText = originalText;
-                if (wasDark) htmlElement.classList.add('dark');
             }).catch(err => {
                 console.error("PDF Export Error: ", err);
-                printHeader.classList.add('hidden');
-                actionBtns.style.display = 'flex';
                 pdfBtnText.innerText = originalText;
-                if (wasDark) htmlElement.classList.add('dark');
                 alert("Failed to export PDF. Please try again.");
             });
         }
@@ -1116,7 +1121,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             applyThemeLogic();
-            applyBranding();
             
             const savedLang = localStorage.getItem('salap_lang');
             if (savedLang) {
