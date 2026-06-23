@@ -600,6 +600,16 @@
             }
         };
 
+        // Inject Dishend Keys dynamically for all languages
+        const dishendTranslations = {
+            en: { f_dish_type: "Dishend Type", f_tori: "Torispherical", f_ellip: "Ellipsoidal", f_hemi: "Hemispherical", f_blank_dia: "Dish Blank Dia (mm)" },
+            bn: { f_dish_type: "ডিশএন্ডের ধরন", f_tori: "টোরিস্ফেরিক্যাল", f_ellip: "উপবৃত্তাকার (Ellipsoidal)", f_hemi: "অর্ধগোলাকার (Hemispherical)", f_blank_dia: "ডিশ ব্ল্যাঙ্ক ব্যাস (mm)" },
+            hi: { f_dish_type: "डिशएंड प्रकार", f_tori: "टोरिस्फेरिकल", f_ellip: "एलिप्सोइडल", f_hemi: "हेमिस्फेरिकल", f_blank_dia: "डिश ब्लैंक व्यास (mm)" }
+        };
+        Object.keys(dict).forEach(lang => {
+            Object.assign(dict[lang], dishendTranslations[lang] || dishendTranslations['en']);
+        });
+
         let currentLang = 'en';
         
         function changeLanguage() {
@@ -777,6 +787,49 @@
 
         let totalAssemblyWeight = 0;
         let activeShape = 'plate';
+        let currentDishType = 'tori';
+
+        function setDishType(type) {
+            currentDishType = type;
+            const btns = ['tori', 'ellip', 'hemi'];
+            btns.forEach(b => {
+                const el = document.getElementById('dt_' + b);
+                if(el) {
+                    if(b === type) {
+                        el.className = 'flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all';
+                    } else {
+                        el.className = 'flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer';
+                    }
+                }
+            });
+            updateDishBlank();
+        }
+
+        function updateDishBlank() {
+            if(activeShape !== 'dishend') return;
+            const OD = parseFloat(document.getElementById('inp_OD')?.value) || 0;
+            const SF = parseFloat(document.getElementById('inp_SF')?.value) || 0;
+            let blankDia = 0;
+
+            if (OD > 0) {
+                if (currentDishType === 'tori') {
+                    blankDia = (1.12 * OD) + (2 * SF);
+                } else if (currentDishType === 'ellip') {
+                    blankDia = (1.16 * OD) + (2 * SF); // 2:1 Semi-Ellipsoidal standard approximation
+                } else if (currentDishType === 'hemi') {
+                    blankDia = (1.57 * OD) + (2 * SF); // Pi/2 approximation for Hemispherical
+                }
+            }
+            
+            const blankInp = document.getElementById('inp_BlankDia');
+            if (blankInp) {
+                if (OD > 0) {
+                    blankInp.value = Math.ceil(blankDia);
+                } else {
+                    blankInp.value = '';
+                }
+            }
+        }
 
         function togglePlateInputs() {
             const type = document.getElementById('inp_plate_type').value;
@@ -882,7 +935,10 @@
                 html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
             }
             else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
-            else if(shape === 'dishend') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
+            else if(shape === 'dishend') { 
+                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group sm:col-span-2"><label>${t('f_dish_type')}</label><div class="flex gap-1 bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-lg border border-slate-200 dark:border-slate-700"><button id="dt_tori" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all" onclick="setDishType('tori')">${t('f_tori')}</button><button id="dt_ellip" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('ellip')">${t('f_ellip')}</button><button id="dt_hemi" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('hemi')">${t('f_hemi')}</button></div></div><div class="input-group"><label>${t('f_blank_dia')}</label><input type="number" id="inp_BlankDia" min="0" class="bg-blue-50/50 dark:bg-blue-900/20 text-brand font-bold border-blue-200 dark:border-blue-800"></div>` + Qty; 
+                currentDishType = 'tori';
+            }
             else if(['ismb','ismc'].includes(shape)) { html = `<div class="input-group"><label>${t('f_h_sec')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_w_fl')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_tw')}</label><input type="number" id="inp_tw" min="0"></div><div class="input-group"><label>${t('f_tf')}</label><input type="number" id="inp_tf" min="0"></div>` + L + Qty; }
             else if(shape === 'isa') { html = `<div class="input-group"><label>${t('f_leg_a')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_leg_b')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + L + Qty; }
             
@@ -1006,9 +1062,13 @@
                 volume = Math.PI * (Math.pow(OD/2, 2) - Math.pow(ID/2, 2)) * T;
             }
             else if(activeShape === 'dishend') {
-                const OD = getVal('inp_OD'), SF = getVal('inp_SF') !== null ? getVal('inp_SF') : 25, T = getVal('inp_T');
-                if (!OD || !T) return showError("Fields missing.", ['inp_OD','inp_T'], 'errorBox', 'inputGrid');
-                volume = (Math.PI / 4) * Math.pow((1.12 * OD) + (2 * SF), 2) * T;
+                const BlankDia = getVal('inp_BlankDia'), T = getVal('inp_T');
+                if (!BlankDia || !T) return showError("Fields missing.", ['inp_BlankDia','inp_T'], 'errorBox', 'inputGrid');
+                volume = (Math.PI / 4) * Math.pow(BlankDia, 2) * T;
+                let typeName = "Torispherical Dish End";
+                if (currentDishType === 'ellip') typeName = "Ellipsoidal Dish End";
+                if (currentDishType === 'hemi') typeName = "Hemispherical Dish End";
+                name = typeName;
             }
             else if(['ismb','ismc'].includes(activeShape)) {
                 const H = getVal('inp_H'), W = getVal('inp_W'), tw = getVal('inp_tw'), tf = getVal('inp_tf'), L = getVal('inp_L');
