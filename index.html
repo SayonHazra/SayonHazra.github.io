@@ -606,8 +606,20 @@
             bn: { f_dish_type: "ডিশএন্ডের ধরন", f_tori: "টোরিস্ফেরিক্যাল", f_ellip: "উপবৃত্তাকার (Ellipsoidal)", f_hemi: "অর্ধগোলাকার (Hemispherical)", f_blank_dia: "ডিশ ব্ল্যাঙ্ক ব্যাস (mm)" },
             hi: { f_dish_type: "डिशएंड प्रकार", f_tori: "टोरिस्फेरिकल", f_ellip: "एलिप्सोइडल", f_hemi: "हेमिस्फेरिकल", f_blank_dia: "डिश ब्लैंक व्यास (mm)" }
         };
+        const pyramidTranslations = {
+            en: { f_base_l: "Base Length (mm)", f_base_w: "Base Width (mm)", f_top_l: "Top Length (mm)", f_top_w: "Top Width (mm)" },
+            bn: { f_base_l: "বেস দৈর্ঘ্য (mm)", f_base_w: "বেস প্রস্থ (mm)", f_top_l: "শীর্ষ দৈর্ঘ্য (mm)", f_top_w: "শীর্ষ প্রস্থ (mm)" },
+            hi: { f_base_l: "बेस लंबाई (mm)", f_base_w: "बेस चौड़ाई (mm)", f_top_l: "शीर्ष लंबाई (mm)", f_top_w: "शीर्ष चौड़ाई (mm)" },
+            ta: { f_base_l: "அடிப்படை நீளம் (mm)", f_base_w: "அடிப்படை அகலம் (mm)", f_top_l: "மேல் நீளம் (mm)", f_top_w: "மேல் அகலம் (mm)" },
+            ml: { f_base_l: "ബേസ് നീളം (mm)", f_base_w: "ബേസ് വീതി (mm)", f_top_l: "മുകളിലെ നീളം (mm)", f_top_w: "മുകളിലെ വീതി (mm)" },
+            te: { f_base_l: "బేస్ పొడవు (mm)", f_base_w: "బేస్ వెడల్పు (mm)", f_top_l: "పై పొడవు (mm)", f_top_w: "పై వెడల్పు (mm)" },
+            or: { f_base_l: "ବେସ୍ ଲମ୍ବ (mm)", f_base_w: "ବେସ୍ ପ୍ରସ୍ଥ (mm)", f_top_l: "ଉପର ଲମ୍ବ (mm)", f_top_w: "ଉପର ପ୍ରସ୍ଥ (mm)" },
+            pa: { f_base_l: "ਬੇਸ ਲੰਬਾਈ (mm)", f_base_w: "ਬੇਸ ਚੌੜਾਈ (mm)", f_top_l: "ਉੱਪਰਲੀ ਲੰਬਾਈ (mm)", f_top_w: "ਉੱਪਰਲੀ ਚੌੜਾਈ (mm)" },
+            ur: { f_base_l: "بیس کی لمبائی (mm)", f_base_w: "بیس کی چوڑائی (mm)", f_top_l: "اوپری لمبائی (mm)", f_top_w: "اوپری چوڑائی (mm)" },
+            as: { f_base_l: "বেচ দৈৰ্ঘ্য (mm)", f_base_w: "বেচ প্ৰস্থ (mm)", f_top_l: "ওপৰৰ দৈৰ্ঘ্য (mm)", f_top_w: "ওপৰৰ প্ৰস্থ (mm)" }
+        };
         Object.keys(dict).forEach(lang => {
-            Object.assign(dict[lang], dishendTranslations[lang] || dishendTranslations['en']);
+            Object.assign(dict[lang], dishendTranslations[lang] || dishendTranslations['en'], pyramidTranslations[lang] || pyramidTranslations['en']);
         });
 
         let currentLang = 'en';
@@ -872,8 +884,16 @@
 
         function togglePyramidInputs() {
             const type = document.getElementById('inp_pyramid_type').value;
-            document.getElementById('wrap_pyr_B').style.display = type === 'truncated' ? 'flex' : 'none';
+            document.getElementById('wrap_pyr_L2').style.display = type === 'truncated' ? 'flex' : 'none';
+            document.getElementById('wrap_pyr_W2').style.display = type === 'truncated' ? 'flex' : 'none';
             document.getElementById('diagramBox').innerHTML = `<img src="${type === 'truncated' ? 'trunc_pyr-ref.jpg' : 'full_pyr-ref.jpg'}" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
+        }
+
+        function toggleSq2RndInputs() {
+            const type = document.getElementById('inp_sq2rnd_type').value;
+            document.getElementById('wrap_B').style.display = type === 'rect' ? 'flex' : 'none';
+            document.getElementById('lbl_A').innerText = type === 'square' ? t('f_base_dim') : t('f_base_l');
+            document.getElementById('diagramBox').innerHTML = `<img src="${type === 'square' ? 'sq2rnd-ref.jpg' : 'rect2rnd-ref.jpg'}" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
         }
 
         function loadShape(shape) {
@@ -898,6 +918,11 @@
 
             const grid = document.getElementById('inputGrid');
             hideError('errorBox', 'inputGrid');
+            
+            document.querySelectorAll('.shape-item').forEach(btn => {
+                btn.classList.remove('shape-btn-active');
+                if(btn.getAttribute('onclick').includes(`('${shape}')`)) btn.classList.add('shape-btn-active');
+            });
 
             if (!['plate', 'cone', 'pyramid', 'sq2rnd', 'hollow', 'solid'].includes(shape)) {
                 document.getElementById('diagramBox').innerHTML = `<img src="${shape}-ref.jpg" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
@@ -924,7 +949,7 @@
                 setTimeout(toggleConeInputs, 10);
             }
             else if(shape === 'pyramid') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_dim')}</label><input type="number" id="inp_pyr_A" min="0"></div><div id="wrap_pyr_B" class="input-group"><label>${t('f_top_dim')}</label><input type="number" id="inp_pyr_B" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_pyr_L1" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_pyr_W1" min="0"></div><div id="wrap_pyr_L2" class="input-group"><label>${t('f_top_l')}</label><input type="number" id="inp_pyr_L2" min="0"></div><div id="wrap_pyr_W2" class="input-group"><label>${t('f_top_w')}</label><input type="number" id="inp_pyr_W2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(togglePyramidInputs, 10);
             }
             else if(shape === 'sq2rnd') {
@@ -1023,20 +1048,25 @@
             }
             else if(activeShape === 'pyramid') {
                 const type = document.getElementById('inp_pyramid_type').value;
-                const A = getVal('inp_pyr_A'), H = getVal('inp_H'), T = getVal('inp_T');
+                const L1 = getVal('inp_pyr_L1'), W1 = getVal('inp_pyr_W1'), H = getVal('inp_H'), T = getVal('inp_T');
                 if (type === 'truncated') {
-                    const B = getVal('inp_pyr_B');
-                    if (A===null || B===null || !H || !T) return showError("Fields missing.", ['inp_pyr_A','inp_pyr_B','inp_H','inp_T'], 'errorBox', 'inputGrid');
-                    const meanA = A > T ? A - T : A;
-                    const meanB = B > T ? B - T : B;
-                    const slantH = Math.sqrt(Math.pow((meanA - meanB)/2, 2) + Math.pow(H, 2));
-                    volume = 2 * (meanA + meanB) * slantH * T; 
+                    const L2 = getVal('inp_pyr_L2'), W2 = getVal('inp_pyr_W2');
+                    if (L1===null || W1===null || L2===null || W2===null || !H || !T) return showError("Fields missing.", ['inp_pyr_L1','inp_pyr_W1','inp_pyr_L2','inp_pyr_W2','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    const meanL1 = L1 > T ? L1 - T : L1;
+                    const meanW1 = W1 > T ? W1 - T : W1;
+                    const meanL2 = L2 > T ? L2 - T : L2;
+                    const meanW2 = W2 > T ? W2 - T : W2;
+                    const slantHL = Math.sqrt(Math.pow((meanW1 - meanW2)/2, 2) + Math.pow(H, 2));
+                    const slantHW = Math.sqrt(Math.pow((meanL1 - meanL2)/2, 2) + Math.pow(H, 2));
+                    volume = ((meanL1 + meanL2) * slantHL + (meanW1 + meanW2) * slantHW) * T; 
                     name = "Truncated Pyramid";
                 } else {
-                    if (A===null || !H || !T) return showError("Fields missing.", ['inp_pyr_A','inp_H','inp_T'], 'errorBox', 'inputGrid');
-                    const meanA = A > T ? A - T : A;
-                    const slantH = Math.sqrt(Math.pow(meanA/2, 2) + Math.pow(H, 2));
-                    volume = 2 * meanA * slantH * T; 
+                    if (L1===null || W1===null || !H || !T) return showError("Fields missing.", ['inp_pyr_L1','inp_pyr_W1','inp_H','inp_T'], 'errorBox', 'inputGrid');
+                    const meanL1 = L1 > T ? L1 - T : L1;
+                    const meanW1 = W1 > T ? W1 - T : W1;
+                    const slantHL = Math.sqrt(Math.pow(meanW1/2, 2) + Math.pow(H, 2));
+                    const slantHW = Math.sqrt(Math.pow(meanL1/2, 2) + Math.pow(H, 2));
+                    volume = (meanL1 * slantHL + meanW1 * slantHW) * T; 
                     name = "Full Pyramid";
                 }
             }
