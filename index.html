@@ -19,7 +19,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- PDF Generation Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -228,11 +229,11 @@
                         </div>
 
                         <!-- BOM Table Area -->
-                        <div id="exportBOMContainer" class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200 bg-white dark:bg-slate-800/90 print:bg-transparent print:border-none print:shadow-none">
-                            <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 print:bg-transparent print:border-b-2 print:border-slate-800 border-b border-slate-200 dark:border-slate-700/50 flex flex-wrap justify-between items-center gap-4">
-                                <h3 class="font-bold text-slate-700 dark:text-slate-200 print:text-slate-900 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
+                        <div class="glass-panel rounded-2xl overflow-hidden transition-colors duration-200">
+                            <div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-900/50 flex flex-wrap justify-between items-center gap-4">
+                                <h3 class="font-bold text-slate-700 dark:text-slate-200 uppercase" data-i18n="lbl_bom">Bill of Materials (BOM)</h3>
                                 
-                                <div id="actionButtons" class="flex flex-wrap gap-4 items-center print:hidden">
+                                <div id="actionButtons" class="flex flex-wrap gap-4 items-center">
                                     <button onclick="exportToPDF()" class="text-sm px-3 py-1.5 bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded-md font-bold transition flex items-center gap-1.5">
                                         <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                         <span id="pdfBtnText" data-i18n="btn_print">Save PDF</span>
@@ -247,19 +248,19 @@
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-sm whitespace-nowrap text-slate-800 dark:text-slate-200">
                                     <thead>
-                                        <tr class="text-slate-500 dark:text-slate-400 print:text-slate-800 border-b border-slate-200 dark:border-slate-700/50 print:border-slate-300">
+                                        <tr class="text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700/50">
                                             <th class="px-6 py-3 font-semibold" data-i18n="th_shape">Shape</th>
                                             <th class="px-6 py-3 font-semibold" data-i18n="th_material">Material</th>
                                             <th class="px-6 py-3 font-semibold text-center" data-i18n="th_qty">Qty</th>
                                             <th class="px-6 py-3 font-semibold text-right" data-i18n="th_result">Result Mass</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="historyBody" class="print:text-black"></tbody>
-                                    <tfoot class="bg-slate-50/80 dark:bg-slate-900/80 print:bg-transparent font-bold border-t-2 border-brand dark:border-brand print:border-slate-800">
+                                    <tbody id="historyBody"></tbody>
+                                    <tfoot class="bg-slate-50/80 dark:bg-slate-900/80 font-bold border-t-2 border-brand dark:border-brand">
                                         <tr>
-                                            <td colspan="3" class="px-6 py-4 text-right text-slate-700 dark:text-slate-200 print:text-black tracking-wider" id="lbl_total">TOTAL ASSEMBLY:</td>
+                                            <td colspan="3" class="px-6 py-4 text-right tracking-wider" id="lbl_total">TOTAL ASSEMBLY:</td>
                                             <td class="px-6 py-4 text-right flex items-center justify-end gap-3">
-                                                <div id="bomTotalWeight" class="text-lg text-brand print:text-black">0.000 kg</div>
+                                                <div id="bomTotalWeight" class="text-lg text-brand">0.000 kg</div>
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -408,7 +409,7 @@
 
         const dict = {
             en: {
-                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 6.8 PWA",
                 nav_home: "Home", nav_units: "Unit Converter", nav_fab: "Fabrication BOM", nav_settings: "Settings", btn_back: "Back to Dashboard",
                 welcome_title: "Welcome to the Toolkit", welcome_name: "Welcome {name}", welcome_sub: "Select a module below to get started.",
                 desc_fab: "Calculate weights for plates, pipes, and profiles.", desc_unit: "Convert length measurements quickly.", desc_settings: "Customize app theme and preferences.",
@@ -426,7 +427,7 @@
                 f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)", f_side_a: "Side A (mm)", f_side_b: "Side B (mm)", f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)", f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)", f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)", f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
-                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৬.৭ PWA",
+                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৬.৮ PWA",
                 nav_home: "হোম", nav_units: "একক রূপান্তরকারী", nav_fab: "ফ্যাব্রিকেশন বিওএম", nav_settings: "সেটিংস", btn_back: "ড্যাশবোর্ডে ফিরে যান",
                 welcome_title: "টুলকিটে স্বাগতম", welcome_name: "স্বাগতম {name}", welcome_sub: "শুরু করতে নিচে থেকে একটি মডিউল নির্বাচন করুন।",
                 desc_fab: "প্লেট, পাইপ এবং প্রোফাইলের ওজন হিসাব করুন।", desc_unit: "দ্রুত দৈর্ঘ্য রূপান্তর করুন।", desc_settings: "অ্যাপের থিম এবং পছন্দ কাস্টমাইজ করুন।",
@@ -444,7 +445,7 @@
                 f_od: "বাইরের ব্যাস (OD)", f_id: "ভিতরের ব্যাস (ID)", f_dia: "ব্যাস (mm)", f_side_a: "বাহু A", f_side_b: "বাহু B", f_d1: "শীর্ষ ব্যাস (D1)", f_d2: "নিচের ব্যাস (D2)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)", f_sf: "সোজা মুখ (SF)", f_h_sec: "গভীরতা (h)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b)", f_tw: "ওয়েব পুরুত্ব (tw)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf)", f_leg_a: "লেগ A", f_leg_b: "লেগ B", f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R)", f_pieces: "মোট পিস (N)"
             },
             hi: {
-                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 6.7 PWA",
+                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 6.8 PWA",
                 nav_home: "होम", nav_units: "इकाई कनवर्टर", nav_fab: "फैब्रिकेशन BOM", nav_settings: "सेटिंग्स", btn_back: "डैशबोर्ड पर वापस जाएं",
                 welcome_title: "टूलकिट में आपका स्वागत है", welcome_name: "स्वागत है {name}", welcome_sub: "आरंभ करने के लिए नीचे से एक मॉड्यूल चुनें।",
                 desc_fab: "प्लेट, पाइप और प्रोफाइल के वजन की गणना करें।", desc_unit: "लंबाई को जल्दी से बदलें।", desc_settings: "ऐप थीम और प्राथमिकताओं को कस्टमाइज़ करें।",
@@ -462,7 +463,7 @@
                 f_od: "बाहरी व्यास (OD)", f_id: "आंतरिक व्यास (ID)", f_dia: "व्यास (mm)", f_side_a: "साइड A", f_side_b: "साइड B", f_d1: "शीर्ष OD (D1)", f_d2: "निचला OD (D2)", f_base_od: "बेस OD", f_h: "ऊंचाई", f_sf: "सीधा चेहरा (SF)", f_h_sec: "गहराई (h)", f_w_fl: "फ्लेंज चौड़ाई (b)", f_tw: "वेब मोटाई (tw)", f_tf: "फ्लेंज मोटाई (tf)", f_leg_a: "लेग A", f_leg_b: "लेग B", f_bend_ang: "बेंड कोण (°)", f_bend_rad: "त्रिज्या (R)", f_pieces: "कुल टुकड़े (N)"
             },
             ta: {
-                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 6.8 PWA",
                 nav_home: "முகப்பு", nav_units: "அலகு மாற்றி", nav_fab: "ஃபேப்ரிகேஷன் BOM", nav_settings: "அமைப்புகள்", btn_back: "டாஷ்போர்டுக்குத் திரும்பு",
                 welcome_title: "வரவேற்கிறோம்", welcome_name: "வரவேற்கிறோம் {name}", welcome_sub: "தொடங்க கீழே உள்ள ஒரு தொகுதியைத் தேர்ந்தெடுக்கவும்.",
                 desc_fab: "தட்டுகள் மற்றும் குழாய்களின் எடையைக் கணக்கிடுங்கள்.", desc_unit: "நீளத்தை விரைவாக மாற்றவும்.", desc_settings: "பயன்பாட்டு தீம் மற்றும் விருப்பங்களை மாற்றவும்.",
@@ -480,13 +481,13 @@
                 f_od: "வெளிப்புற விட்டம் (OD)", f_id: "உட்புற விட்டம் (ID)", f_dia: "விட்டம் (mm)", f_side_a: "பக்கம் A", f_side_b: "பக்கம் B", f_d1: "மேல் OD (D1)", f_d2: "கீழ் OD (D2)", f_base_od: "அடிப்படை OD", f_h: "உயரம்", f_sf: "நேரான முகம் (SF)", f_h_sec: "ஆழம் (h)", f_w_fl: "ஃபிளேன்ஜ் அகலம் (b)", f_tw: "வெப் தடிமன் (tw)", f_tf: "ஃபிளேன்ஜ் தடிமன் (tf)", f_leg_a: "கால் A", f_leg_b: "கால் B", f_bend_ang: "வளைவு கோணம் (°)", f_bend_rad: "ஆரம் (R)", f_pieces: "துண்டுகள் (N)"
             },
             ml: {
-                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 6.8 PWA",
                 nav_home: "ഹോം", nav_units: "യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "ഫാബ്രിക്കേഷൻ BOM", nav_settings: "ക്രമീകരണങ്ങൾ", btn_back: "ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക",
                 welcome_title: "സ്വാഗതം", welcome_name: "സ്വാഗതം {name}", welcome_sub: "ആരംഭിക്കുന്നതിന് താഴെ നിന്ന് ഒരു മൊഡ്യൂൾ തിരഞ്ഞെടുക്കുക.",
                 desc_fab: "പ്ലേറ്റുകൾക്കും പൈപ്പുകൾക്കുമുള്ള ഭാരം കണക്കാക്കുക.", desc_unit: "നീളം വേഗത്തിൽ മാറ്റുക.", desc_settings: "തീമും ഭാഷയും മാറ്റുക.",
-                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാంద్రത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാന്ദ്രത",
+                lbl_mat_preset: "മെറ്റീരിയൽ പ്രീസെറ്റ്", lbl_density: "സാంద్రത (kg/m³)", mat_cs: "കാർബൺ സ്റ്റീൽ (7850)", mat_ss: "സ്റ്റെയിൻലെസ്സ് സ്റ്റീൽ (8000)", mat_al: "അലുമിനിയം (2700)", mat_cu: "ചെമ്പ് (8960)", mat_custom: "കസ്റ്റം സാంద్రത",
                 title_converter: "കൃത്യമായ നീള കൺവെർട്ടർ", lbl_input_val: "ഇൻപുട്ട് മൂല്യം", lbl_from_unit: "ഏതിൽനിന്ന്", lbl_to_unit: "ഏതിലേക്ക്", lbl_result_meas: "ഫലം", lbl_fab_profiles: "ഫാബ്രിക്കേഷൻ പ്രൊഫൈലുകൾ",
-                sh_plate: "പ്ലേറ്റ് / ബ്ലാങ്ക്", sh_hollow: "പൊള്ളയായ", sh_solid: "സോളിഡ്", sh_cone: "കോൺ", sh_pyramid: "പിരമിഡ്", sh_sq2rnd: "ഹോപ്പർ", sh_miter: "മൈറ്റർ ബെൻഡ്", sh_dishend: "ഡിഷ് എൻഡ്", sh_ring: "റിംഗ്", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA",
+                sh_plate: "പ്ലേറ്റ് / ബ്ലാങ്ക്", sh_hollow: "പൊള്ളയായ", sh_solid: "സോളിഡ്", sh_cone: "കോൺ", sh_pyramid: "പിരమిഡ്", sh_sq2rnd: "ഹോപ്പർ", sh_miter: "മൈറ്റർ ബെൻഡ്", sh_dishend: "ഡിഷ് എൻഡ്", sh_ring: "റിംഗ്", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA",
                 lbl_prof_ref: "പ്രൊഫൈൽ റഫറൻസ്", btn_calc: "കണക്കാക്കി ചേർക്കുക", lbl_current_mass: "നിലവിലെ ഭാരം", lbl_bom: "BOM", btn_clear: "എല്ലാം മായ്ക്കുക", btn_print: "PDF സേവ് ചെയ്യുക", btn_wa: "WhatsApp", th_shape: "ആകൃതി", th_material: "മെറ്റീരിയൽ", th_qty: "അളവ്", th_result: "മൊത്തം ഭാരം", lbl_total: "മൊത്തം അസംബ്ലി:", msg_empty_bom: "BOM ശൂന്യമാണ്. ദയവായി ആദ്യം ഇനങ്ങൾ ചേർക്കുക.",
                 about_title: "ഈ പ്രോജക്റ്റിനെക്കുറിച്ച്", about_desc: "<p>ഈ ടൂൾകിറ്റ് <strong>സയോൺ ഹസ്ര</strong> വികസിപ്പിച്ചതാണ്.</p><p class='mt-3 text-brand font-bold'>ഫാബ്രിക്കേഷൻ കമ്മ്യൂണിറ്റിയെ പിന്തുണയ്ക്കുന്നതിനായി രൂപകൽപ്പന ചെയ്ത 100% സൗജന്യ ആപ്ലിക്കേഷനാണിത്.</p>", about_connect: "ബന്ധപ്പെടുക",
                 lbl_username: "നിങ്ങളുടെ പേര്", lbl_theme: "ആപ്പ് തീം", lbl_lang: "ഭാഷ", theme_system: "സിസ്റ്റം", theme_light: "ലൈറ്റ്", theme_dark: "ഡാർക്ക്", btn_save_settings: "ക്രമീകരണങ്ങൾ സംരക്ഷിക്കുക", msg_saved: "സംരക്ഷിച്ചു!",
@@ -498,7 +499,7 @@
                 f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
             },
             te: {
-                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 6.8 PWA",
                 nav_home: "హోమ్", nav_units: "యూనిట్ కన్వర్టర్", nav_fab: "ఫ్యాబ్రికేషన్ BOM", nav_settings: "సెట్టింగులు", btn_back: "డాష్‌బోర్డ్‌కు తిరిగి వెళ్ళు",
                 welcome_title: "స్వాగతం", welcome_name: "స్వాగతం {name}", welcome_sub: "ప్రారంభించడానికి దిగువ నుండి ఒక మాడ్యూల్‌ని ఎంచుకోండి.",
                 desc_fab: "ప్లేట్లు, పైపులు మరియు ప్రొఫైల్స్ బరువు లెక్కించండి.", desc_unit: "పొడవులను త్వరగా మార్చండి.", desc_settings: "యాప్ థీమ్ మరియు ప్రాధాన్యతలను అనుకూలీకరించండి.",
@@ -516,8 +517,8 @@
                 f_od: "వెలుపలి వ్యాసం (OD)", f_id: "లోపలి వ్యాసం (ID)", f_dia: "వ్యాసం (mm)", f_side_a: "సైడ్ A", f_side_b: "సైడ్ B", f_d1: "పై OD (D1)", f_d2: "క్రింది OD (D2)", f_base_od: "బేస్ OD", f_h: "ఎత్తు", f_sf: "స్ట్రెయిట్ ఫేస్ (SF)", f_h_sec: "లోతు (h)", f_w_fl: "ఫ్లాంజ్ వెడల్పు (b)", f_tw: "వెబ్ మందం (tw)", f_tf: "ఫ్లాంజ్ మందం (tf)", f_leg_a: "లెగ్ A", f_leg_b: "లెగ్ B", f_bend_ang: "బెండ్ యాంగిల్ (°)", f_bend_rad: "రేడియస్ (R)", f_pieces: "ముక్కలు (N)"
             },
             or: {
-                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 6.7 PWA",
-                nav_home: "ହୋମ୍", nav_units: "ୟୁନିଟ୍ କନଭର୍ଟର", nav_fab: "ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_settings: "ସେଟିଂସ୍", btn_back: "ଡ୍ୟାସବୋର୍ଡକୁ ଫେରନ୍ତୁ",
+                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 6.8 PWA",
+                nav_home: "ହୋମ୍", nav_units: "ୟୁନਿଟ୍ କନଭର୍ଟର", nav_fab: "ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_settings: "ସେଟିଂସ୍", btn_back: "ଡ୍ୟାସବୋର୍ଡକୁ ଫେରନ୍ତୁ",
                 welcome_title: "ସ୍ୱାଗତ", welcome_name: "ସ୍ୱାଗତ {name}", welcome_sub: "ଆରମ୍ଭ କରିବା ପାଇଁ ତଳୁ ଗୋଟିଏ ମଡ୍ୟୁଲ୍ ବାଛନ୍ତୁ।",
                 desc_fab: "ପ୍ଲେଟ୍, ପାଇପ୍ ଏବଂ ପ୍ରୋଫାଇଲ୍ ର ଓଜନ ହିସାବ କରନ୍ତୁ।", desc_unit: "ଲମ୍ବ ଶୀଘ୍ର ପରିବର୍ତ୍ତନ କରନ୍ତୁ।", desc_settings: "ଆପ୍ ଥିମ୍ ଏବଂ ଭାଷା ପରିବର୍ତ୍ତନ କରନ୍ତୁ।",
                 lbl_mat_preset: "ସାମଗ୍ରୀ ପ୍ରିସେଟ୍", lbl_density: "ଘନତ୍ୱ (kg/m³)", mat_cs: "କାର୍ବନ୍ ଷ୍ଟିଲ୍ (7850)", mat_ss: "ଷ୍ଟେନଲେସ୍ ଷ୍ଟିଲ୍ (8000)", mat_al: "ଆଲୁମିନିୟମ୍ (2700)", mat_cu: "ତମ୍ବା (8960)", mat_custom: "କଷ୍ଟମ୍ ଘନତ୍ୱ",
@@ -534,7 +535,7 @@
                 f_od: "ବାହାର ବ୍ୟାସ (OD)", f_id: "ଭିତର ବ୍ୟାସ (ID)", f_dia: "ବ୍ୟାସ (mm)", f_side_a: "ପାର୍ଶ୍ୱ A", f_side_b: "ପାର୍ଶ୍ୱ B", f_d1: "ଉପର OD (D1)", f_d2: "ତଳ OD (D2)", f_base_od: "ବେସ୍ OD", f_h: "ଉଚ୍ଚତା", f_sf: "ଷ୍ଟ୍ରେଟ୍ ଫେସ୍ (SF)", f_h_sec: "ଗଭୀରତା (h)", f_w_fl: "ଫ୍ଲାଞ୍ଜ ପ୍ରସ୍ଥ (b)", f_tw: "ୱେବ୍ ମୋଟେଇ (tw)", f_tf: "ଫ୍ଲାଞ୍ଜ ମୋଟେଇ (tf)", f_leg_a: "ଲେଗ୍ A", f_leg_b: "ଲେଗ୍ B", f_bend_ang: "ବେଣ୍ଡ୍ ଆଙ୍ଗେଲ୍ (°)", f_bend_rad: "ରେଡିଅସ୍ (R)", f_pieces: "ମୋଟ ପିସ୍ (N)"
             },
             pa: {
-                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 6.8 PWA",
                 nav_home: "ਹੋਮ", nav_units: "ਯੂਨਿਟ ਕਨਵਰਟਰ", nav_fab: "ਫੈਬਰੀਕੇਸ਼ਨ BOM", nav_settings: "ਸੈਟਿੰਗਜ਼", btn_back: "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ",
                 welcome_title: "ਜੀ ਆਇਆਂ ਨੂੰ", welcome_name: "ਜੀ ਆਇਆਂ ਨੂੰ {name}", welcome_sub: "ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਮੋਡੀਊਲ ਦੀ ਚੋਣ ਕਰੋ।",
                 desc_fab: "ਪਲੇਟਾਂ, ਪਾਈਪਾਂ ਅਤੇ ਪ੍ਰੋਫਾਈਲਾਂ ਦਾ ਭਾਰ ਕੱਢੋ।", desc_unit: "ਲੰਬਾਈ ਨੂੰ ਜਲਦੀ ਬਦਲੋ।", desc_settings: "ਐਪ ਥੀਮ ਅਤੇ ਤਰਜੀਹਾਂ ਬਦਲੋ।",
@@ -552,7 +553,7 @@
                 f_od: "ਬਾਹਰੀ ਵਿਆਸ (OD)", f_id: "ਅੰਦਰੂਨੀ ਵਿਆਸ (ID)", f_dia: "ਵਿਆਸ (mm)", f_side_a: "ਸਾਈਡ A", f_side_b: "ਸਾਈਡ B", f_d1: "ਉੱਪਰਲਾ OD (D1)", f_d2: "ਹੇਠਲਾ OD (D2)", f_base_od: "ਬੇਸ OD", f_h: "ਉਚਾਈ", f_sf: "ਸਿੱਧਾ ਫੇਸ (SF)", f_h_sec: "ਡੂੰਘਾਈ (h)", f_w_fl: "ਫਲੈਂਜ ਚੌੜਾਈ (b)", f_tw: "ਵੈੱਬ ਮੋਟਾਈ (tw)", f_tf: "ਫਲੈਂਜ ਮੋਟਾਈ (tf)", f_leg_a: "ਲੈੱਗ A", f_leg_b: "ਲੈੱਗ B", f_bend_ang: "ਬੈਂਡ ਐਂਗਲ (°)", f_bend_rad: "ਰੇਡੀਅਸ (R)", f_pieces: "ਕੁੱਲ ਪੀਸ (N)"
             },
             ur: {
-                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 6.8 PWA",
                 nav_home: "ہوم", nav_units: "یونٹ کنورٹر", nav_fab: "فیبریکیشن BOM", nav_settings: "ترتیبات", btn_back: "ڈیش بورڈ پر واپس جائیں",
                 welcome_title: "خوش آمدید", welcome_name: "خوش آمدید {name}", welcome_sub: "شروع کرنے کے لیے نیچے سے ایک ماڈیول منتخب کریں۔",
                 desc_fab: "پلیٹس، پائپ اور پروفائلز کا وزن معلوم کریں۔", desc_unit: "لمبائی کو جلدی سے تبدیل کریں۔", desc_settings: "ایپ کی ترتیبات تبدیل کریں۔",
@@ -570,7 +571,7 @@
                 f_od: "بیرونی قطر (OD)", f_id: "اندرونی قطر (ID)", f_dia: "قطر (mm)", f_side_a: "سائیڈ A", f_side_b: "سائیڈ B", f_d1: "اوپری OD (D1)", f_d2: "نچلا OD (D2)", f_base_od: "بیس OD", f_h: "اونچائی", f_sf: "سیدھا چہرہ (SF)", f_h_sec: "گہرائی (h)", f_w_fl: "فلینج کی چوڑائی (b)", f_tw: "ویب کی موٹائی (tw)", f_tf: "فلینج کی موٹائی (tf)", f_leg_a: "لیگ A", f_leg_b: "لیگ B", f_bend_ang: "بینڈ اینگل (°)", f_bend_rad: "ریڈیس (R)", f_pieces: "ٹکڑے (N)"
             },
             as: {
-                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 6.7 PWA",
+                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 6.8 PWA",
                 nav_home: "হোম", nav_units: "একক ৰূপান্তৰকাৰী", nav_fab: "ফেব্ৰিকেচন BOM", nav_settings: "ছেটিংছ", btn_back: "ডেশবৰ্ডলৈ উভতি যাওক",
                 welcome_title: "স্বাগতম", welcome_name: "স্বাগতম {name}", welcome_sub: "আৰম্ভ কৰিবলৈ তলৰ পৰা এটা মডিউল বাছক।",
                 desc_fab: "প্লেট, পাইপ আৰু প্ৰোফাইলৰ ওজন হিচাপ কৰক।", desc_unit: "দৈৰ্ঘ্য দ্ৰুতভাৱে ৰূপান্তৰ কৰক।", desc_settings: "এপৰ থীম আৰু ভাষা সলনি কৰক।",
@@ -837,9 +838,9 @@
                 html = `<div class="input-group sm:col-span-2"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_dim')}</label><input type="number" id="inp_pyr_A" min="0"></div><div id="wrap_pyr_B" class="input-group"><label>${t('f_top_dim')}</label><input type="number" id="inp_pyr_B" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(togglePyramidInputs, 10);
             }
-            else if(shape === 'sq2rnd') {
+            else if(activeShape === 'sq2rnd') {
                 html = `<div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_A" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group sm:col-span-2"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
-                document.getElementById('diagramBox').innerHTML = `<img src="icon-sq2rnd.jpg" onerror="this.src='sq2rnd-ref.jpg'" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
+                document.getElementById('diagramBox').innerHTML = `<img src="sq2rnd-ref.jpg" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
             }
             else if(shape === 'miter') {
                 html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
@@ -1015,83 +1016,85 @@
             const originalText = pdfBtnText.innerText;
             pdfBtnText.innerText = "..."; 
 
-            const compName = localStorage.getItem('salap_comp_name') || 'FABRICATION WEIGHT CALCULATOR';
-            const compAddr = localStorage.getItem('salap_comp_addr') || '';
-            const compContact = localStorage.getItem('salap_comp_contact') || '';
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'pt', 'a4');
 
-            let tableRows = '';
-            const rows = document.querySelectorAll('#historyBody tr');
-            rows.forEach((row, i) => {
-                const cols = row.querySelectorAll('td');
-                tableRows += `
-                    <tr style="border-bottom: 1px solid #e2e8f0;">
-                        <td style="padding: 10px 8px; color: #475569;">${i+1}</td>
-                        <td style="padding: 10px 8px; font-weight: 600; color: #1e293b;">${cols[0].innerText}</td>
-                        <td style="padding: 10px 8px; color: #64748b;">${cols[1].innerText}</td>
-                        <td style="padding: 10px 8px; text-align: center; font-weight: 600; color: #475569;">${cols[2].innerText}</td>
-                        <td style="padding: 10px 8px; text-align: right; font-weight: 700; color: #2563eb;">${cols[3].innerText}</td>
-                    </tr>
-                `;
-            });
+                const compName = localStorage.getItem('salap_comp_name') || 'FABRICATION WEIGHT CALCULATOR';
+                const compAddr = localStorage.getItem('salap_comp_addr') || '';
+                const compContact = localStorage.getItem('salap_comp_contact') || '';
 
-            const htmlContent = `
-                <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: white; padding: 40px; color: black; width: 800px; box-sizing: border-box;">
-                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1e293b; padding-bottom: 20px;">
-                        <h1 style="margin: 0; font-size: 26px; font-weight: 900; color: #0f172a; text-transform: uppercase;">${compName}</h1>
-                        ${compAddr ? `<p style="margin: 5px 0 0 0; font-size: 14px; color: #475569;">${compAddr}</p>` : ''}
-                        ${compContact ? `<p style="margin: 5px 0 0 0; font-size: 14px; font-weight: 600; color: #475569;">📞 ${compContact}</p>` : ''}
-                        <p style="margin: 15px 0 0 0; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8;">Project Bill of Materials</p>
-                    </div>
-                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                        <thead>
-                            <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left; color: #64748b;">
-                                <th style="padding: 12px 8px;">#</th>
-                                <th style="padding: 12px 8px;">Shape</th>
-                                <th style="padding: 12px 8px;">Material</th>
-                                <th style="padding: 12px 8px; text-align: center;">Qty</th>
-                                <th style="padding: 12px 8px; text-align: right;">Total Mass</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${tableRows}
-                        </tbody>
-                        <tfoot>
-                            <tr style="border-top: 3px solid #2563eb;">
-                                <td colspan="4" style="padding: 15px 8px; text-align: right; font-weight: 800; font-size: 16px; color: #1e293b; letter-spacing: 1px;">TOTAL ASSEMBLY:</td>
-                                <td style="padding: 15px 8px; text-align: right; font-weight: 900; font-size: 18px; color: #2563eb;">${totalAssemblyWeight.toFixed(3)} kg</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            `;
+                // Add Header Text
+                let yPos = 40;
+                
+                doc.setFontSize(22);
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(15, 23, 42);
+                const pageWidth = doc.internal.pageSize.getWidth();
+                doc.text(compName.toUpperCase(), pageWidth / 2, yPos, { align: 'center' });
+                yPos += 20;
 
-            const opt = {
-                margin:       0.4,
-                filename:     'Fabrication_BOM.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(71, 85, 105);
+                
+                if (compAddr.trim() !== '') {
+                    doc.text(compAddr, pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 14;
+                }
+                if (compContact.trim() !== '') {
+                    doc.text("Contact: " + compContact, pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 14;
+                }
 
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlContent;
-            tempDiv.style.position = 'absolute';
-            tempDiv.style.left = '0px';
-            tempDiv.style.top = '0px';
-            tempDiv.style.zIndex = '-1000';
-            document.body.appendChild(tempDiv);
+                yPos += 10;
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(37, 99, 235);
+                doc.text("PROJECT BILL OF MATERIALS", pageWidth / 2, yPos, { align: 'center' });
+                yPos += 20;
 
-            setTimeout(() => {
-                html2pdf().set(opt).from(tempDiv).save().then(() => {
-                    pdfBtnText.innerText = originalText;
-                    document.body.removeChild(tempDiv);
-                }).catch(err => {
-                    console.error("PDF Export Error: ", err);
-                    pdfBtnText.innerText = originalText;
-                    document.body.removeChild(tempDiv);
-                    alert("Failed to export PDF. Please try again.");
+                // Extract Table Data
+                const tableData = [];
+                const rows = document.querySelectorAll('#historyBody tr');
+                rows.forEach((row, index) => {
+                    const cols = row.querySelectorAll('td');
+                    tableData.push([
+                        index + 1,
+                        cols[0].innerText,
+                        cols[1].innerText,
+                        cols[2].innerText,
+                        cols[3].innerText
+                    ]);
                 });
-            }, 300);
+
+                // Generate AutoTable
+                doc.autoTable({
+                    startY: yPos,
+                    head: [['#', 'Shape', 'Material', 'Qty', 'Total Mass']],
+                    body: tableData,
+                    theme: 'striped',
+                    headStyles: { fillColor: [37, 99, 235], textColor: 255, fontStyle: 'bold', halign: 'center' },
+                    columnStyles: {
+                        0: { halign: 'center', cellWidth: 30 },
+                        1: { halign: 'left' },
+                        2: { halign: 'left' },
+                        3: { halign: 'center', cellWidth: 40 },
+                        4: { halign: 'right', fontStyle: 'bold', textColor: [37, 99, 235] }
+                    },
+                    foot: [['', '', '', 'TOTAL ASSEMBLY:', totalAssemblyWeight.toFixed(3) + ' kg']],
+                    footStyles: { fillColor: [241, 245, 249], textColor: [15, 23, 42], fontStyle: 'bold', halign: 'right' }
+                });
+
+                // Save PDF directly to device
+                doc.save('Fabrication_BOM.pdf');
+                pdfBtnText.innerText = originalText;
+
+            } catch(err) {
+                console.error("PDF Export Error: ", err);
+                alert("Failed to export PDF. Please ensure you are connected to the internet to load the PDF engine.");
+                pdfBtnText.innerText = originalText;
+            }
         }
 
         function shareWhatsApp() {
