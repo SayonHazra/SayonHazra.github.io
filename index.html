@@ -294,14 +294,14 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: Unit Converter -->
-            <div id="section-units" class="hidden max-w-4xl mx-auto">
+            <!-- SECTION 2: Unit Converter & Cheat Sheet -->
+            <div id="section-units" class="hidden max-w-4xl mx-auto space-y-6">
                 <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     <span data-i18n="btn_back">Back to Dashboard</span>
                 </button>
                 
-                <div class="glass-panel rounded-2xl p-8 md:p-12 transition-colors duration-200 mb-8">
+                <div class="glass-panel rounded-2xl p-8 md:p-12 transition-colors duration-200">
                     <h2 class="text-2xl md:text-3xl font-black mb-8 text-slate-800 dark:text-white uppercase tracking-tighter" data-i18n="title_converter">Precision Length Converter</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                         <div class="input-group md:col-span-1">
@@ -335,35 +335,20 @@
                     </div>
                 </div>
 
-                <!-- NEW: Fraction to Decimal Cheat Sheet -->
+                <!-- Comprehensive Fraction to Suto Cheat Sheet -->
                 <div class="glass-panel rounded-2xl p-6 md:p-10 transition-colors duration-200">
-                    <h3 class="text-xl md:text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase tracking-tighter" data-i18n="title_cheat">Fraction to Decimal Cheat Sheet</h3>
-                    <div class="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
-                        <table class="w-full text-sm ref-table whitespace-nowrap text-center">
-                            <thead>
+                    <h3 class="text-xl md:text-2xl font-black mb-6 text-slate-800 dark:text-white uppercase tracking-tighter" data-i18n="title_cheat">Fraction to Suto / mm Cheat Sheet</h3>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 max-h-[500px] overflow-y-auto relative">
+                        <table class="w-full text-sm text-center whitespace-nowrap">
+                            <thead class="sticky top-0 bg-slate-100 dark:bg-slate-900 shadow-sm z-10">
                                 <tr>
-                                    <th data-i18n="th_frac" class="text-center">Fraction (")</th>
-                                    <th data-i18n="th_dec" class="text-center">Decimal (")</th>
-                                    <th data-i18n="th_mm" class="text-center">Millimeters (mm)</th>
+                                    <th data-i18n="th_frac" class="px-4 py-3 font-black uppercase text-slate-500 text-xs border-b border-slate-200 dark:border-slate-700">Fraction (")</th>
+                                    <th data-i18n="th_suto" class="px-4 py-3 font-black uppercase text-slate-500 text-xs border-b border-slate-200 dark:border-slate-700">Suto (Soot)</th>
+                                    <th data-i18n="th_mm" class="px-4 py-3 font-black uppercase text-slate-500 text-xs border-b border-slate-200 dark:border-slate-700">Millimeters (mm)</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr><td class="font-bold">1/16"</td><td>0.0625</td><td class="font-mono font-bold text-brand">1.588</td></tr>
-                                <tr><td class="font-bold">1/8"</td><td>0.1250</td><td class="font-mono font-bold text-brand">3.175</td></tr>
-                                <tr><td class="font-bold">3/16"</td><td>0.1875</td><td class="font-mono font-bold text-brand">4.763</td></tr>
-                                <tr><td class="font-bold">1/4"</td><td>0.2500</td><td class="font-mono font-bold text-brand">6.350</td></tr>
-                                <tr><td class="font-bold">5/16"</td><td>0.3125</td><td class="font-mono font-bold text-brand">7.938</td></tr>
-                                <tr><td class="font-bold">3/8"</td><td>0.3750</td><td class="font-mono font-bold text-brand">9.525</td></tr>
-                                <tr><td class="font-bold">7/16"</td><td>0.4375</td><td class="font-mono font-bold text-brand">11.113</td></tr>
-                                <tr><td class="font-bold">1/2"</td><td>0.5000</td><td class="font-mono font-bold text-brand">12.700</td></tr>
-                                <tr><td class="font-bold">9/16"</td><td>0.5625</td><td class="font-mono font-bold text-brand">14.288</td></tr>
-                                <tr><td class="font-bold">5/8"</td><td>0.6250</td><td class="font-mono font-bold text-brand">15.875</td></tr>
-                                <tr><td class="font-bold">11/16"</td><td>0.6875</td><td class="font-mono font-bold text-brand">17.463</td></tr>
-                                <tr><td class="font-bold">3/4"</td><td>0.7500</td><td class="font-mono font-bold text-brand">19.050</td></tr>
-                                <tr><td class="font-bold">13/16"</td><td>0.8125</td><td class="font-mono font-bold text-brand">20.638</td></tr>
-                                <tr><td class="font-bold">7/8"</td><td>0.8750</td><td class="font-mono font-bold text-brand">22.225</td></tr>
-                                <tr><td class="font-bold">15/16"</td><td>0.9375</td><td class="font-mono font-bold text-brand">23.813</td></tr>
-                                <tr><td class="font-bold">1"</td><td>1.0000</td><td class="font-mono font-bold text-brand">25.400</td></tr>
+                            <tbody id="cheatSheetBody" class="text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-800/50">
+                                <!-- Automatically generated via Javascript to include 1/64 to 1" -->
                             </tbody>
                         </table>
                     </div>
@@ -668,7 +653,7 @@
                 f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
                 f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
                 f_base_dim: "ബേസ് നീളം (A)", f_base_w: "ബേസ് വീതി (B)", f_base_l: "ബേസ് നീളം (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_top_od: "മുകളിലെ റൗണ്ട് OD",
-                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ్యాസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
+                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
             },
             te: {
                 app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
@@ -679,7 +664,7 @@
                 desc_fab: "ప్లేట్లు, పైపులు మరియు ప్రొఫైల్స్ బరువు లెక్కించండి.", desc_unit: "పొడవులను త్వరగా మార్చండి.", desc_settings: "యాప్ థీమ్ మరియు ప్రాధాన్యతలను అనుకూలీకరించండి.",
                 lbl_mat_preset: "మెటీరియల్ ప్రీసెట్", lbl_density: "సాంద్రత (kg/m³)", mat_cs: "కార్బన్ స్టీల్ (7850)", mat_ss: "స్టెయిన్లెస్ స్టీల్ (8000)", mat_al: "అల్యూమినియం (2700)", mat_cu: "రాగి (8960)", mat_custom: "కస్టమ్ సాంద్రత",
                 title_converter: "ఖచ్చితమైన పొడవు కన్వర్టర్", lbl_input_val: "ఇన్‌పుట్ విలువ", lbl_from_unit: "నుండి (యూనిట్)", lbl_to_unit: "వరకు (యూనిట్)", lbl_result_meas: "ఫలితం", lbl_fab_profiles: "ఫ్యాబ్రికేషన్ ప్రొఫైల్స్",
-                sh_plate: "ప్లేట్ / బ్లాంక్", sh_hollow: "హాలో", sh_solid: "ఘన", sh_cone: "కోన్", sh_pyramid: "పిరమిഡ്", sh_sq2rnd: "హాపర్", sh_miter: "మైటర్ బెండ్", sh_dishend: "డిష్ ఎండ్", sh_ring: "రింగ్", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA యాంగిల్",
+                sh_plate: "ప్లేట్ / బ్లాంక్", sh_hollow: "హాలో", sh_solid: "ఘన", sh_cone: "కోన్", sh_pyramid: "పిరమిడ్", sh_sq2rnd: "హాపర్", sh_miter: "మైటర్ బెండ్", sh_dishend: "డిష్ ఎండ్", sh_ring: "రింగ్", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA యాంగిల్",
                 lbl_prof_ref: "ప్రొఫైల్ రిఫరెన్స్", btn_calc: "లెక్కించి జోడించండి", lbl_current_mass: "ప్రస్తుత భాగం బరువు", lbl_bom: "మెటీరియల్స్ జాబితా (BOM)", btn_clear: "అన్నింటినీ క్లియర్ చేయి", btn_print: "PDF సేవ్ చేయి", btn_wa: "WhatsApp", th_shape: "ఆకారం", th_material: "మెటీరియల్", th_qty: "పరిమాణం", th_result: "మొత్తం బరువు", lbl_total: "మొత్తం అసెంబ్లీ:", msg_empty_bom: "BOM ఖాళీగా ఉంది. దయచేసి ముందుగా అంశాలను జోడించండి.",
                 about_title: "ఈ ప్రాజెక్ట్ గురించి", about_desc: "<p>ఈ టూల్‌కిట్ <strong>సాయోన్ హజ్రా</strong>చే అభివృద్ధి చేయబడింది.</p><p class='mt-3 text-brand font-bold'>ఇది ఫ్యాబ్రికేషన్ కమ్యూనిటీకి మద్దతు ఇవ్వడానికి రూపొందించబడిన 100% ఉచిత అప్లికేషన్.</p>", about_connect: "సంప్రదించండి",
                 lbl_username: "మీ పేరు", lbl_theme: "యాప్ థీమ్", lbl_lang: "భాష", theme_system: "సిస్టమ్", theme_light: "లైట్ మోడ్", theme_dark: "డార్క్ మోడ్", btn_save_settings: "సెట్టింగులను సేవ్ చేయండి", msg_saved: "సేవ్ చేయబడింది!",
@@ -697,7 +682,7 @@
                 tab_nb: "NB ପାଇପ୍", tab_ismb: "ISMB ବିମ୍", tab_ismc: "ISMC ଚ୍ୟାନେଲ୍", tab_isa: "ISA ଆଙ୍ଗେଲ୍",
                 welcome_title: "ସ୍ୱାଗତ", welcome_name: "ସ୍ୱାଗତ {name}", welcome_sub: "ଆରମ୍ଭ କରିବା ପାଇଁ ତଳୁ ଗୋଟିଏ ମଡ୍ୟୁଲ୍ ବାଛନ୍ତୁ।",
                 desc_fab: "ପ୍ଲେଟ୍, ପାଇପ୍ ଏବଂ ପ୍ରୋଫାଇଲ୍ ର ଓଜନ ହିସାବ କରନ୍ତୁ।", desc_unit: "ଲମ୍ବ ଶୀଘ୍ର ପରିବର୍ତ୍ତନ କରନ୍ତୁ।", desc_settings: "ଆପ୍ ଥିମ୍ ଏବଂ ଭାଷା ପରିବର୍ତ୍ତନ କରନ୍ତୁ।",
-                lbl_mat_preset: "ସାମଗ୍ରୀ ପ୍ରିସେଟ୍", lbl_density: "ଘନତ୍ୱ (kg/m³)", mat_cs: "କାର୍ବନ୍ ଷ୍ଟିଲ୍ (7850)", mat_ss: "ଷ୍ଟେନଲେସ୍ ଷ୍ଟିଲ୍ (8000)", mat_al: "ଆଲୁମିନିୟମ୍ (2700)", mat_cu: "ତମ୍ବା (8960)", mat_custom: "କଷ୍ଟମ୍ ଘନତ୍ୱ",
+                lbl_mat_preset: "ସାମଗ୍ରୀ ପ୍ରିସେଟ୍", lbl_density: "ଘନତ୍ୱ (kg/m³)", mat_cs: "କାରବନ୍ ଷ୍ଟିଲ୍ (7850)", mat_ss: "ଷ୍ଟେନଲେସ୍ ଷ୍ଟିଲ୍ (8000)", mat_al: "ଆଲୁମିନିୟମ୍ (2700)", mat_cu: "ତମ୍ବା (8960)", mat_custom: "କଷ୍ଟମ୍ ଘନତ୍ୱ",
                 title_converter: "ଲମ୍ବ କନଭର୍ଟର", lbl_input_val: "ଇନପୁଟ୍ ମୂଲ୍ୟ", lbl_from_unit: "ରୁ (ୟୁନਿଟ୍)", lbl_to_unit: "ପର୍ଯ୍ୟନ୍ତ (ୟୁନਿଟ୍)", lbl_result_meas: "ଫଳାଫଳ", lbl_fab_profiles: "ଫ୍ୟାବ୍ରିକେସନ୍ ପ୍ରୋଫାଇଲ୍",
                 sh_plate: "ପ୍ଲେଟ୍ / ବ୍ଲାଙ୍କ୍", sh_hollow: "ଫମ୍ପା", sh_solid: "କଠିନ", sh_cone: "ଶଙ୍କୁ", sh_pyramid: "ପିରାମିଡ୍", sh_sq2rnd: "ହପର୍", sh_miter: "ମାଇଟର୍ ବେଣ୍ଡ୍", sh_dishend: "ଡିସ୍ ଏଣ୍ଡ୍", sh_ring: "ରିଙ୍ଗ୍", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA ଆଙ୍ଗେଲ୍",
                 lbl_prof_ref: "ପ୍ରୋଫାଇଲ୍ ରେଫରେନ୍ସ", btn_calc: "ହିସାବ କରନ୍ତୁ", lbl_current_mass: "ବର୍ତ୍ତମାନର ଓଜନ", lbl_bom: "ସାମଗ୍ରୀ ତାଲିକା (BOM)", btn_clear: "ସବୁ ସଫା କରନ୍ତୁ", btn_print: "PDF ସେଭ୍", btn_wa: "WhatsApp", th_shape: "ଆକାର", th_material: "ସାମଗ୍ରୀ", th_qty: "ପରିମାଣ", th_result: "ମୋଟ ଓଜନ", lbl_total: "ମୋଟ ଆସେମ୍ବଲି:", msg_empty_bom: "BOM ଖାଲି ଅଛି। ଦୟାକରି ପ୍ରଥମେ ଆଇଟମ୍ ଯୋଗ କରନ୍ତୁ।",
@@ -772,7 +757,7 @@
             }
         };
 
-        // Inject Dishend & Pyramid Keys dynamically
+        // Inject Dishend, Pyramid & Cheat Sheet Keys dynamically
         const dishendTranslations = {
             en: { f_dish_type: "Dishend Type", f_tori: "Torispherical", f_ellip: "Ellipsoidal", f_hemi: "Hemispherical", f_blank_dia: "Dish Blank Dia (mm)" },
             bn: { f_dish_type: "ডিশএন্ডের ধরন", f_tori: "টোরিস্ফেরিক্যাল", f_ellip: "উপবৃত্তাকার (Ellipsoidal)", f_hemi: "অর্ধগোলাকার (Hemispherical)", f_blank_dia: "ডিশ ব্ল্যাঙ্ক ব্যাস (mm)" },
@@ -791,10 +776,11 @@
             as: { f_base_l: "বেচ দৈৰ্ঘ্য (mm)", f_base_w: "বেচ প্ৰস্থ (mm)", f_top_l: "ওপৰৰ দৈৰ্ঘ্য (mm)", f_top_w: "ওপৰৰ প্ৰস্থ (mm)" }
         };
         const cheatTranslations = {
-            en: { title_cheat: "Fraction to Decimal Cheat Sheet", th_frac: "Fraction (\")", th_dec: "Decimal (\")", th_mm: "Millimeters (mm)" },
-            bn: { title_cheat: "ভগ্নাংশ থেকে দশমিক চার্ট", th_frac: "ভগ্নাংশ (\")", th_dec: "দশমিক (\")", th_mm: "মিলিমিটার (mm)" },
-            hi: { title_cheat: "अंश से दशमलव चार्ट", th_frac: "अंश (\")", th_dec: "दशमलव (\")", th_mm: "मिलीमीटर (mm)" }
+            en: { title_cheat: "Fraction to Suto / mm Cheat Sheet", th_frac: "Fraction (\")", th_suto: "Suto (Soot)", th_mm: "Millimeters (mm)" },
+            bn: { title_cheat: "ভগ্নাংশ থেকে সুতো চার্ট", th_frac: "ভগ্নাংশ (\")", th_suto: "সুতো (Soot)", th_mm: "মিলিমিটার (mm)" },
+            hi: { title_cheat: "अंश से सूत चार्ट", th_frac: "अंश (\")", th_suto: "सूत (Soot)", th_mm: "मिलीमीटर (mm)" }
         };
+        
         Object.keys(dict).forEach(lang => {
             Object.assign(dict[lang], dishendTranslations[lang] || dishendTranslations['en'], pyramidTranslations[lang] || pyramidTranslations['en'], cheatTranslations[lang] || cheatTranslations['en']);
         });
@@ -972,6 +958,32 @@
             const val = parseFloat(document.getElementById('uInput').value) || 0;
             const res = (val * factors[document.getElementById('uFrom').value]) / factors[document.getElementById('uTo').value];
             document.getElementById('uOutput').innerText = res.toLocaleString(undefined, {maximumFractionDigits: 4});
+        }
+        
+        function generateCheatSheet() {
+            const tbody = document.getElementById('cheatSheetBody');
+            if(!tbody) return;
+            let html = '';
+            for(let i=1; i<=64; i++) {
+                let num = i;
+                let den = 64;
+                while(num % 2 === 0 && den > 2) {
+                    num /= 2;
+                    den /= 2;
+                }
+                const fraction = `${num}/${den}"`;
+                
+                let suto = (i / 8).toString();
+                
+                const mm = (i / 64 * 25.4).toFixed(3);
+                
+                html += `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td class="font-bold border-b border-slate-200 dark:border-slate-700 px-4 py-2">${i === 64 ? '1"' : fraction}</td>
+                    <td class="border-b border-slate-200 dark:border-slate-700 px-4 py-2 text-slate-600 dark:text-slate-400 font-bold">${suto}</td>
+                    <td class="font-mono font-bold text-brand border-b border-slate-200 dark:border-slate-700 px-4 py-2">${mm}</td>
+                </tr>`;
+            }
+            tbody.innerHTML = html;
         }
 
         function getVal(id) { const v = document.getElementById(id)?.value; return v ? parseFloat(v) : null; }
@@ -1440,6 +1452,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             applyThemeLogic();
+            generateCheatSheet();
             
             const savedLang = localStorage.getItem('salap_lang');
             if (savedLang) {
