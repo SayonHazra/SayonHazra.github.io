@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabrication Weight Calculator</title>
+    <title>MetriFab: Fabrication Assistant</title>
     
     <meta name="theme-color" content="#1e293b">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -82,10 +82,9 @@
             <div class="p-6 flex flex-col items-center md:items-start cursor-pointer hover:opacity-80 transition-opacity" onclick="switchMainTab('home')" title="Go to Dashboard">
                 <div class="text-center md:text-left">
                     <h1 class="text-2xl md:text-xl font-black text-brand tracking-tight leading-none mb-1">
-                        <span data-i18n="app_name_part1">FABRICATION</span> <br>
-                        <span class="text-slate-800 dark:text-white" data-i18n="app_name_part2">WEIGHT CALCULATOR</span>
+                        <span data-i18n="app_name_part1">METRIFAB</span> <br>
+                        <span class="text-slate-800 dark:text-white" data-i18n="app_name_part2">FABRICATION ASSISTANT</span>
                     </h1>
-                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase" data-i18n="app_version">VERSION 7.0 PWA</p>
                 </div>
             </div>
             
@@ -347,37 +346,39 @@
                 <div class="glass-panel rounded-2xl p-6 md:p-10 transition-colors duration-200">
                     <h2 class="text-2xl md:text-3xl font-black mb-8 text-slate-800 dark:text-white uppercase tracking-tighter" data-i18n="title_ref">Standard Steel Reference</h2>
                     
-                    <!-- Sub-tabs for Reference Charts -->
-                    <div class="flex flex-wrap gap-2 mb-6 bg-slate-100/50 dark:bg-slate-900/50 p-2 rounded-xl">
-                        <button id="btn-ref-nb" onclick="switchRefTab('nb')" class="flex-1 min-w-[100px] py-2 px-4 text-sm font-bold rounded-lg bg-brand text-white shadow-md transition-all" data-i18n="tab_nb">NB Pipes</button>
-                        <button id="btn-ref-ismb" onclick="switchRefTab('ismb')" class="flex-1 min-w-[100px] py-2 px-4 text-sm font-bold rounded-lg bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all" data-i18n="tab_ismb">ISMB Beams</button>
-                        <button id="btn-ref-ismc" onclick="switchRefTab('ismc')" class="flex-1 min-w-[100px] py-2 px-4 text-sm font-bold rounded-lg bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all" data-i18n="tab_ismc">ISMC Channels</button>
-                        <button id="btn-ref-isa" onclick="switchRefTab('isa')" class="flex-1 min-w-[100px] py-2 px-4 text-sm font-bold rounded-lg bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all" data-i18n="tab_isa">ISA Angles</button>
+                    <!-- Sub-tabs Dropdown for Reference Charts -->
+                    <div class="mb-6">
+                        <select id="refDropdown" onchange="switchRefTab(this.value)" class="w-full md:max-w-xs p-3 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold">
+                            <option value="nb" data-i18n="tab_nb">NB Pipes</option>
+                            <option value="ismb" data-i18n="tab_ismb">ISMB Beams</option>
+                            <option value="ismc" data-i18n="tab_ismc">ISMC Channels</option>
+                            <option value="isa" data-i18n="tab_isa">ISA Angles</option>
+                        </select>
                     </div>
 
                     <!-- NB Pipes Table -->
                     <div id="ref-nb" class="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
                         <table class="w-full text-sm ref-table whitespace-nowrap">
                             <thead>
-                                <tr><th>Nominal Bore (NB)</th><th>Inch (")</th><th>Outer Diameter (mm)</th></tr>
+                                <tr><th>Size (NB / Inch)</th><th>Outer Diameter (mm)</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>15 NB</td><td>½"</td><td class="font-mono font-bold text-brand">21.3</td></tr>
-                                <tr><td>20 NB</td><td>¾"</td><td class="font-mono font-bold text-brand">26.7</td></tr>
-                                <tr><td>25 NB</td><td>1"</td><td class="font-mono font-bold text-brand">33.4</td></tr>
-                                <tr><td>32 NB</td><td>1¼"</td><td class="font-mono font-bold text-brand">42.4</td></tr>
-                                <tr><td>40 NB</td><td>1½"</td><td class="font-mono font-bold text-brand">48.3</td></tr>
-                                <tr><td>50 NB</td><td>2"</td><td class="font-mono font-bold text-brand">60.3</td></tr>
-                                <tr><td>65 NB</td><td>2½"</td><td class="font-mono font-bold text-brand">73.0</td></tr>
-                                <tr><td>80 NB</td><td>3"</td><td class="font-mono font-bold text-brand">88.9</td></tr>
-                                <tr><td>100 NB</td><td>4"</td><td class="font-mono font-bold text-brand">114.3</td></tr>
-                                <tr><td>125 NB</td><td>5"</td><td class="font-mono font-bold text-brand">141.3</td></tr>
-                                <tr><td>150 NB</td><td>6"</td><td class="font-mono font-bold text-brand">168.3</td></tr>
-                                <tr><td>200 NB</td><td>8"</td><td class="font-mono font-bold text-brand">219.1</td></tr>
-                                <tr><td>250 NB</td><td>10"</td><td class="font-mono font-bold text-brand">273.0</td></tr>
-                                <tr><td>300 NB</td><td>12"</td><td class="font-mono font-bold text-brand">323.8</td></tr>
-                                <tr><td>350 NB</td><td>14"</td><td class="font-mono font-bold text-brand">355.6</td></tr>
-                                <tr><td>400 NB</td><td>16"</td><td class="font-mono font-bold text-brand">406.4</td></tr>
+                                <tr><td>15 NB (½")</td><td class="font-mono font-bold text-brand">21.3</td></tr>
+                                <tr><td>20 NB (¾")</td><td class="font-mono font-bold text-brand">26.7</td></tr>
+                                <tr><td>25 NB (1")</td><td class="font-mono font-bold text-brand">33.4</td></tr>
+                                <tr><td>32 NB (1¼")</td><td class="font-mono font-bold text-brand">42.4</td></tr>
+                                <tr><td>40 NB (1½")</td><td class="font-mono font-bold text-brand">48.3</td></tr>
+                                <tr><td>50 NB (2")</td><td class="font-mono font-bold text-brand">60.3</td></tr>
+                                <tr><td>65 NB (2½")</td><td class="font-mono font-bold text-brand">73.0</td></tr>
+                                <tr><td>80 NB (3")</td><td class="font-mono font-bold text-brand">88.9</td></tr>
+                                <tr><td>100 NB (4")</td><td class="font-mono font-bold text-brand">114.3</td></tr>
+                                <tr><td>125 NB (5")</td><td class="font-mono font-bold text-brand">141.3</td></tr>
+                                <tr><td>150 NB (6")</td><td class="font-mono font-bold text-brand">168.3</td></tr>
+                                <tr><td>200 NB (8")</td><td class="font-mono font-bold text-brand">219.1</td></tr>
+                                <tr><td>250 NB (10")</td><td class="font-mono font-bold text-brand">273.0</td></tr>
+                                <tr><td>300 NB (12")</td><td class="font-mono font-bold text-brand">323.8</td></tr>
+                                <tr><td>350 NB (14")</td><td class="font-mono font-bold text-brand">355.6</td></tr>
+                                <tr><td>400 NB (16")</td><td class="font-mono font-bold text-brand">406.4</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -386,17 +387,17 @@
                     <div id="ref-ismb" class="hidden overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
                         <table class="w-full text-sm ref-table whitespace-nowrap">
                             <thead>
-                                <tr><th>Designation</th><th>Depth (h)</th><th>Flange Width (b)</th><th>Web Thk (tw)</th><th>Flange Thk (tf)</th><th>Weight (kg/m)</th></tr>
+                                <tr><th>Profile (h x b)</th><th>Thk (tw / tf)</th><th>Weight (kg/m)</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td class="font-bold">ISMB 100</td><td>100</td><td>50</td><td>4.0</td><td>7.0</td><td class="font-mono font-bold text-brand">11.5</td></tr>
-                                <tr><td class="font-bold">ISMB 150</td><td>150</td><td>75</td><td>4.8</td><td>5.4</td><td class="font-mono font-bold text-brand">14.9</td></tr>
-                                <tr><td class="font-bold">ISMB 200</td><td>200</td><td>100</td><td>5.7</td><td>10.8</td><td class="font-mono font-bold text-brand">25.4</td></tr>
-                                <tr><td class="font-bold">ISMB 250</td><td>250</td><td>125</td><td>6.9</td><td>12.5</td><td class="font-mono font-bold text-brand">37.3</td></tr>
-                                <tr><td class="font-bold">ISMB 300</td><td>300</td><td>140</td><td>7.5</td><td>12.4</td><td class="font-mono font-bold text-brand">44.2</td></tr>
-                                <tr><td class="font-bold">ISMB 400</td><td>400</td><td>140</td><td>8.9</td><td>16.0</td><td class="font-mono font-bold text-brand">61.6</td></tr>
-                                <tr><td class="font-bold">ISMB 500</td><td>500</td><td>180</td><td>10.2</td><td>17.2</td><td class="font-mono font-bold text-brand">86.9</td></tr>
-                                <tr><td class="font-bold">ISMB 600</td><td>600</td><td>210</td><td>12.0</td><td>20.8</td><td class="font-mono font-bold text-brand">122.6</td></tr>
+                                <tr><td class="font-bold">ISMB 100 x 50</td><td>4.0 / 7.0</td><td class="font-mono font-bold text-brand">11.5</td></tr>
+                                <tr><td class="font-bold">ISMB 150 x 75</td><td>4.8 / 5.4</td><td class="font-mono font-bold text-brand">14.9</td></tr>
+                                <tr><td class="font-bold">ISMB 200 x 100</td><td>5.7 / 10.8</td><td class="font-mono font-bold text-brand">25.4</td></tr>
+                                <tr><td class="font-bold">ISMB 250 x 125</td><td>6.9 / 12.5</td><td class="font-mono font-bold text-brand">37.3</td></tr>
+                                <tr><td class="font-bold">ISMB 300 x 140</td><td>7.5 / 12.4</td><td class="font-mono font-bold text-brand">44.2</td></tr>
+                                <tr><td class="font-bold">ISMB 400 x 140</td><td>8.9 / 16.0</td><td class="font-mono font-bold text-brand">61.6</td></tr>
+                                <tr><td class="font-bold">ISMB 500 x 180</td><td>10.2 / 17.2</td><td class="font-mono font-bold text-brand">86.9</td></tr>
+                                <tr><td class="font-bold">ISMB 600 x 210</td><td>12.0 / 20.8</td><td class="font-mono font-bold text-brand">122.6</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -405,16 +406,16 @@
                     <div id="ref-ismc" class="hidden overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
                         <table class="w-full text-sm ref-table whitespace-nowrap">
                             <thead>
-                                <tr><th>Designation</th><th>Depth (h)</th><th>Flange Width (b)</th><th>Web Thk (tw)</th><th>Flange Thk (tf)</th><th>Weight (kg/m)</th></tr>
+                                <tr><th>Profile (h x b)</th><th>Thk (tw / tf)</th><th>Weight (kg/m)</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td class="font-bold">ISMC 75</td><td>75</td><td>40</td><td>4.8</td><td>7.5</td><td class="font-mono font-bold text-brand">7.14</td></tr>
-                                <tr><td class="font-bold">ISMC 100</td><td>100</td><td>50</td><td>4.7</td><td>7.5</td><td class="font-mono font-bold text-brand">9.56</td></tr>
-                                <tr><td class="font-bold">ISMC 150</td><td>150</td><td>75</td><td>5.4</td><td>9.0</td><td class="font-mono font-bold text-brand">16.8</td></tr>
-                                <tr><td class="font-bold">ISMC 200</td><td>200</td><td>75</td><td>6.1</td><td>11.4</td><td class="font-mono font-bold text-brand">22.3</td></tr>
-                                <tr><td class="font-bold">ISMC 250</td><td>250</td><td>80</td><td>7.1</td><td>14.1</td><td class="font-mono font-bold text-brand">34.2</td></tr>
-                                <tr><td class="font-bold">ISMC 300</td><td>300</td><td>90</td><td>7.6</td><td>13.6</td><td class="font-mono font-bold text-brand">35.8</td></tr>
-                                <tr><td class="font-bold">ISMC 400</td><td>400</td><td>100</td><td>8.6</td><td>15.3</td><td class="font-mono font-bold text-brand">49.4</td></tr>
+                                <tr><td class="font-bold">ISMC 75 x 40</td><td>4.8 / 7.5</td><td class="font-mono font-bold text-brand">7.14</td></tr>
+                                <tr><td class="font-bold">ISMC 100 x 50</td><td>4.7 / 7.5</td><td class="font-mono font-bold text-brand">9.56</td></tr>
+                                <tr><td class="font-bold">ISMC 150 x 75</td><td>5.4 / 9.0</td><td class="font-mono font-bold text-brand">16.8</td></tr>
+                                <tr><td class="font-bold">ISMC 200 x 75</td><td>6.1 / 11.4</td><td class="font-mono font-bold text-brand">22.3</td></tr>
+                                <tr><td class="font-bold">ISMC 250 x 80</td><td>7.1 / 14.1</td><td class="font-mono font-bold text-brand">34.2</td></tr>
+                                <tr><td class="font-bold">ISMC 300 x 90</td><td>7.6 / 13.6</td><td class="font-mono font-bold text-brand">35.8</td></tr>
+                                <tr><td class="font-bold">ISMC 400 x 100</td><td>8.6 / 15.3</td><td class="font-mono font-bold text-brand">49.4</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -423,16 +424,16 @@
                     <div id="ref-isa" class="hidden overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
                         <table class="w-full text-sm ref-table whitespace-nowrap">
                             <thead>
-                                <tr><th>Designation</th><th>Size (A x B)</th><th>Thickness (t)</th><th>Weight (kg/m)</th></tr>
+                                <tr><th>Profile (A x B)</th><th>Thickness (mm)</th><th>Weight (kg/m)</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td class="font-bold">ISA 2525</td><td>25 x 25</td><td>3 mm<br>5 mm</td><td class="font-mono font-bold text-brand">1.1<br>1.8</td></tr>
-                                <tr><td class="font-bold">ISA 4040</td><td>40 x 40</td><td>5 mm<br>6 mm</td><td class="font-mono font-bold text-brand">3.0<br>3.5</td></tr>
-                                <tr><td class="font-bold">ISA 5050</td><td>50 x 50</td><td>5 mm<br>6 mm</td><td class="font-mono font-bold text-brand">3.8<br>4.5</td></tr>
-                                <tr><td class="font-bold">ISA 6565</td><td>65 x 65</td><td>6 mm<br>8 mm</td><td class="font-mono font-bold text-brand">5.8<br>7.7</td></tr>
-                                <tr><td class="font-bold">ISA 7575</td><td>75 x 75</td><td>6 mm<br>8 mm</td><td class="font-mono font-bold text-brand">6.8<br>8.9</td></tr>
-                                <tr><td class="font-bold">ISA 100100</td><td>100 x 100</td><td>8 mm<br>10 mm</td><td class="font-mono font-bold text-brand">12.1<br>14.9</td></tr>
-                                <tr><td class="font-bold">ISA 150150</td><td>150 x 150</td><td>10 mm<br>12 mm</td><td class="font-mono font-bold text-brand">22.8<br>27.3</td></tr>
+                                <tr><td class="font-bold">ISA 25 x 25</td><td>3 / 5</td><td class="font-mono font-bold text-brand">1.1 / 1.8</td></tr>
+                                <tr><td class="font-bold">ISA 40 x 40</td><td>5 / 6</td><td class="font-mono font-bold text-brand">3.0 / 3.5</td></tr>
+                                <tr><td class="font-bold">ISA 50 x 50</td><td>5 / 6</td><td class="font-mono font-bold text-brand">3.8 / 4.5</td></tr>
+                                <tr><td class="font-bold">ISA 65 x 65</td><td>6 / 8</td><td class="font-mono font-bold text-brand">5.8 / 7.7</td></tr>
+                                <tr><td class="font-bold">ISA 75 x 75</td><td>6 / 8</td><td class="font-mono font-bold text-brand">6.8 / 8.9</td></tr>
+                                <tr><td class="font-bold">ISA 100 x 100</td><td>8 / 10</td><td class="font-mono font-bold text-brand">12.1 / 14.9</td></tr>
+                                <tr><td class="font-bold">ISA 150 x 150</td><td>10 / 12</td><td class="font-mono font-bold text-brand">22.8 / 27.3</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -536,7 +537,7 @@
 
         const dict = {
             en: {
-                app_name_part1: "FABRICATION", app_name_part2: "WEIGHT CALCULATOR", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "Home", nav_units: "Unit Converter", nav_fab: "Fabrication BOM", nav_settings: "Settings", btn_back: "Back to Dashboard", btn_back_profiles: "Back to Profiles",
                 nav_ref: "Steel Reference", desc_ref: "Standard sizes for NB Pipes, ISA, ISMC & ISMB.", title_ref: "Standard Steel Reference",
                 tab_nb: "NB Pipes", tab_ismb: "ISMB Beams", tab_ismc: "ISMC Channels", tab_isa: "ISA Angles",
@@ -556,13 +557,13 @@
                 f_od: "Outer Diameter (OD) (mm)", f_id: "Inner Diameter (ID) (mm)", f_dia: "Diameter (mm)", f_side_a: "Side A (mm)", f_side_b: "Side B (mm)", f_d1: "Top OD (D1) (mm)", f_d2: "Bottom OD (D2) (mm)", f_base_od: "Base OD (mm)", f_h: "Vertical Height (mm)", f_sf: "Straight Face (SF) (mm)", f_h_sec: "Depth of Section (h) (mm)", f_w_fl: "Width of Flange (b) (mm)", f_tw: "Web Thk (tw) (mm)", f_tf: "Flange Thk (tf) (mm)", f_leg_a: "Leg A (mm)", f_leg_b: "Leg B (mm)", f_bend_ang: "Total Bend Angle (°)", f_bend_rad: "Centerline Radius (R) (mm)", f_pieces: "Total Pieces (N)"
             },
             bn: {
-                app_name_part1: "ফ্যাব্রিকেশন", app_name_part2: "ওজন ক্যালকুলেটর", app_version: "সংস্করণ ৭.০ PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "সংস্করণ ৭.০ PWA",
                 nav_home: "হোম", nav_units: "একক রূপান্তরকারী", nav_fab: "ফ্যাব্রিকেশন বিওএম", nav_settings: "সেটিংস", btn_back: "ড্যাশবোর্ডে ফিরে যান", btn_back_profiles: "প্রোফাইলে ফিরে যান",
                 nav_ref: "স্টিল রেফারেন্স", desc_ref: "এনবি পাইপ, আইএসএ, আইএসএমসি এবং আইএসএমবি এর মাপ।", title_ref: "স্ট্যান্ডার্ড স্টিল রেফারেন্স",
                 tab_nb: "এনবি পাইপ", tab_ismb: "আইএসএমবি বিম", tab_ismc: "আইএসএমসি চ্যানেল", tab_isa: "আইএসএ অ্যাঙ্গেল",
                 welcome_title: "টুলকিটে স্বাগতম", welcome_name: "স্বাগতম {name}", welcome_sub: "শুরু করতে নিচে থেকে একটি মডিউল নির্বাচন করুন।",
                 desc_fab: "প্লেট, পাইপ এবং প্রোফাইলের ওজন হিসাব করুন।", desc_unit: "দ্রুত দৈর্ঘ্য রূপান্তর করুন।", desc_settings: "অ্যাপের থিম এবং পছন্দ কাস্টমাইজ করুন।",
-                lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)", mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (৮০০০)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
+                lbl_mat_preset: "উপাদান প্রিসেট", lbl_density: "ঘনত্ব (kg/m³)", mat_cs: "কার্বন স্টিল (৭৮৫০)", mat_ss: "স্টেইনলেস স্টিল (8000)", mat_al: "অ্যালুমিনিয়াম (২৭০০)", mat_cu: "তামা (৮৯৬০)", mat_custom: "কাস্টম ঘনত্ব",
                 title_converter: "নির্ভুল দৈর্ঘ্য রূপান্তরকারী", lbl_input_val: "ইনপুট মান", lbl_from_unit: "থেকে (একক)", lbl_to_unit: "পর্যন্ত (একক)", lbl_result_meas: "ফলাফল পরিমাপ", lbl_fab_profiles: "ফ্যাব্রিকেশন প্রোফাইল",
                 sh_plate: "প্লেট / ব্ল্যাঙ্ক", sh_hollow: "ফাঁপা বিভাগ", sh_solid: "নিটোল বিভাগ", sh_cone: "শঙ্কু", sh_pyramid: "পিরামিড", sh_sq2rnd: "হপার", sh_miter: "মাইটার বেন্ড", sh_dishend: "ডিশ এন্ড", sh_ring: "গোলাকার রিং", sh_ismb: "আইএসএমবি", sh_ismc: "আইএসএমসি", sh_isa: "আইএসএ",
                 lbl_prof_ref: "প্রোফাইল রেফারেন্স", btn_calc: "হিসাব করুন ও যোগ করুন", lbl_current_mass: "বর্তমান অংশের ওজন", lbl_bom: "উপাদানের তালিকা (BOM)", btn_clear: "সব মুছুন", btn_print: "PDF সেভ", btn_wa: "WhatsApp", th_shape: "আকার", th_material: "উপাদান", th_qty: "পরিমাণ", th_result: "মোট ওজন", lbl_total: "মোট অ্যাসেম্বলি:", msg_empty_bom: "বিওএম খালি। আগে উপাদান যোগ করুন।",
@@ -576,7 +577,7 @@
                 f_od: "বাইরের ব্যাস (OD)", f_id: "ভিতরের ব্যাস (ID)", f_dia: "ব্যাস (mm)", f_side_a: "বাহু A", f_side_b: "বাহু B", f_d1: "শীর্ষ ব্যাস (D1)", f_d2: "নিচের ব্যাস (D2)", f_base_od: "বেস ব্যাস (mm)", f_h: "উল্লম্ব উচ্চতা (mm)", f_sf: "সোজা মুখ (SF)", f_h_sec: "গভীরতা (h)", f_w_fl: "ফ্ল্যাঞ্জের প্রস্থ (b)", f_tw: "ওয়েব পুরুত্ব (tw)", f_tf: "ফ্ল্যাঞ্জ পুরুত্ব (tf)", f_leg_a: "লেগ A", f_leg_b: "লেগ B", f_bend_ang: "মোট বেন্ড অ্যাঙ্গেল (°)", f_bend_rad: "সেন্টারলাইন ব্যাসার্ধ (R)", f_pieces: "মোট পিস (N)"
             },
             hi: {
-                app_name_part1: "फैब्रिकेशन", app_name_part2: "वजन कैलकुलेटर", app_version: "संस्करण 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "संस्करण 7.0 PWA",
                 nav_home: "होम", nav_units: "इकाई कनवर्टर", nav_fab: "फैब्रिकेशन BOM", nav_settings: "सेटिंग्स", btn_back: "डैशबोर्ड पर वापस जाएं", btn_back_profiles: "प्रोफाइल पर वापस जाएं",
                 nav_ref: "स्टील संदर्भ", desc_ref: "एनबी पाइप, आईएसए, आईएसएमसी और आईएसएमबी के मानक आकार।", title_ref: "मानक स्टील संदर्भ",
                 tab_nb: "एनबी पाइप", tab_ismb: "ISMB बीम", tab_ismc: "ISMC चैनल", tab_isa: "ISA एंगल",
@@ -596,7 +597,7 @@
                 f_od: "बाहरी व्यास (OD)", f_id: "आंतरिक व्यास (ID)", f_dia: "व्यास (mm)", f_side_a: "साइड A", f_side_b: "साइड B", f_d1: "शीर्ष OD (D1)", f_d2: "निचला OD (D2)", f_base_od: "बेस OD", f_h: "ऊंचाई", f_sf: "सीधा चेहरा (SF)", f_h_sec: "गहराई (h)", f_w_fl: "फ्लेंज चौड़ाई (b)", f_tw: "वेब मोटाई (tw)", f_tf: "फ्लेंज मोटाई (tf)", f_leg_a: "लेग A", f_leg_b: "लेग B", f_bend_ang: "बेंड कोण (°)", f_bend_rad: "त्रिज्या (R)", f_pieces: "कुल टुकड़े (N)"
             },
             ta: {
-                app_name_part1: "ஃபேப்ரிகேஷன்", app_name_part2: "எடை கால்குலேட்டர்", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "முகப்பு", nav_units: "அலகு மாற்றி", nav_fab: "ஃபேப்ரிகேஷன் BOM", nav_settings: "அமைப்புகள்", btn_back: "டாஷ்போர்டுக்குத் திரும்பு", btn_back_profiles: "சுயவிவரங்களுக்குத் திரும்பு",
                 nav_ref: "எஃகு குறிப்பு", desc_ref: "NB குழாய்கள், ISA, ISMC & ISMB க்கான நிலையான அளவுகள்.", title_ref: "நிலையான எஃகு குறிப்பு",
                 tab_nb: "NB குழாய்கள்", tab_ismb: "ISMB பீம்ஸ்", tab_ismc: "ISMC சேனல்", tab_isa: "ISA ஆங்கிள்",
@@ -616,7 +617,7 @@
                 f_od: "வெளிப்புற விட்டம் (OD)", f_id: "உட்புற விட்டம் (ID)", f_dia: "விட்டம் (mm)", f_side_a: "பக்கம் A", f_side_b: "பக்கம் B", f_d1: "மேல் OD (D1)", f_d2: "கீழ் OD (D2)", f_base_od: "அடிப்படை OD", f_h: "உயரம்", f_sf: "நேரான முகம் (SF)", f_h_sec: "ஆழம் (h)", f_w_fl: "ஃபிளேன்ஜ் அகலம் (b)", f_tw: "வெப் தடிமன் (tw)", f_tf: "ஃபிளேன்ஜ் தடிமன் (tf)", f_leg_a: "கால் A", f_leg_b: "கால் B", f_bend_ang: "வளைவு கோணம் (°)", f_bend_rad: "ஆரம் (R)", f_pieces: "துண்டுகள் (N)"
             },
             ml: {
-                app_name_part1: "ഫാബ്രിക്കേഷൻ", app_name_part2: "ഭാരം കാൽക്കുലേറ്റർ", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "ഹോം", nav_units: "യൂണിറ്റ് കൺവെർട്ടർ", nav_fab: "ഫാബ്രിക്കേഷൻ BOM", nav_settings: "ക്രമീകരണങ്ങൾ", btn_back: "ഡാഷ്‌ബോർഡിലേക്ക് മടങ്ങുക", btn_back_profiles: "പ്രൊഫൈലുകളിലേക്ക് മടങ്ങുക",
                 nav_ref: "സ്റ്റീൽ റഫറൻസ്", desc_ref: "NB പൈപ്പുകൾ, ISA, ISMC & ISMB എന്നിവയുടെ സ്റ്റാൻഡേർഡ് വലുപ്പങ്ങൾ.", title_ref: "സ്റ്റാൻഡേർഡ് സ്റ്റീൽ റഫറൻസ്",
                 tab_nb: "NB പൈപ്പുകൾ", tab_ismb: "ISMB ബീമുകൾ", tab_ismc: "ISMC ചാനലുകൾ", tab_isa: "ISA ആംഗിളുകൾ",
@@ -633,10 +634,10 @@
                 f_type_hollow: "തരം", f_opt_cyl_shell: "സിലിണ്ടർ ഷെൽ", f_opt_sq_tube: "സ്ക്വയർ ട്യൂബ്", f_opt_rect_tube: "ചതുര ട്യൂബ്", f_type_solid: "തരം", f_opt_sq_bar: "സ്ക്വയർ ബാർ", f_opt_rect_bar: "ചതുര ബാർ", f_opt_rnd_bar: "റൗണ്ട് ബാർ",
                 f_type_cone: "കോൺ തരം", f_opt_trunc: "മുറിച്ച കോൺ", f_opt_full: "മുഴുവൻ കോൺ", f_type_pyramid: "പിരമിഡ് തരം", f_opt_trunc_pyr: "മുറിച്ച പിരമിഡ്", f_opt_full_pyr: "മുഴുവൻ പിരമിഡ്",
                 f_base_dim: "ബേസ് നീളം (A)", f_base_w: "ബേസ് വീതി (B)", f_base_l: "ബേസ് നീളം (A)", f_top_dim: "മുകളിലെ അളവ് (B)", f_top_od: "മുകളിലെ റൗണ്ട് OD",
-                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ്യാസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
+                f_od: "പുറത്തെ വ്യാസം (OD)", f_id: "അകത്തെ വ്യാസം (ID)", f_dia: "വ్యాസം (mm)", f_side_a: "വശം A", f_side_b: "വശം B", f_d1: "മുകളിലെ OD (D1)", f_d2: "താഴത്തെ OD (D2)", f_base_od: "ബേസ് OD", f_h: "ഉയരം", f_sf: "സ്ട്രെയിറ്റ് ഫെയ്സ് (SF)", f_h_sec: "ആഴം (h)", f_w_fl: "ഫ്ലേഞ്ച് വീതി (b)", f_tw: "വെബ് കനം (tw)", f_tf: "ഫ്ലേഞ്ച് കനം (tf)", f_leg_a: "ലെഗ് A", f_leg_b: "ലെഗ് B", f_bend_ang: "ബെൻഡ് ആംഗിൾ (°)", f_bend_rad: "റേഡിയസ് (R)", f_pieces: "കഷണങ്ങൾ (N)"
             },
             te: {
-                app_name_part1: "ఫ్యాబ్రికేషన్", app_name_part2: "బరువు కాలిక్యులేటర్", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "హోమ్", nav_units: "యూనిట్ కన్వర్టర్", nav_fab: "ఫ్యాబ్రికేషన్ BOM", nav_settings: "సెట్టింగులు", btn_back: "డాష్‌బోర్డ్‌కు తిరిగి వెళ్ళు", btn_back_profiles: "ప్రొఫైల్స్‌కు తిరిగి వెళ్ళు",
                 nav_ref: "స్టీల్ రిఫరెన్స్", desc_ref: "NB పైపులు, ISA, ISMC & ISMB యొక్క ప్రామాణిక పరిమాణాలు.", title_ref: "ప్రామాణిక స్టీల్ రిఫరెన్స్",
                 tab_nb: "NB పైపులు", tab_ismb: "ISMB కిరణాలు", tab_ismc: "ISMC ఛానెల్‌లు", tab_isa: "ISA కోణాలు",
@@ -644,7 +645,7 @@
                 desc_fab: "ప్లేట్లు, పైపులు మరియు ప్రొఫైల్స్ బరువు లెక్కించండి.", desc_unit: "పొడవులను త్వరగా మార్చండి.", desc_settings: "యాప్ థీమ్ మరియు ప్రాధాన్యతలను అనుకూలీకరించండి.",
                 lbl_mat_preset: "మెటీరియల్ ప్రీసెట్", lbl_density: "సాంద్రత (kg/m³)", mat_cs: "కార్బన్ స్టీల్ (7850)", mat_ss: "స్టెయిన్లెస్ స్టీల్ (8000)", mat_al: "అల్యూమినియం (2700)", mat_cu: "రాగి (8960)", mat_custom: "కస్టమ్ సాంద్రత",
                 title_converter: "ఖచ్చితమైన పొడవు కన్వర్టర్", lbl_input_val: "ఇన్‌పుట్ విలువ", lbl_from_unit: "నుండి (యూనిట్)", lbl_to_unit: "వరకు (యూనిట్)", lbl_result_meas: "ఫలితం", lbl_fab_profiles: "ఫ్యాబ్రికేషన్ ప్రొఫైల్స్",
-                sh_plate: "ప్లేట్ / బ్లాంక్", sh_hollow: "హాలో", sh_solid: "ఘన", sh_cone: "కోన్", sh_pyramid: "పిరమిడ్", sh_sq2rnd: "హాపర్", sh_miter: "మైటర్ బెండ్", sh_dishend: "డిష్ ఎండ్", sh_ring: "రింగ్", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA యాంగిల్",
+                sh_plate: "ప్లేట్ / బ్లాంక్", sh_hollow: "హాలో", sh_solid: "ఘన", sh_cone: "కోన్", sh_pyramid: "పిరమిഡ്", sh_sq2rnd: "హాపర్", sh_miter: "మైటర్ బెండ్", sh_dishend: "డిష్ ఎండ్", sh_ring: "రింగ్", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA యాంగిల్",
                 lbl_prof_ref: "ప్రొఫైల్ రిఫరెన్స్", btn_calc: "లెక్కించి జోడించండి", lbl_current_mass: "ప్రస్తుత భాగం బరువు", lbl_bom: "మెటీరియల్స్ జాబితా (BOM)", btn_clear: "అన్నింటినీ క్లియర్ చేయి", btn_print: "PDF సేవ్ చేయి", btn_wa: "WhatsApp", th_shape: "ఆకారం", th_material: "మెటీరియల్", th_qty: "పరిమాణం", th_result: "మొత్తం బరువు", lbl_total: "మొత్తం అసెంబ్లీ:", msg_empty_bom: "BOM ఖాళీగా ఉంది. దయచేసి ముందుగా అంశాలను జోడించండి.",
                 about_title: "ఈ ప్రాజెక్ట్ గురించి", about_desc: "<p>ఈ టూల్‌కిట్ <strong>సాయోన్ హజ్రా</strong>చే అభివృద్ధి చేయబడింది.</p><p class='mt-3 text-brand font-bold'>ఇది ఫ్యాబ్రికేషన్ కమ్యూనిటీకి మద్దతు ఇవ్వడానికి రూపొందించబడిన 100% ఉచిత అప్లికేషన్.</p>", about_connect: "సంప్రదించండి",
                 lbl_username: "మీ పేరు", lbl_theme: "యాప్ థీమ్", lbl_lang: "భాష", theme_system: "సిస్టమ్", theme_light: "లైట్ మోడ్", theme_dark: "డార్క్ మోడ్", btn_save_settings: "సెట్టింగులను సేవ్ చేయండి", msg_saved: "సేవ్ చేయబడింది!",
@@ -656,14 +657,14 @@
                 f_od: "వెలుపలి వ్యాసం (OD)", f_id: "లోపలి వ్యాసం (ID)", f_dia: "వ్యాసం (mm)", f_side_a: "సైడ్ A", f_side_b: "సైడ్ B", f_d1: "పై OD (D1)", f_d2: "క్రింది OD (D2)", f_base_od: "బేస్ OD", f_h: "ఎత్తు", f_sf: "స్ట్రెయిట్ ఫేస్ (SF)", f_h_sec: "లోతు (h)", f_w_fl: "ఫ్లాంజ్ వెడల్పు (b)", f_tw: "వెబ్ మందం (tw)", f_tf: "ఫ్లాంజ్ మందం (tf)", f_leg_a: "లెగ్ A", f_leg_b: "లెగ్ B", f_bend_ang: "బెండ్ యాంగిల్ (°)", f_bend_rad: "రేడియస్ (R)", f_pieces: "ముక్కలు (N)"
             },
             or: {
-                app_name_part1: "ଫ୍ୟାବ୍ରିକେସନ୍", app_name_part2: "ଓଜନ କାଲକୁଲେଟର", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "ହୋମ୍", nav_units: "ୟୁନਿଟ୍ କନଭର୍ଟର", nav_fab: "ଫ୍ୟାବ୍ରିକେସନ୍ BOM", nav_settings: "ସେଟିଂସ୍", btn_back: "ଡ୍ୟାସବୋର୍ଡକୁ ଫେରନ୍ତୁ", btn_back_profiles: "ପ୍ରୋଫାଇଲକୁ ଫେରନ୍ତୁ",
                 nav_ref: "ଷ୍ଟିଲ୍ ରେଫରେନ୍ସ", desc_ref: "NB ପାଇପ୍, ISA, ISMC ଏବଂ ISMB ର ଷ୍ଟାଣ୍ଡାର୍ଡ ଆକାର।", title_ref: "ଷ୍ଟାଣ୍ଡାର୍ଡ ଷ୍ଟିଲ୍ ରେଫରେନ୍ସ",
                 tab_nb: "NB ପାଇପ୍", tab_ismb: "ISMB ବିମ୍", tab_ismc: "ISMC ଚ୍ୟାନେଲ୍", tab_isa: "ISA ଆଙ୍ଗେଲ୍",
                 welcome_title: "ସ୍ୱାଗତ", welcome_name: "ସ୍ୱାଗତ {name}", welcome_sub: "ଆରମ୍ଭ କରିବା ପାଇଁ ତଳୁ ଗୋଟିଏ ମଡ୍ୟୁଲ୍ ବାଛନ୍ତୁ।",
                 desc_fab: "ପ୍ଲେଟ୍, ପାଇପ୍ ଏବଂ ପ୍ରୋଫାଇଲ୍ ର ଓଜନ ହିସାବ କରନ୍ତୁ।", desc_unit: "ଲମ୍ବ ଶୀଘ୍ର ପରିବର୍ତ୍ତନ କରନ୍ତୁ।", desc_settings: "ଆପ୍ ଥିମ୍ ଏବଂ ଭାଷା ପରିବର୍ତ୍ତନ କରନ୍ତୁ।",
                 lbl_mat_preset: "ସାମଗ୍ରୀ ପ୍ରିସେଟ୍", lbl_density: "ଘନତ୍ୱ (kg/m³)", mat_cs: "କାର୍ବନ୍ ଷ୍ଟିଲ୍ (7850)", mat_ss: "ଷ୍ଟେନଲେସ୍ ଷ୍ଟିଲ୍ (8000)", mat_al: "ଆଲୁମିନିୟମ୍ (2700)", mat_cu: "ତମ୍ବା (8960)", mat_custom: "କଷ୍ଟମ୍ ଘନତ୍ୱ",
-                title_converter: "ଲମ୍ବ କନଭର୍ଟର", lbl_input_val: "ଇନପୁଟ୍ ମୂଲ୍ୟ", lbl_from_unit: "ରୁ (ୟୁନିଟ୍)", lbl_to_unit: "ପର୍ଯ୍ୟନ୍ତ (ୟୁନିଟ୍)", lbl_result_meas: "ଫଳାଫଳ", lbl_fab_profiles: "ଫ୍ୟାବ୍ରିକେସନ୍ ପ୍ରୋଫାଇଲ୍",
+                title_converter: "ଲମ୍ବ କନଭର୍ଟର", lbl_input_val: "ଇନପୁଟ୍ ମୂଲ୍ୟ", lbl_from_unit: "ରୁ (ୟୁନਿଟ୍)", lbl_to_unit: "ପର୍ଯ୍ୟନ୍ତ (ୟୁନਿଟ୍)", lbl_result_meas: "ଫଳାଫଳ", lbl_fab_profiles: "ଫ୍ୟାବ୍ରିକେସନ୍ ପ୍ରୋଫାଇଲ୍",
                 sh_plate: "ପ୍ଲେଟ୍ / ବ୍ଲାଙ୍କ୍", sh_hollow: "ଫମ୍ପା", sh_solid: "କଠିନ", sh_cone: "ଶଙ୍କୁ", sh_pyramid: "ପିରାମିଡ୍", sh_sq2rnd: "ହପର୍", sh_miter: "ମାଇଟର୍ ବେଣ୍ଡ୍", sh_dishend: "ଡିସ୍ ଏଣ୍ଡ୍", sh_ring: "ରିଙ୍ଗ୍", sh_ismb: "ISMB", sh_ismc: "ISMC", sh_isa: "ISA ଆଙ୍ଗେଲ୍",
                 lbl_prof_ref: "ପ୍ରୋଫାଇଲ୍ ରେଫରେନ୍ସ", btn_calc: "ହିସାବ କରନ୍ତୁ", lbl_current_mass: "ବର୍ତ୍ତମାନର ଓଜନ", lbl_bom: "ସାମଗ୍ରୀ ତାଲିକା (BOM)", btn_clear: "ସବୁ ସଫା କରନ୍ତୁ", btn_print: "PDF ସେଭ୍", btn_wa: "WhatsApp", th_shape: "ଆକାର", th_material: "ସାମଗ୍ରୀ", th_qty: "ପରିମାଣ", th_result: "ମୋଟ ଓଜନ", lbl_total: "ମୋଟ ଆସେମ୍ବଲି:", msg_empty_bom: "BOM ଖାଲି ଅଛି। ଦୟାକରି ପ୍ରଥମେ ଆଇଟମ୍ ଯୋଗ କରନ୍ତୁ।",
                 about_title: "ଏହି ପ୍ରୋଜେକ୍ଟ ବିଷୟରେ", about_desc: "<p>ଏହି ଫ୍ୟାବ୍ରିକେସନ୍ ଟୁଲକିଟ୍ <strong>ସାୟୋନ୍ ହାଜରା</strong>ଙ୍କ ଦ୍ୱାରା ପ୍ରସ୍ତୁତ ହୋଇଛି।</p><p class='mt-3 text-brand font-bold'>ଏହା ଫ୍ୟାବ୍ରିକେସନ୍ ସମ୍ପ୍ରଦାୟକୁ ସମର୍ଥନ କରିବା ପାଇଁ ଡିଜାଇନ୍ ହୋଇଥିବା ୧୦୦% ମାଗଣା ଆପ୍ଲିକେସନ୍।</p>", about_connect: "ଯୋଗାଯୋଗ କରନ୍ତୁ",
@@ -676,7 +677,7 @@
                 f_od: "ବାହାର ବ୍ୟାସ (OD)", f_id: "ଭିତର ବ୍ୟାସ (ID)", f_dia: "ବ୍ୟାସ (mm)", f_side_a: "ପାର୍ଶ୍ୱ A", f_side_b: "ପାର୍ଶ୍ୱ B", f_d1: "ଉପର OD (D1)", f_d2: "ତଳ OD (D2)", f_base_od: "ବେସ୍ OD", f_h: "ଉଚ୍ଚତା", f_sf: "ଷ୍ଟ୍ରେଟ୍ ଫେସ୍ (SF)", f_h_sec: "ଗଭୀରତା (h)", f_w_fl: "ଫ୍ଲାଞ୍ଜ ପ୍ରସ୍ଥ (b)", f_tw: "ୱେବ୍ ମୋଟେଇ (tw)", f_tf: "ଫ୍ଲାଞ୍ଜ ମୋଟେଇ (tf)", f_leg_a: "ଲେଗ୍ A", f_leg_b: "ଲେଗ୍ B", f_bend_ang: "ବେଣ୍ଡ୍ ଆଙ୍ଗେଲ୍ (°)", f_bend_rad: "ରେଡିଅସ୍ (R)", f_pieces: "ମୋଟ ପିସ୍ (N)"
             },
             pa: {
-                app_name_part1: "ਫੈਬਰੀਕੇਸ਼ਨ", app_name_part2: "ਭਾਰ ਕੈਲਕੁਲੇਟਰ", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "ਹੋਮ", nav_units: "ਯੂਨਿਟ ਕਨਵਰਟਰ", nav_fab: "ਫੈਬਰੀਕੇਸ਼ਨ BOM", nav_settings: "ਸੈਟਿੰਗਜ਼", btn_back: "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਵਾਪਸ ਜਾਓ", btn_back_profiles: "ਪ੍ਰੋਫਾਈਲਾਂ 'ਤੇ ਵਾਪਸ ਜਾਓ",
                 nav_ref: "ਸਟੀਲ ਹਵਾਲਾ", desc_ref: "NB ਪਾਈਪਾਂ, ISA, ISMC ਅਤੇ ISMB ਦੇ ਮਿਆਰੀ ਆਕਾਰ।", title_ref: "ਮਿਆਰੀ ਸਟੀਲ ਹਵਾਲਾ",
                 tab_nb: "NB ਪਾਈਪਾਂ", tab_ismb: "ISMB ਬੀਮ", tab_ismc: "ISMC ਚੈਨਲ", tab_isa: "ISA ਐਂਗਲ",
@@ -696,7 +697,7 @@
                 f_od: "ਬਾਹਰੀ ਵਿਆਸ (OD)", f_id: "ਅੰਦਰੂਨੀ ਵਿਆਸ (ID)", f_dia: "ਵਿਆਸ (mm)", f_side_a: "ਸਾਈਡ A", f_side_b: "ਸਾਈਡ B", f_d1: "ਉੱਪਰਲਾ OD (D1)", f_d2: "ਹੇਠਲਾ OD (D2)", f_base_od: "ਬੇਸ OD", f_h: "ਉਚਾਈ", f_sf: "ਸਿੱਧਾ ਫੇਸ (SF)", f_h_sec: "ਡੂੰਘਾਈ (h)", f_w_fl: "ਫਲੈਂਜ ਚੌੜਾਈ (b)", f_tw: "ਵੈੱਬ ਮੋਟਾਈ (tw)", f_tf: "ਫਲੈਂਜ ਮੋਟਾਈ (tf)", f_leg_a: "ਲੈੱਗ A", f_leg_b: "ਲੈੱਗ B", f_bend_ang: "ਬੈਂਡ ਐਂਗਲ (°)", f_bend_rad: "ਰੇਡੀਅਸ (R)", f_pieces: "ਕੁੱਲ ਪੀਸ (N)"
             },
             ur: {
-                app_name_part1: "فیبریکیشن", app_name_part2: "وزن کیلکولیٹر", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "ہوم", nav_units: "یونٹ کنورٹر", nav_fab: "فیبریکیشن BOM", nav_settings: "ترتیبات", btn_back: "ڈیش بورڈ پر واپس جائیں", btn_back_profiles: "پروفائلز پر واپس جائیں",
                 nav_ref: "اسٹیل حوالہ", desc_ref: "این بی پائپس، آئی ایس اے، آئی ایس ایم سی اور آئی ایس ایم بی کے معیاری سائز۔", title_ref: "معیاری اسٹیل حوالہ",
                 tab_nb: "این بی پائپس", tab_ismb: "ISMB بیم", tab_ismc: "ISMC چینل", tab_isa: "ISA اینگل",
@@ -716,7 +717,7 @@
                 f_od: "بیرونی قطر (OD)", f_id: "اندرونی قطر (ID)", f_dia: "قطر (mm)", f_side_a: "سائیڈ A", f_side_b: "سائیڈ B", f_d1: "اوپری OD (D1)", f_d2: "نچلا OD (D2)", f_base_od: "بیس OD", f_h: "اونچائی", f_sf: "سیدھا چہرہ (SF)", f_h_sec: "گہرائی (h)", f_w_fl: "فلینج کی چوڑائی (b)", f_tw: "ویب کی موٹائی (tw)", f_tf: "فلینج کی موٹائی (tf)", f_leg_a: "لیگ A", f_leg_b: "لیگ B", f_bend_ang: "بینڈ اینگل (°)", f_bend_rad: "ریڈیس (R)", f_pieces: "ٹکڑے (N)"
             },
             as: {
-                app_name_part1: "ফেব্ৰিকেচন", app_name_part2: "ওজন কেলকুলেটৰ", app_version: "VERSION 7.0 PWA",
+                app_name_part1: "METRIFAB", app_name_part2: "FABRICATION ASSISTANT", app_version: "VERSION 7.0 PWA",
                 nav_home: "হোম", nav_units: "একক ৰূপান্তৰকাৰী", nav_fab: "ফেব্ৰিকেচন BOM", nav_settings: "ছেটিংছ", btn_back: "ডেশবৰ্ডলৈ উভতি যাওক", btn_back_profiles: "প্ৰোফাইললৈ উভতি যাওক",
                 nav_ref: "ষ্টীল ৰেফাৰেন্স", desc_ref: "NB পাইপ, ISA, ISMC আৰু ISMB ৰ মানক আকাৰ।", title_ref: "মানক ষ্টীল ৰেফাৰেন্স",
                 tab_nb: "NB পাইপ", tab_ismb: "ISMB বীম", tab_ismc: "ISMC চেনেল", tab_isa: "ISA এংগেল",
@@ -914,17 +915,17 @@
         function switchRefTab(tab) {
             ['nb', 'ismb', 'ismc', 'isa'].forEach(t => {
                 const el = document.getElementById(`ref-${t}`);
-                const btn = document.getElementById(`btn-ref-${t}`);
                 if(t === tab) {
                     el.classList.remove('hidden');
-                    btn.classList.add('bg-brand', 'text-white', 'shadow-md');
-                    btn.classList.remove('bg-transparent', 'text-slate-600', 'dark:text-slate-400');
                 } else {
                     el.classList.add('hidden');
-                    btn.classList.remove('bg-brand', 'text-white', 'shadow-md');
-                    btn.classList.add('bg-transparent', 'text-slate-600', 'dark:text-slate-400');
                 }
             });
+            
+            const selectEl = document.getElementById('refDropdown');
+            if (selectEl && selectEl.value !== tab) {
+                selectEl.value = tab;
+            }
         }
 
         const factors = { mm: 1, cm: 10, m: 1000, in: 25.4, ft: 304.8 };
@@ -1293,7 +1294,7 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'pt', 'a4');
 
-                const compName = localStorage.getItem('salap_comp_name') || 'FABRICATION WEIGHT CALCULATOR';
+                const compName = localStorage.getItem('salap_comp_name') || 'METRIFAB: FABRICATION ASSISTANT';
                 const compAddr = localStorage.getItem('salap_comp_addr') || '';
                 const compContact = localStorage.getItem('salap_comp_contact') || '';
 

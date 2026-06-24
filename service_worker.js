@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fab-calc-cache-v6.5';
+const CACHE_NAME = 'fab-calc-cache-v7.0';
 
 // Installs the new service worker immediately
 self.addEventListener('install', event => {
