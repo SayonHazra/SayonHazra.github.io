@@ -57,9 +57,9 @@
         .glass-panel { @apply bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 shadow-lg; }
         
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .input-group { @apply flex flex-col mb-4; }
-        label { @apply text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-1 transition-colors leading-relaxed; }
-        input, select { @apply p-3 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 leading-relaxed; }
+        .input-group { @apply flex flex-col mb-2; }
+        label { @apply text-[10px] sm:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-0.5 transition-colors leading-tight; }
+        input, select { @apply p-2 text-sm border border-slate-200 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-brand focus:border-brand outline-none transition-all bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 leading-snug; }
         input[readonly] { @apply bg-slate-100/50 dark:bg-slate-900/30 text-slate-500 dark:text-slate-500 cursor-not-allowed border-transparent dark:border-transparent focus:ring-0; }
         
         .shape-btn-active { @apply border-brand bg-brand/10 text-brand dark:bg-brand/20 dark:text-brand scale-95 shadow-inner; }
@@ -73,7 +73,7 @@
         .ref-table tr:last-child td { @apply border-b-0; }
         
         /* Force Profile Reference diagrams to expand fully */
-        #diagramBox img { width: 100% !important; height: 100% !important; object-fit: contain !important; max-height: 280px; }
+        #diagramBox img { width: 100% !important; height: 100% !important; object-fit: contain !important; max-height: 160px; }
     </style>
 </head>
 <body class="min-h-screen font-sans transition-colors duration-200 text-base">
@@ -234,23 +234,24 @@
 
                 <!-- Calculator View -->
                 <div id="weight-calculator" class="hidden mb-8">
-                    <div class="glass-panel rounded-2xl p-8 transition-colors duration-200">
-                        <h2 id="shapeTitle" class="text-2xl font-black mb-6 text-brand uppercase italic">Steel Plate</h2>
-                        <div id="errorBox" class="hidden mb-6 p-4 bg-red-50/90 dark:bg-red-900/40 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm font-semibold backdrop-blur-sm"></div>
+                    <div class="glass-panel rounded-2xl p-4 sm:p-8 transition-colors duration-200">
+                        <h2 id="shapeTitle" class="text-xl sm:text-2xl font-black mb-4 text-brand uppercase italic">Steel Plate</h2>
+                        <div id="errorBox" class="hidden mb-4 p-3 bg-red-50/90 dark:bg-red-900/40 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-xs font-semibold backdrop-blur-sm"></div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div id="inputGrid" class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-                            <div class="md:col-span-1 flex flex-col items-center justify-start p-4 bg-slate-50/50 dark:bg-slate-900/50 rounded-xl border border-slate-200/50 dark:border-slate-700/50 min-h-[250px] md:min-h-full">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 flex-shrink-0" data-i18n="lbl_prof_ref">Profile Reference</p>
-                                <div id="diagramBox" class="w-full flex-1 flex items-center justify-center p-2 overflow-hidden"></div>
-                            </div>
+                        <!-- Moved Profile Reference to Top -->
+                        <div class="mb-4 flex flex-col items-center justify-center p-2 bg-slate-50/50 dark:bg-slate-900/50 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
+                            <div id="diagramBox" class="w-full h-28 sm:h-40 flex items-center justify-center overflow-hidden"></div>
                         </div>
 
-                        <div class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-700/50 flex flex-col md:flex-row justify-between items-center gap-8">
-                            <button onclick="calcWeight()" class="w-full md:w-auto px-12 py-4 bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-xl shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all" data-i18n="btn_calc">CALCULATE & ADD</button>
-                            <div class="text-right">
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest" data-i18n="lbl_current_mass">Current Part Mass</p>
-                                <p id="wResult" class="text-5xl font-mono font-black text-slate-900 dark:text-white">0.000 <span class="text-xl text-slate-400 font-sans">kg</span></p>
+                        <!-- Compact Input Grid -->
+                        <div id="inputGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-2"></div>
+
+                        <!-- Compact Calculate Button & Result -->
+                        <div class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-700/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <button onclick="calcWeight()" class="w-full sm:w-auto px-8 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all" data-i18n="btn_calc">CALCULATE & ADD</button>
+                            <div class="text-center sm:text-right">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1" data-i18n="lbl_current_mass">Current Part Mass</p>
+                                <p id="wResult" class="text-3xl sm:text-4xl font-mono font-black text-slate-900 dark:text-white leading-none">0.000 <span class="text-sm sm:text-lg text-slate-400 font-sans">kg</span></p>
                             </div>
                         </div>
                     </div>
@@ -1017,9 +1018,9 @@
                 const el = document.getElementById('dt_' + b);
                 if(el) {
                     if(b === type) {
-                        el.className = 'flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all';
+                        el.className = 'flex-1 py-1.5 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all';
                     } else {
-                        el.className = 'flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer';
+                        el.className = 'flex-1 py-1.5 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer';
                     }
                 }
             });
@@ -1135,35 +1136,35 @@
             const Qty = `<div class="input-group"><label>${t('f_qty')}</label><input type="number" id="inp_Qty" value="1" min="1"></div>`;
 
             if(shape === 'plate') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
+                html = `<div class="input-group col-span-2 sm:col-span-full"><label>${t('f_type_plate')}</label><select id="inp_plate_type" onchange="togglePlateInputs()"><option value="rect">${t('f_opt_rect')}</option><option value="circle">${t('f_opt_circ')}</option></select></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div id="wrap_L" class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div><div id="wrap_W" class="input-group"><label>${t('f_wid')}</label><input type="number" id="inp_W" min="0"></div><div id="wrap_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_OD" min="0"></div>` + Qty;
                 setTimeout(togglePlateInputs, 10);
             } 
             else if(shape === 'hollow') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_hollow')}</label><select id="inp_hollow_type" onchange="toggleHollowInputs()"><option value="cyl">${t('f_opt_cyl_shell')}</option><option value="sq">${t('f_opt_sq_tube')}</option><option value="rect">${t('f_opt_rect_tube')}</option></select></div><div id="wrap_hollow_OD" class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_hollow_OD" min="0"></div><div id="wrap_hollow_A" class="input-group" style="display:none;"><label>${t('f_side_a')}</label><input type="number" id="inp_hollow_A" min="0"></div><div id="wrap_hollow_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_hollow_B" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                html = `<div class="input-group col-span-2 sm:col-span-full"><label>${t('f_type_hollow')}</label><select id="inp_hollow_type" onchange="toggleHollowInputs()"><option value="cyl">${t('f_opt_cyl_shell')}</option><option value="sq">${t('f_opt_sq_tube')}</option><option value="rect">${t('f_opt_rect_tube')}</option></select></div><div id="wrap_hollow_OD" class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_hollow_OD" min="0"></div><div id="wrap_hollow_A" class="input-group" style="display:none;"><label>${t('f_side_a')}</label><input type="number" id="inp_hollow_A" min="0"></div><div id="wrap_hollow_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_hollow_B" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
                 setTimeout(toggleHollowInputs, 10);
             }
             else if(shape === 'solid') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_solid')}</label><select id="inp_solid_type" onchange="toggleSolidInputs()"><option value="sq">${t('f_opt_sq_bar')}</option><option value="rect">${t('f_opt_rect_bar')}</option><option value="rnd">${t('f_opt_rnd_bar')}</option></select></div><div id="wrap_solid_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_solid_OD" min="0"></div><div id="wrap_solid_A" class="input-group"><label>${t('f_side_a')}</label><input type="number" id="inp_solid_A" min="0"></div><div id="wrap_solid_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_solid_B" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
+                html = `<div class="input-group col-span-2 sm:col-span-full"><label>${t('f_type_solid')}</label><select id="inp_solid_type" onchange="toggleSolidInputs()"><option value="sq">${t('f_opt_sq_bar')}</option><option value="rect">${t('f_opt_rect_bar')}</option><option value="rnd">${t('f_opt_rnd_bar')}</option></select></div><div id="wrap_solid_OD" class="input-group" style="display:none;"><label>${t('f_dia')}</label><input type="number" id="inp_solid_OD" min="0"></div><div id="wrap_solid_A" class="input-group"><label>${t('f_side_a')}</label><input type="number" id="inp_solid_A" min="0"></div><div id="wrap_solid_B" class="input-group" style="display:none;"><label>${t('f_side_b')}</label><input type="number" id="inp_solid_B" min="0"></div><div class="input-group"><label>${t('f_len')}</label><input type="number" id="inp_L" min="0"></div>` + Qty;
                 setTimeout(toggleSolidInputs, 10);
             }
             else if(shape === 'cone') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="truncated">${t('f_opt_trunc')}</option><option value="full">${t('f_opt_full')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group col-span-2 sm:col-span-full"><label>${t('f_type_cone')}</label><select id="inp_cone_type" onchange="toggleConeInputs()"><option value="truncated">${t('f_opt_trunc')}</option><option value="full">${t('f_opt_full')}</option></select></div><div class="input-group"><label id="lbl_D1">${t('f_d1')}</label><input type="number" id="inp_D1" min="0"></div><div id="wrap_D2" class="input-group"><label>${t('f_d2')}</label><input type="number" id="inp_D2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(toggleConeInputs, 10);
             }
             else if(shape === 'pyramid') {
-                html = `<div class="input-group sm:col-span-2"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_pyr_L1" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_pyr_W1" min="0"></div><div id="wrap_pyr_L2" class="input-group"><label>${t('f_top_l')}</label><input type="number" id="inp_pyr_L2" min="0"></div><div id="wrap_pyr_W2" class="input-group"><label>${t('f_top_w')}</label><input type="number" id="inp_pyr_W2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group col-span-2 sm:col-span-full"><label>${t('f_type_pyramid')}</label><select id="inp_pyramid_type" onchange="togglePyramidInputs()"><option value="truncated">${t('f_opt_trunc_pyr')}</option><option value="full">${t('f_opt_full_pyr')}</option></select></div><div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_pyr_L1" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_pyr_W1" min="0"></div><div id="wrap_pyr_L2" class="input-group"><label>${t('f_top_l')}</label><input type="number" id="inp_pyr_L2" min="0"></div><div id="wrap_pyr_W2" class="input-group"><label>${t('f_top_w')}</label><input type="number" id="inp_pyr_W2" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 setTimeout(togglePyramidInputs, 10);
             }
             else if(shape === 'sq2rnd') {
-                html = `<div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_A" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group sm:col-span-2"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
+                html = `<div class="input-group"><label>${t('f_base_l')}</label><input type="number" id="inp_A" min="0"></div><div class="input-group"><label>${t('f_base_w')}</label><input type="number" id="inp_B" min="0"></div><div class="input-group"><label>${t('f_top_od')}</label><input type="number" id="inp_D" min="0"></div><div class="input-group"><label>${t('f_h')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group col-span-2 sm:col-span-1"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty;
                 document.getElementById('diagramBox').innerHTML = `<img src="sq2rnd-ref.jpg" class="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-lighten">`;
             }
             else if(shape === 'miter') {
-                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
+                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group"><label>${t('f_bend_rad')}</label><input type="number" id="inp_R" min="0"></div><div class="input-group"><label>${t('f_bend_ang')}</label><input type="number" id="inp_Ang" min="0"></div><div class="input-group col-span-2 sm:col-span-1"><label>${t('f_pieces')}</label><input type="number" id="inp_P" min="2"></div>` + Qty;
             }
-            else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
+            else if(shape === 'ring') { html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0"></div><div class="input-group"><label>${t('f_id')}</label><input type="number" id="inp_ID" min="0"></div><div class="input-group col-span-2 sm:col-span-1"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div>` + Qty; }
             else if(shape === 'dishend') { 
-                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group sm:col-span-2"><label>${t('f_dish_type')}</label><div class="flex gap-1 bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-lg border border-slate-200 dark:border-slate-700"><button id="dt_tori" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all" onclick="setDishType('tori')">${t('f_tori')}</button><button id="dt_ellip" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('ellip')">${t('f_ellip')}</button><button id="dt_hemi" class="flex-1 py-2 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('hemi')">${t('f_hemi')}</button></div></div><div class="input-group"><label>${t('f_blank_dia')}</label><input type="number" id="inp_BlankDia" min="0" class="bg-blue-50/50 dark:bg-blue-900/20 text-brand font-bold border-blue-200 dark:border-blue-800"></div>` + Qty; 
+                html = `<div class="input-group"><label>${t('f_od')}</label><input type="number" id="inp_OD" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_sf')}</label><input type="number" id="inp_SF" value="25" min="0" oninput="updateDishBlank()"></div><div class="input-group"><label>${t('f_thk')}</label><input type="number" id="inp_T" min="0"></div><div class="input-group col-span-2 sm:col-span-full"><label>${t('f_dish_type')}</label><div class="flex gap-1 bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-lg border border-slate-200 dark:border-slate-700"><button id="dt_tori" class="flex-1 py-1.5 px-1 text-[10px] sm:text-xs font-bold rounded-md bg-white dark:bg-slate-600 shadow text-brand dark:text-white transition-all" onclick="setDishType('tori')">${t('f_tori')}</button><button id="dt_ellip" class="flex-1 py-1.5 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('ellip')">${t('f_ellip')}</button><button id="dt_hemi" class="flex-1 py-1.5 px-1 text-[10px] sm:text-xs font-bold rounded-md text-slate-500 hover:text-slate-700 dark:text-slate-400 transition-all cursor-pointer" onclick="setDishType('hemi')">${t('f_hemi')}</button></div></div><div class="input-group col-span-2 sm:col-span-full"><label>${t('f_blank_dia')}</label><input type="number" id="inp_BlankDia" min="0" class="bg-blue-50/50 dark:bg-blue-900/20 text-brand font-bold border-blue-200 dark:border-blue-800"></div>` + Qty; 
                 currentDishType = 'tori';
             }
             else if(['ismb','ismc'].includes(shape)) { html = `<div class="input-group"><label>${t('f_h_sec')}</label><input type="number" id="inp_H" min="0"></div><div class="input-group"><label>${t('f_w_fl')}</label><input type="number" id="inp_W" min="0"></div><div class="input-group"><label>${t('f_tw')}</label><input type="number" id="inp_tw" min="0"></div><div class="input-group"><label>${t('f_tf')}</label><input type="number" id="inp_tf" min="0"></div>` + L + Qty; }
