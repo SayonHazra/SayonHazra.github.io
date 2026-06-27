@@ -1,21 +1,27 @@
-const CACHE_NAME = 'metrifab-cache-v9';
+const CACHE_NAME = 'metrifab-cache-v10';
 
-// Files required to make the app work offline on GitHub Pages
+// Only cache the absolute bare minimum required to load the page
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './manifest.json',
-  './logo-192.png',
-  './logo-512.png'
+  './manifest.json'
 ];
 
-// 1. Install Event - Cache core files
+// 1. Install Event - Safe caching (Will not crash if a file is missing)
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[Service Worker] Caching pre-cache assets');
-      return cache.addAll(PRECACHE_ASSETS);
+      console.log('[Service Worker] Caching pre-cache assets safely');
+      return Promise.allSettled(
+        PRECACHE_ASSETS.map(url => {
+          return fetch(url).then(response => {
+            if (response.ok) {
+              return cache.put(url, response);
+            }
+          }).catch(e => console.log('SW Cache skipped for:', url));
+        })
+      );
     })
   );
 });
@@ -55,7 +61,7 @@ self.addEventListener('fetch', event => {
           return networkResponse;
         }
         
-        // Clone and cache the new downloaded asset
+        // Clone and cache the new downloaded asset (images, fonts, etc.)
         const responseToCache = networkResponse.clone();
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, responseToCache);
