@@ -1,10 +1,10 @@
 {
-"id": "/",
+"id": "?source=pwa",
 "name": "MetriFab: Fabrication Assistant",
 "short_name": "MetriFab",
 "description": "Fabrication Toolkit and Engineering Calculator",
-"start_url": "/",
-"scope": "/",
+"start_url": "./",
+"scope": "./",
 "display": "standalone",
 "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
 "orientation": "any",
@@ -24,7 +24,7 @@
 "name": "Unit Converter",
 "short_name": "Converter",
 "description": "Open Precision Length Converter",
-"url": "/",
+"url": "./",
 "icons": [
 {
 "src": "logo-192.png",
@@ -37,7 +37,7 @@
 "name": "Steel Reference",
 "short_name": "Reference",
 "description": "View Standard Steel Charts",
-"url": "/",
+"url": "./",
 "icons": [
 {
 "src": "logo-192.png",

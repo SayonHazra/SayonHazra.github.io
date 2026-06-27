@@ -1484,6 +1484,14 @@
             window.open(`https://wa.me/?text=${encodedText}`, '_blank');
         }
 
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SW registered!', reg))
+                .catch(err => console.error('SW failed!', err));
+            });
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             applyThemeLogic();
             generateCheatSheet();

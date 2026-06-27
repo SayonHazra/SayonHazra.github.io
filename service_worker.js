@@ -1,47 +1,73 @@
-// This is the "Offline page" service worker
+const CACHE_NAME = 'metrifab-cache-v9';
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+// Files required to make the app work offline on GitHub Pages
+const PRECACHE_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './logo-192.png',
+  './logo-512.png'
+];
 
-const CACHE = "pwabuilder-page";
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
-
-self.addEventListener('install', async (event) => {
+// 1. Install Event - Cache core files
+self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('[Service Worker] Caching pre-cache assets');
+      return cache.addAll(PRECACHE_ASSETS);
+    })
   );
 });
 
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
+// 2. Activate Event - Clean up old caches
+self.addEventListener('activate', event => {
+  event.waitUntil(clients.claim());
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('[Service Worker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
+// 3. Fetch Event - Cache-First, Fallback to Network strategy
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
 
-        if (preloadResp) {
-          return preloadResp;
-        }
-
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
-
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      // Return cached version if found
+      if (cachedResponse) {
+        return cachedResponse;
       }
-    })());
-  }
+      
+      // Otherwise, fetch from the network
+      return fetch(event.request).then(networkResponse => {
+        // Don't cache if not a valid response
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+          return networkResponse;
+        }
+        
+        // Clone and cache the new downloaded asset
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache);
+        });
+        
+        return networkResponse;
+      }).catch(() => {
+        // If network fails (offline) and it's a page navigation, return the index.html
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+      });
+    })
+  );
 });
