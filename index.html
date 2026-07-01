@@ -126,8 +126,17 @@
                             <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3" data-i18n="nav_fab">Fabrication BOM</h3>
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_fab">Calculate weights for plates, pipes, and profiles.</p>
                         </div>
+
+                        <!-- Card 2: Plate Layout -->
+                        <div onclick="switchMainTab('layout')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
+                            <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-3">Plate Layout</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Developed blank layouts for Shell, Truncated Cone &amp; Full Cone.</p>
+                        </div>
                         
-                        <!-- Card 2: Steel Reference -->
+                        <!-- Card 3: Steel Reference -->
                         <div onclick="switchMainTab('reference')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -136,7 +145,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_ref">Standard sizes for NB Pipes, ISA, ISMC & ISMB.</p>
                         </div>
                         
-                        <!-- Card 3: Unit Converter -->
+                        <!-- Card 4: Unit Converter -->
                         <div onclick="switchMainTab('units')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
@@ -145,7 +154,7 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="desc_unit">Convert length measurements quickly.</p>
                         </div>
 
-                        <!-- Card 4: Settings -->
+                        <!-- Card 5: Settings -->
                         <div onclick="switchMainTab('settings')" class="cursor-pointer p-8 bg-white/60 dark:bg-slate-700/40 rounded-2xl border border-slate-200/50 dark:border-slate-600/50 hover:border-brand hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow-xl transform hover:-translate-y-1.5 active:scale-95 active:bg-brand/10 transition-all duration-300 ease-out group">
                             <div class="mb-5 text-brand group-hover:scale-110 transition-transform origin-left">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -548,6 +557,223 @@
                 </div>
             </div>
 
+            <!-- SECTION 5: Plate Layout -->
+            <div id="section-layout" class="hidden max-w-5xl mx-auto">
+                <button onclick="switchMainTab('home')" class="mb-4 text-brand font-bold text-sm flex items-center gap-2 hover:underline transition-transform hover:-translate-x-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Back to Dashboard
+                </button>
+
+                <div class="glass-panel rounded-2xl p-6 md:p-10 transition-colors duration-200">
+                    <h2 class="text-2xl md:text-3xl font-black mb-2 text-slate-800 dark:text-white uppercase tracking-tighter">Plate Layout Calculator</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-8">Visual flat plate layout / blank development for fabricated items. All dimensions in <strong>mm</strong>.</p>
+
+                    <!-- Item Selector Tabs -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <button id="lt-btn-shell" onclick="switchLayoutTab('shell')" class="layout-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold border-2 border-brand bg-brand/10 text-brand transition-all">⬡ Cylindrical Shell</button>
+                        <button id="lt-btn-trunccone" onclick="switchLayoutTab('trunccone')" class="layout-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-brand hover:text-brand transition-all">△ Truncated Cone</button>
+                        <button id="lt-btn-fullcone" onclick="switchLayoutTab('fullcone')" class="layout-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-brand hover:text-brand transition-all">▲ Full Cone</button>
+                    </div>
+
+                    <!-- === SHELL LAYOUT === -->
+                    <div id="lt-shell" class="layout-panel">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                            <div>
+                                <h3 class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Input Parameters</h3>
+                                <div class="space-y-3">
+                                    <div class="input-group">
+                                        <label>Inside Diameter — ID (mm)</label>
+                                        <input type="number" id="sh_id" placeholder="e.g. 1200">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Shell Length — L (mm)</label>
+                                        <input type="number" id="sh_len" placeholder="e.g. 2000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Plate Thickness — T (mm)</label>
+                                        <input type="number" id="sh_thk" placeholder="e.g. 10">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>No. of Sections (circumferential plates)</label>
+                                        <input type="number" id="sh_sec" placeholder="e.g. 2" min="1" max="8" value="1">
+                                    </div>
+                                </div>
+
+                                <button onclick="calcShellLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+
+                                <!-- Results -->
+                                <div id="sh_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
+                                    <p class="font-black uppercase text-xs text-slate-500 tracking-widest mb-3">Details</p>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Mean Diameter (Dm)</span><span id="sh_r_dm" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Blank Width (circumference / sections)</span><span id="sh_r_w" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Blank Length (= Shell Length)</span><span id="sh_r_l" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="border-t border-slate-200 dark:border-slate-700 pt-2 flex justify-between"><span class="font-bold text-slate-700 dark:text-slate-200">Total Plate Area</span><span id="sh_r_area" class="font-mono font-bold text-green-600 dark:text-green-400">—</span></div>
+                                    <div class="flex justify-between"><span class="font-bold text-slate-700 dark:text-slate-200">Approx. Plate Mass (CS)</span><span id="sh_r_mass" class="font-mono font-bold text-green-600 dark:text-green-400">—</span></div>
+                                </div>
+                            </div>
+                            <!-- Image / Diagram -->
+                            <div>
+                                <h3 id="sh_diagram_title" class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Reference Image</h3>
+                                <div class="bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-64">
+                                    <!-- Preview image shown before calculation -->
+                                    <svg id="sh-preview-img" viewBox="0 0 420 260" width="100%" class="max-w-sm mx-auto">
+                                        <text x="210" y="20" text-anchor="middle" font-size="11" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">CYLINDRICAL SHELL</text>
+                                        <ellipse cx="100" cy="140" rx="42" ry="95" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 3"/>
+                                        <ellipse cx="320" cy="140" rx="42" ry="95" fill="#2563eb" fill-opacity="0.08" stroke="#2563eb" stroke-width="2"/>
+                                        <rect x="100" y="45" width="220" height="190" fill="#dbeafe" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+                                        <line x1="100" y1="45" x2="320" y2="45" stroke="#2563eb" stroke-width="1" stroke-dasharray="5 3"/>
+                                        <line x1="100" y1="235" x2="320" y2="235" stroke="#2563eb" stroke-width="1.5"/>
+                                        <line x1="100" y1="248" x2="320" y2="248" stroke="#64748b" stroke-width="1" marker-end="url(#arrSH)" marker-start="url(#arrSH)"/>
+                                        <text x="210" y="244" text-anchor="middle" font-size="0" fill="#64748b"></text>
+                                        <text x="210" y="262" text-anchor="middle" font-size="10" fill="#64748b" font-family="Inter,sans-serif">Length L</text>
+                                        <line x1="335" y1="45" x2="335" y2="235" stroke="#64748b" stroke-width="1" marker-end="url(#arrSH)" marker-start="url(#arrSH)"/>
+                                        <text x="350" y="143" text-anchor="start" font-size="10" fill="#64748b" font-family="Inter,sans-serif">ID</text>
+                                        <text x="210" y="40" text-anchor="middle" font-size="0" fill="#94a3b8"></text>
+                                        <text x="210" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter,sans-serif">Enter values &amp; click Calculate to see the plate blank layout</text>
+                                        <defs><marker id="arrSH" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker></defs>
+                                    </svg>
+                                    <!-- Calculated layout (hidden until calculate is pressed) -->
+                                    <svg id="svg-shell" viewBox="0 0 420 260" width="100%" class="max-w-sm mx-auto hidden"></svg>
+                                </div>
+                                <!-- How-to note -->
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed"><strong>Formula:</strong> Blank width per section = π × (ID + T) ÷ sections. Roll the plate and weld the longitudinal seam. For multi-section shells, each plate gets one seam. Stagger seams 90° on assembly.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- === TRUNCATED CONE LAYOUT === -->
+                    <div id="lt-trunccone" class="layout-panel hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                            <div>
+                                <h3 class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Input Parameters</h3>
+                                <div class="space-y-3">
+                                    <div class="input-group">
+                                        <label>Large End Diameter — D (mm)</label>
+                                        <input type="number" id="tc_D" placeholder="e.g. 1000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Small End Diameter — d (mm)</label>
+                                        <input type="number" id="tc_d" placeholder="e.g. 600">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Cone Height — H (mm)</label>
+                                        <input type="number" id="tc_H" placeholder="e.g. 800">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Plate Thickness — T (mm)</label>
+                                        <input type="number" id="tc_T" placeholder="e.g. 8">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>No. of Sections (petals)</label>
+                                        <input type="number" id="tc_sec" placeholder="1" min="1" max="8" value="1">
+                                    </div>
+                                </div>
+
+                                <button onclick="calcTruncConeLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+
+                                <!-- Results -->
+                                <div id="tc_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
+                                    <p class="font-black uppercase text-xs text-slate-500 tracking-widest mb-3">Details</p>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Half Apex Angle (α)</span><span id="tc_r_alpha" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Slant Height (L)</span><span id="tc_r_slant" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Large Radius (R1 on flat)</span><span id="tc_r_R1" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Small Radius (R2 on flat)</span><span id="tc_r_R2" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Sector Angle (θ)</span><span id="tc_r_theta" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="border-t border-slate-200 dark:border-slate-700 pt-2 flex justify-between"><span class="font-bold text-slate-700 dark:text-slate-200">Approx. Plate Mass (CS)</span><span id="tc_r_mass" class="font-mono font-bold text-green-600 dark:text-green-400">—</span></div>
+                                </div>
+                            </div>
+                            <!-- Image / Diagram -->
+                            <div>
+                                <h3 id="tc_diagram_title" class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Reference Image</h3>
+                                <div class="bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-64">
+                                    <!-- Preview image shown before calculation -->
+                                    <svg id="tc-preview-img" viewBox="0 0 420 300" width="100%" class="max-w-sm mx-auto">
+                                        <text x="210" y="20" text-anchor="middle" font-size="11" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">TRUNCATED CONE</text>
+                                        <!-- frustum profile -->
+                                        <polygon points="120,250 300,250 260,90 160,90" fill="#dbeafe" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+                                        <ellipse cx="210" cy="250" rx="90" ry="18" fill="#2563eb" fill-opacity="0.08" stroke="#2563eb" stroke-width="1.5"/>
+                                        <ellipse cx="210" cy="90" rx="50" ry="10" fill="#bfdbfe" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.5"/>
+                                        <line x1="120" y1="250" x2="160" y2="90" stroke="#2563eb" stroke-width="2"/>
+                                        <line x1="300" y1="250" x2="260" y2="90" stroke="#2563eb" stroke-width="2"/>
+                                        <text x="210" y="270" text-anchor="middle" font-size="10" fill="#64748b" font-family="Inter,sans-serif">Large Dia D</text>
+                                        <text x="210" y="78" text-anchor="middle" font-size="10" fill="#64748b" font-family="Inter,sans-serif">Small Dia d</text>
+                                        <line x1="330" y1="90" x2="330" y2="250" stroke="#64748b" stroke-width="1" marker-end="url(#arrTC)" marker-start="url(#arrTC)"/>
+                                        <text x="344" y="172" text-anchor="start" font-size="10" fill="#64748b" font-family="Inter,sans-serif">H</text>
+                                        <text x="210" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter,sans-serif">Enter values &amp; click Calculate to see the developed blank</text>
+                                        <defs><marker id="arrTC" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker></defs>
+                                    </svg>
+                                    <!-- Calculated layout (hidden until calculate is pressed) -->
+                                    <svg id="svg-trunccone" viewBox="0 0 420 300" width="100%" class="max-w-sm mx-auto hidden"></svg>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed"><strong>Method:</strong> R1 = slant × D/(D−d), R2 = R1 − slant. Sector angle θ = 360° × (D+T) / (2×R1). Mark on plate with trammel/scriber, cut, and roll into cone. For multi-petal cones, divide θ by no. of sections.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- === FULL CONE LAYOUT === -->
+                    <div id="lt-fullcone" class="layout-panel hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                            <div>
+                                <h3 class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Input Parameters</h3>
+                                <div class="space-y-3">
+                                    <div class="input-group">
+                                        <label>Base Diameter — D (mm)</label>
+                                        <input type="number" id="fc_D" placeholder="e.g. 1000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Cone Height — H (mm)</label>
+                                        <input type="number" id="fc_H" placeholder="e.g. 900">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Plate Thickness — T (mm)</label>
+                                        <input type="number" id="fc_T" placeholder="e.g. 8">
+                                    </div>
+                                    <div class="input-group">
+                                        <label>No. of Sections (petals)</label>
+                                        <input type="number" id="fc_sec" placeholder="1" min="1" max="8" value="1">
+                                    </div>
+                                </div>
+
+                                <button onclick="calcFullConeLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+
+                                <!-- Results -->
+                                <div id="fc_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
+                                    <p class="font-black uppercase text-xs text-slate-500 tracking-widest mb-3">Details</p>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Half Apex Angle (α)</span><span id="fc_r_alpha" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Slant Height (L)</span><span id="fc_r_slant" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Flat Radius (R)</span><span id="fc_r_R" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-600 dark:text-slate-300">Sector Angle (θ)</span><span id="fc_r_theta" class="font-mono font-bold text-brand">—</span></div>
+                                    <div class="border-t border-slate-200 dark:border-slate-700 pt-2 flex justify-between"><span class="font-bold text-slate-700 dark:text-slate-200">Approx. Plate Mass (CS)</span><span id="fc_r_mass" class="font-mono font-bold text-green-600 dark:text-green-400">—</span></div>
+                                </div>
+                            </div>
+                            <!-- Image / Diagram -->
+                            <div>
+                                <h3 id="fc_diagram_title" class="font-black text-slate-700 dark:text-slate-200 uppercase text-xs tracking-widest mb-4">Reference Image</h3>
+                                <div class="bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4 flex items-center justify-center min-h-64">
+                                    <!-- Preview image shown before calculation -->
+                                    <svg id="fc-preview-img" viewBox="0 0 420 300" width="100%" class="max-w-sm mx-auto">
+                                        <text x="210" y="20" text-anchor="middle" font-size="11" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">FULL CONE</text>
+                                        <polygon points="120,250 300,250 210,75" fill="#dbeafe" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+                                        <ellipse cx="210" cy="250" rx="90" ry="18" fill="#2563eb" fill-opacity="0.08" stroke="#2563eb" stroke-width="1.5"/>
+                                        <circle cx="210" cy="75" r="3" fill="#2563eb"/>
+                                        <text x="210" y="270" text-anchor="middle" font-size="10" fill="#64748b" font-family="Inter,sans-serif">Base Dia D</text>
+                                        <text x="210" y="63" text-anchor="middle" font-size="10" fill="#64748b" font-family="Inter,sans-serif">Apex</text>
+                                        <line x1="330" y1="75" x2="330" y2="250" stroke="#64748b" stroke-width="1" marker-end="url(#arrFC)" marker-start="url(#arrFC)"/>
+                                        <text x="344" y="165" text-anchor="start" font-size="10" fill="#64748b" font-family="Inter,sans-serif">H</text>
+                                        <text x="210" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter,sans-serif">Enter values &amp; click Calculate to see the developed blank</text>
+                                        <defs><marker id="arrFC" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker></defs>
+                                    </svg>
+                                    <!-- Calculated layout (hidden until calculate is pressed) -->
+                                    <svg id="svg-fullcone" viewBox="0 0 420 300" width="100%" class="max-w-sm mx-auto hidden"></svg>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed"><strong>Method:</strong> Flat radius R = slant height = √(H² + (D/2)²). Sector angle θ = 360° × (D+T) / (2×R). Mark on plate with trammel/scriber from apex, cut, and roll into full cone. For multi-petal cones, divide θ by no. of sections.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -931,7 +1157,7 @@
                 loadPreferencesIntoForm();
             }
 
-            const sections = ['home', 'units', 'weight', 'settings', 'reference'];
+            const sections = ['home', 'units', 'weight', 'settings', 'reference', 'layout'];
             sections.forEach(s => {
                 const el = document.getElementById(`section-${s}`);
                 if(el) {
@@ -1483,6 +1709,365 @@
             const encodedText = encodeURIComponent(text);
             window.open(`https://wa.me/?text=${encodedText}`, '_blank');
         }
+
+        // ============================================================
+        //  PLATE LAYOUT MODULE
+        // ============================================================
+
+        function switchLayoutTab(tab) {
+            // Update button styles
+            ['shell','trunccone','fullcone'].forEach(t => {
+                const btn = document.getElementById('lt-btn-' + t);
+                if (!btn) return;
+                if (t === tab) {
+                    btn.className = 'layout-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold border-2 border-brand bg-brand/10 text-brand transition-all';
+                } else {
+                    btn.className = 'layout-tab-btn px-5 py-2.5 rounded-xl text-sm font-bold border-2 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-brand hover:text-brand transition-all';
+                }
+            });
+            // Show/hide panels
+            document.querySelectorAll('.layout-panel').forEach(p => p.classList.add('hidden'));
+            const panel = document.getElementById('lt-' + tab);
+            if (panel) panel.classList.remove('hidden');
+        }
+
+        // --- Cylindrical Shell ---
+        function calcShellLayout() {
+            const ID  = parseFloat(document.getElementById('sh_id')?.value) || 0;
+            const L   = parseFloat(document.getElementById('sh_len')?.value) || 0;
+            const T   = parseFloat(document.getElementById('sh_thk')?.value) || 0;
+            const sec = Math.max(1, parseInt(document.getElementById('sh_sec')?.value) || 1);
+
+            if (ID <= 0 || L <= 0 || T <= 0) {
+                alert('Please enter valid Inside Diameter, Length, and Thickness values.');
+                return;
+            }
+
+            const Dm        = ID + T;                          // mean diameter (neutral axis)
+            const circum    = Math.PI * Dm;                    // full circumference
+            const blankW    = circum / sec;                    // blank width per section
+            const blankL    = L;                                // blank length = shell length
+            const totalArea = circum * L;                      // total surface area (mm²)
+            const massCS    = totalArea / 1e6 * T / 1000 * 7850; // kg (CS)
+
+            document.getElementById('sh_r_dm').textContent   = Dm.toFixed(1) + ' mm';
+            document.getElementById('sh_r_w').textContent    = blankW.toFixed(1) + ' mm';
+            document.getElementById('sh_r_l').textContent    = blankL.toFixed(1) + ' mm';
+            document.getElementById('sh_r_area').textContent = (totalArea / 1e6).toFixed(4) + ' m²';
+            document.getElementById('sh_r_mass').textContent = massCS.toFixed(2) + ' kg';
+            document.getElementById('sh_results').classList.remove('hidden');
+
+            // Swap preview image for calculated diagram
+            document.getElementById('sh-preview-img').classList.add('hidden');
+            document.getElementById('svg-shell').classList.remove('hidden');
+            document.getElementById('sh_diagram_title').textContent = 'Calculated Layout';
+
+            updateShellSVG(blankW, blankL, sec, ID, T, Dm);
+        }
+
+        // --- Truncated Cone ---
+        function calcTruncConeLayout() {
+            const D   = parseFloat(document.getElementById('tc_D')?.value) || 0;
+            const d   = parseFloat(document.getElementById('tc_d')?.value) || 0;
+            const H   = parseFloat(document.getElementById('tc_H')?.value) || 0;
+            const T   = parseFloat(document.getElementById('tc_T')?.value) || 0;
+            const sec = Math.max(1, parseInt(document.getElementById('tc_sec')?.value) || 1);
+
+            if (D <= 0 || d < 0 || H <= 0 || T <= 0 || D <= d) {
+                alert('Please enter valid dimensions. Large diameter (D) must be greater than small diameter (d).');
+                return;
+            }
+
+            const Dm = D + T;
+            const dm = d + T;
+            const halfDiff = (Dm - dm) / 2;
+            const slant = Math.sqrt(H * H + halfDiff * halfDiff);
+            const R1 = (slant * Dm) / (Dm - dm);
+            const R2 = R1 - slant;
+            const theta = (180 * Dm) / (R1 * sec);
+            const alpha = Math.atan(halfDiff / H) * 180 / Math.PI;
+            const areaFull = Math.PI * (R1 * R1 - R2 * R2) * (theta / 360);
+            const massCS   = areaFull / 1e6 * T / 1000 * 7850 * sec;
+
+            document.getElementById('tc_r_alpha').textContent = alpha.toFixed(2) + '°';
+            document.getElementById('tc_r_slant').textContent = slant.toFixed(1) + ' mm';
+            document.getElementById('tc_r_R1').textContent    = R1.toFixed(1) + ' mm';
+            document.getElementById('tc_r_R2').textContent    = R2.toFixed(1) + ' mm';
+            document.getElementById('tc_r_theta').textContent = theta.toFixed(2) + '°';
+            document.getElementById('tc_r_mass').textContent  = massCS.toFixed(2) + ' kg';
+            document.getElementById('tc_results').classList.remove('hidden');
+
+            document.getElementById('tc-preview-img').classList.add('hidden');
+            document.getElementById('svg-trunccone').classList.remove('hidden');
+            document.getElementById('tc_diagram_title').textContent = 'Calculated Layout';
+
+            updateTruncConeSVG(R1, R2, theta, sec, slant, D, d, alpha);
+        }
+
+        // --- Full Cone ---
+        function calcFullConeLayout() {
+            const D   = parseFloat(document.getElementById('fc_D')?.value) || 0;
+            const H   = parseFloat(document.getElementById('fc_H')?.value) || 0;
+            const T   = parseFloat(document.getElementById('fc_T')?.value) || 0;
+            const sec = Math.max(1, parseInt(document.getElementById('fc_sec')?.value) || 1);
+
+            if (D <= 0 || H <= 0 || T <= 0) {
+                alert('Please enter valid Base Diameter, Height, and Thickness values.');
+                return;
+            }
+
+            const Dm = D + T;
+            const radius = Dm / 2;
+            const slant = Math.sqrt(H * H + radius * radius);
+            const R = slant;
+            const alpha = Math.atan(radius / H) * 180 / Math.PI;
+            const theta = (180 * Dm) / (R * sec);
+            const areaFull = Math.PI * R * R * (theta / 360);
+            const massCS   = areaFull / 1e6 * T / 1000 * 7850 * sec;
+
+            document.getElementById('fc_r_alpha').textContent = alpha.toFixed(2) + '°';
+            document.getElementById('fc_r_slant').textContent = slant.toFixed(1) + ' mm';
+            document.getElementById('fc_r_R').textContent     = R.toFixed(1) + ' mm';
+            document.getElementById('fc_r_theta').textContent = theta.toFixed(2) + '°';
+            document.getElementById('fc_r_mass').textContent  = massCS.toFixed(2) + ' kg';
+            document.getElementById('fc_results').classList.remove('hidden');
+
+            document.getElementById('fc-preview-img').classList.add('hidden');
+            document.getElementById('svg-fullcone').classList.remove('hidden');
+            document.getElementById('fc_diagram_title').textContent = 'Calculated Layout';
+
+            updateFullConeSVG(R, theta, sec, slant, D, alpha);
+        }
+
+        // ── Shared SVG helpers ────────────────────────────────────────
+        // Arrow-tip defs block (call once per SVG)
+        // ── Shared: arrow marker defs ─────────────────────────────────
+        function mkDefs(id) {
+            // id suffix keeps markers unique per SVG (avoids cross-SVG bleed)
+            return `<defs>
+              <marker id="a${id}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#334155"/></marker>
+              <marker id="ar${id}" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M7,0 L0,3.5 L7,7 Z" fill="#334155"/></marker>
+            </defs>`;
+        }
+        // Double-headed dim line; label sits above the midpoint
+        function dbl(x1,y1,x2,y2,lbl,col,id) {
+            const mx=(x1+x2)/2, my=(y1+y2)/2;
+            const ang=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
+            col=col||'#334155';
+            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" stroke-width="1.3" marker-start="url(#ar${id})" marker-end="url(#a${id})"/>
+<text x="${mx.toFixed(1)}" y="${(my-4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="bold" fill="${col}" font-family="Inter,sans-serif" transform="rotate(${ang.toFixed(1)},${mx.toFixed(1)},${my.toFixed(1)})">${lbl}</text>`;
+        }
+        // Simple leader: thin line + small filled circle at tip
+        function ldr(x1,y1,x2,y2,col) {
+            col=col||'#334155';
+            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" stroke-width="1"/>
+<circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="2" fill="${col}"/>`;
+        }
+        // Witness / extension line (thin grey tick)
+        function ext(x1,y1,x2,y2) {
+            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#64748b" stroke-width="0.8"/>`;
+        }
+
+        // ── Shell layout ──────────────────────────────────────────────
+        function updateShellSVG(blankW, blankL, sec, ID, T, Dm) {
+            const svg = document.getElementById('svg-shell');
+            const W = 500, H = 320;
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+            const lm = 50, rm = 100, tm = 40, bm = 16;   // margins
+            const drawW = W - lm - rm, drawH = H - tm - bm;
+            const gap = 8;
+
+            // Fit blank(s) proportionally
+            const ratio = blankW / blankL;
+            let bW = drawW, bH = bW / ratio;
+            if (bH * sec + gap*(sec-1) > drawH) {
+                bH = (drawH - gap*(sec-1)) / sec;
+                bW = bH * ratio;
+            }
+            bW = Math.min(bW, drawW);
+            const totalH = bH*sec + gap*(sec-1);
+            const x0 = lm + (drawW - bW)/2;
+            const y0 = tm + (drawH - totalH)/2;
+
+            const FILLS   = ['#dbeafe','#e0f2fe','#ede9fe','#d1fae5','#fce7f3','#fef3c7','#fee2e2','#f1f5f9'];
+            const STROKES = ['#2563eb','#0284c7','#7c3aed','#16a34a','#db2777','#d97706','#dc2626','#64748b'];
+
+            let h = mkDefs('sh');
+            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">CYLINDRICAL SHELL — PLATE BLANK LAYOUT</text>`;
+
+            for (let i=0; i<sec; i++) {
+                const py = y0 + i*(bH+gap);
+                h += `<rect x="${x0.toFixed(1)}" y="${py.toFixed(1)}" width="${bW.toFixed(1)}" height="${bH.toFixed(1)}" fill="${FILLS[i%FILLS.length]}" stroke="${STROKES[i%STROKES.length]}" stroke-width="1.8" rx="2"/>`;
+                const fs = Math.max(9, Math.min(12, bH*0.4));
+                h += `<text x="${(x0+bW/2).toFixed(1)}" y="${(py+bH/2+fs*0.38).toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(0)}" font-weight="bold" fill="${STROKES[i%STROKES.length]}" font-family="Inter,sans-serif">SECTION ${i+1}</text>`;
+            }
+
+            // ── Width dim: above the top plate ──
+            const dimTop = y0 - 22;
+            h += ext(x0, y0-2, x0, dimTop-3);
+            h += ext(x0+bW, y0-2, x0+bW, dimTop-3);
+            h += dbl(x0+4, dimTop, x0+bW-4, dimTop, 'W', '#2563eb', 'sh');
+            h += `<text x="${(x0+bW/2).toFixed(1)}" y="${(dimTop-7).toFixed(1)}" text-anchor="middle" font-size="9" fill="#2563eb" font-family="Inter,sans-serif">(Blank Width per Section)</text>`;
+
+            // ── Height dim: to the right of the stack ──
+            const dimRx = x0+bW+30;
+            h += ext(x0+bW+2, y0, dimRx+3, y0);
+            h += ext(x0+bW+2, y0+totalH, dimRx+3, y0+totalH);
+            h += dbl(dimRx, y0+4, dimRx, y0+totalH-4, 'L', '#334155', 'sh');
+            h += `<text x="${(dimRx+10).toFixed(1)}" y="${(y0+totalH/2+4).toFixed(1)}" font-size="9" fill="#334155" font-family="Inter,sans-serif" font-weight="bold">(Shell Length)</text>`;
+
+            svg.innerHTML = h;
+        }
+
+        // ── Truncated Cone layout ─────────────────────────────────────
+        function updateTruncConeSVG(R1, R2, theta_deg, sec, slant, D, d, alpha) {
+            const svg = document.getElementById('svg-trunccone');
+            // Wider canvas so labels have room on both sides
+            const W = 500, H = 360;
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+            // Apex sits at bottom-centre; sector fans straight upward
+            const cx = W/2, cy = H - 50;
+            const maxR = Math.min(cx - 55, cy - 30);
+            const scale = maxR / R1;
+            const r1 = R1 * scale;
+            const r2 = Math.max(R2 * scale, r1 * 0.08, 6);
+
+            const tRad = (theta_deg * Math.PI) / 180;
+            const la = tRad > Math.PI ? 1 : 0;
+
+            // All angles measured from positive-X; sector bisector points straight UP (-π/2)
+            const angL = -Math.PI/2 - tRad/2;
+            const angR = -Math.PI/2 + tRad/2;
+
+            // Key points
+            const oL = { x: cx+r1*Math.cos(angL), y: cy+r1*Math.sin(angL) };  // outer left
+            const oR = { x: cx+r1*Math.cos(angR), y: cy+r1*Math.sin(angR) };  // outer right
+            const iL = { x: cx+r2*Math.cos(angL), y: cy+r2*Math.sin(angL) };  // inner left
+            const iR = { x: cx+r2*Math.cos(angR), y: cy+r2*Math.sin(angR) };  // inner right
+            const topMid = { x: cx, y: cy-r1 };   // midpoint of outer arc (straight up)
+            const botMid = { x: cx, y: cy-r2 };   // midpoint of inner arc
+
+            // Sector path
+            const path = `M ${iL.x.toFixed(1)},${iL.y.toFixed(1)}
+                          L ${oL.x.toFixed(1)},${oL.y.toFixed(1)}
+                          A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}
+                          L ${iR.x.toFixed(1)},${iR.y.toFixed(1)}
+                          A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},0 ${iL.x.toFixed(1)},${iL.y.toFixed(1)} Z`;
+
+            let h = mkDefs('tc');
+            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">TRUNCATED CONE — DEVELOPED BLANK</text>`;
+
+            // Sector: light blue fill, solid outer arc, dashed inner arc
+            h += `<path d="${path}" fill="#dbeafe" stroke="none"/>`;
+            // Outer arc (large end) — solid blue
+            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2"/>`;
+            // Inner arc (small end) — dashed red
+            h += `<path d="M ${iL.x.toFixed(1)},${iL.y.toFixed(1)} A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},1 ${iR.x.toFixed(1)},${iR.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="6 3"/>`;
+            // Straight edges
+            h += `<line x1="${iL.x.toFixed(1)}" y1="${iL.y.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+            h += `<line x1="${iR.x.toFixed(1)}" y1="${iR.y.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+
+            // ── θ arc near apex ──
+            const tArcR = Math.min(28, r2*0.55);
+            h += `<path d="M ${(cx+tArcR*Math.cos(angL)).toFixed(1)},${(cy+tArcR*Math.sin(angL)).toFixed(1)} A ${tArcR},${tArcR} 0 ${la},1 ${(cx+tArcR*Math.cos(angR)).toFixed(1)},${(cy+tArcR*Math.sin(angR)).toFixed(1)}" fill="none" stroke="#d97706" stroke-width="1.5"/>`;
+            h += `<text x="${cx.toFixed(1)}" y="${(cy - tArcR - 6).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
+
+            // ── Apex dot ──
+            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3.5" fill="#1e3a5f"/>`;
+
+            // ── X1 dimension: horizontal span at outer arc level ──
+            // Drop a horizontal dim line just below the outer arc ends
+            const x1DimY = Math.max(oL.y, oR.y) + 18;
+            h += ext(oL.x, oL.y, oL.x, x1DimY+3);
+            h += ext(oR.x, oR.y, oR.x, x1DimY+3);
+            h += dbl(oL.x+3, x1DimY, oR.x-3, x1DimY, 'X1', '#2563eb', 'tc');
+
+            // ── X2 dimension: horizontal span at inner arc level ──
+            const x2DimY = x1DimY + 26;
+            h += ext(iL.x, iL.y, iL.x, x2DimY+3);
+            h += ext(iR.x, iR.y, iR.x, x2DimY+3);
+            h += dbl(iL.x+3, x2DimY, iR.x-3, x2DimY, 'X2', '#dc2626', 'tc');
+
+            // ── R1 leader: from midpoint of outer arc, pointing out to the right ──
+            const r1LeadStart = { x: cx + r1*0.72*Math.cos(angR + 0.18), y: cy + r1*0.72*Math.sin(angR + 0.18) };
+            const r1LeadEnd   = { x: Math.min(W-10, r1LeadStart.x + 42), y: r1LeadStart.y - 8 };
+            h += ldr(r1LeadStart.x, r1LeadStart.y, r1LeadEnd.x, r1LeadEnd.y, '#2563eb');
+            h += `<text x="${(r1LeadEnd.x+4).toFixed(1)}" y="${(r1LeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">R1</text>`;
+
+            // ── R2 leader: from midpoint of inner arc, pointing right ──
+            const r2LeadStart = { x: cx + r2*0.68*Math.cos(angR + 0.25), y: cy + r2*0.68*Math.sin(angR + 0.25) };
+            const r2LeadEnd   = { x: Math.min(W-10, r2LeadStart.x + 38), y: r2LeadStart.y + 10 };
+            h += ldr(r2LeadStart.x, r2LeadStart.y, r2LeadEnd.x, r2LeadEnd.y, '#dc2626');
+            h += `<text x="${(r2LeadEnd.x+4).toFixed(1)}" y="${(r2LeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#dc2626" font-family="Inter,sans-serif">R2</text>`;
+
+            // ── L (slant) leader: from midpoint of left straight edge, pointing left ──
+            const slMidX = (iL.x+oL.x)/2, slMidY = (iL.y+oL.y)/2;
+            const slLeadEnd = { x: Math.max(10, slMidX - 40), y: slMidY - 10 };
+            h += ldr(slMidX, slMidY, slLeadEnd.x, slLeadEnd.y, '#16a34a');
+            h += `<text x="${(slLeadEnd.x-4).toFixed(1)}" y="${(slLeadEnd.y+4).toFixed(1)}" text-anchor="end" font-size="12" font-weight="bold" fill="#16a34a" font-family="Inter,sans-serif">L</text>`;
+
+            svg.innerHTML = h;
+        }
+
+        // ── Full Cone layout ──────────────────────────────────────────
+        function updateFullConeSVG(R, theta_deg, sec, slant, D, alpha) {
+            const svg = document.getElementById('svg-fullcone');
+            const W = 500, H = 340;
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+            const cx = W/2, cy = H - 50;
+            const maxR = Math.min(cx - 55, cy - 30);
+            const r = maxR;   // scaled radius
+
+            const tRad = (theta_deg * Math.PI) / 180;
+            const la = tRad > Math.PI ? 1 : 0;
+
+            const angL = -Math.PI/2 - tRad/2;
+            const angR = -Math.PI/2 + tRad/2;
+
+            const oL = { x: cx+r*Math.cos(angL), y: cy+r*Math.sin(angL) };
+            const oR = { x: cx+r*Math.cos(angR), y: cy+r*Math.sin(angR) };
+
+            const path = `M ${cx.toFixed(1)},${cy.toFixed(1)} L ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)} Z`;
+
+            let h = mkDefs('fc');
+            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">FULL CONE — DEVELOPED BLANK</text>`;
+
+            // Sector
+            h += `<path d="${path}" fill="#dbeafe" stroke="none"/>`;
+            // Outer arc — solid blue
+            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2"/>`;
+            // Straight edges
+            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+
+            // ── θ arc near apex ──
+            const tArcR2 = Math.min(30, r*0.2);
+            h += `<path d="M ${(cx+tArcR2*Math.cos(angL)).toFixed(1)},${(cy+tArcR2*Math.sin(angL)).toFixed(1)} A ${tArcR2},${tArcR2} 0 ${la},1 ${(cx+tArcR2*Math.cos(angR)).toFixed(1)},${(cy+tArcR2*Math.sin(angR)).toFixed(1)}" fill="none" stroke="#d97706" stroke-width="1.5"/>`;
+            h += `<text x="${cx.toFixed(1)}" y="${(cy - tArcR2 - 6).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
+
+            // ── Apex dot ──
+            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3.5" fill="#1e3a5f"/>`;
+
+            // ── X1 dim: horizontal span of the arc ends ──
+            const x1DimY = Math.max(oL.y, oR.y) + 18;
+            h += ext(oL.x, oL.y, oL.x, x1DimY+3);
+            h += ext(oR.x, oR.y, oR.x, x1DimY+3);
+            h += dbl(oL.x+3, x1DimY, oR.x-3, x1DimY, 'X', '#2563eb', 'fc');
+
+            // ── R leader: from midpoint along right straight edge ──
+            const rMidX = (cx + oR.x)/2, rMidY = (cy + oR.y)/2;
+            const rLeadEnd = { x: Math.min(W-12, rMidX + 44), y: rMidY - 12 };
+            h += ldr(rMidX, rMidY, rLeadEnd.x, rLeadEnd.y, '#2563eb');
+            h += `<text x="${(rLeadEnd.x+4).toFixed(1)}" y="${(rLeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">R</text>`;
+            h += `<text x="${(rLeadEnd.x+4).toFixed(1)}" y="${(rLeadEnd.y+16).toFixed(1)}" font-size="9" fill="#2563eb" font-family="Inter,sans-serif">(= Slant)</text>`;
+
+            svg.innerHTML = h;
+        }
+
+        // ============================================================
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
