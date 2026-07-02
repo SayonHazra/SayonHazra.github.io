@@ -599,7 +599,10 @@
                                     </div>
                                 </div>
 
-                                <button onclick="calcShellLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                <div class="mt-5 flex gap-3">
+                                    <button onclick="calcShellLayout()" class="flex-1 px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                    <button onclick="clearShellLayout()" class="px-5 py-3 text-sm bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-black rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transform active:scale-95 transition-all">CLEAR</button>
+                                </div>
 
                                 <!-- Results -->
                                 <div id="sh_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
@@ -669,7 +672,10 @@
                                     </div>
                                 </div>
 
-                                <button onclick="calcTruncConeLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                <div class="mt-5 flex gap-3">
+                                    <button onclick="calcTruncConeLayout()" class="flex-1 px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                    <button onclick="clearTruncConeLayout()" class="px-5 py-3 text-sm bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-black rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transform active:scale-95 transition-all">CLEAR</button>
+                                </div>
 
                                 <!-- Results -->
                                 <div id="tc_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
@@ -734,7 +740,10 @@
                                     </div>
                                 </div>
 
-                                <button onclick="calcFullConeLayout()" class="mt-5 w-full px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                <div class="mt-5 flex gap-3">
+                                    <button onclick="calcFullConeLayout()" class="flex-1 px-6 py-3 text-sm bg-brand text-white font-black rounded-xl hover:bg-opacity-90 shadow-lg shadow-brand/20 dark:shadow-none transform active:scale-95 transition-all">CALCULATE LAYOUT</button>
+                                    <button onclick="clearFullConeLayout()" class="px-5 py-3 text-sm bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-black rounded-xl hover:bg-slate-200 dark:hover:bg-slate-600 transform active:scale-95 transition-all">CLEAR</button>
+                                </div>
 
                                 <!-- Results -->
                                 <div id="fc_results" class="hidden mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 text-sm">
@@ -1842,231 +1851,291 @@
         // ── Shared SVG helpers ────────────────────────────────────────
         // Arrow-tip defs block (call once per SVG)
         // ── Shared: arrow marker defs ─────────────────────────────────
+        // ── SVG helpers ───────────────────────────────────────────────
+        // Arrow defs — unique id suffix prevents marker bleed between SVGs
+        // ── SVG helpers ───────────────────────────────────────────────
+        // Arrow marker defs — colour-coded, unique id suffix per SVG
         function mkDefs(id) {
-            // id suffix keeps markers unique per SVG (avoids cross-SVG bleed)
-            return `<defs>
-              <marker id="a${id}" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#334155"/></marker>
-              <marker id="ar${id}" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="auto"><path d="M7,0 L0,3.5 L7,7 Z" fill="#334155"/></marker>
-            </defs>`;
+            const colours = {bl:'#2563eb', rd:'#dc2626', gr:'#16a34a', sl:'#334155'};
+            let d = '<defs>';
+            Object.entries(colours).forEach(([k,c]) => {
+                d += `<marker id="f${k}${id}" markerWidth="9" markerHeight="8" refX="1" refY="4" orient="auto"><path d="M1,1 L8,4 L1,7 Z" fill="${c}"/></marker>`;
+                d += `<marker id="b${k}${id}" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M8,1 L1,4 L8,7 Z" fill="${c}"/></marker>`;
+            });
+            d += '</defs>';
+            return d;
         }
-        // Double-headed dim line; label sits above the midpoint
-        function dbl(x1,y1,x2,y2,lbl,col,id) {
-            const mx=(x1+x2)/2, my=(y1+y2)/2;
-            const ang=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
-            col=col||'#334155';
-            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" stroke-width="1.3" marker-start="url(#ar${id})" marker-end="url(#a${id})"/>
-<text x="${mx.toFixed(1)}" y="${(my-4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="bold" fill="${col}" font-family="Inter,sans-serif" transform="rotate(${ang.toFixed(1)},${mx.toFixed(1)},${my.toFixed(1)})">${lbl}</text>`;
+        // Horizontal double-headed dim arrow with label above midpoint
+        function hdim(x1, y, x2, label, col, ck, id) {
+            const mx = (x1 + x2) / 2;
+            return `<line x1="${x1.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${col}" stroke-width="1.6" marker-start="url(#b${ck}${id})" marker-end="url(#f${ck}${id})"/>
+<text x="${mx.toFixed(1)}" y="${(y - 7).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="bold" fill="${col}" font-family="Inter,sans-serif">${label}</text>`;
         }
-        // Simple leader: thin line + small filled circle at tip
-        function ldr(x1,y1,x2,y2,col) {
-            col=col||'#334155';
-            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${col}" stroke-width="1"/>
-<circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="2" fill="${col}"/>`;
+        // Thin witness / extension line
+        function ext(x1, y1, x2, y2) {
+            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#94a3b8" stroke-width="0.9"/>`;
         }
-        // Witness / extension line (thin grey tick)
-        function ext(x1,y1,x2,y2) {
-            return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#64748b" stroke-width="0.8"/>`;
+        // Radial leader with elbow:
+        //   • dot on shape at (px, py)
+        //   • line radiates outward 30px from shape centre (scx, scy)
+        //   • horizontal elbow continues to label column lx
+        //   • side 'R' → text after lx, 'L' → text before lx
+        function rLeader(px, py, scx, scy, lx, label, col, side) {
+            const dx = px - scx, dy = py - scy;
+            const len = Math.sqrt(dx * dx + dy * dy) || 1;
+            const ex = px + (dx / len) * 32;  // elbow point
+            const ey = py + (dy / len) * 32;
+            const anchor = side === 'L' ? 'end' : 'start';
+            const tx     = side === 'L' ? lx - 6 : lx + 6;
+            return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3.5" fill="${col}"/>
+<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${col}" stroke-width="1.5"/>
+<line x1="${ex.toFixed(1)}" y1="${ey.toFixed(1)}" x2="${lx.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${col}" stroke-width="1.5"/>
+<text x="${tx.toFixed(1)}" y="${(ey + 5).toFixed(1)}" text-anchor="${anchor}" font-size="15" font-weight="bold" fill="${col}" font-family="Inter,sans-serif">${label}</text>`;
         }
 
-        // ── Shell layout ──────────────────────────────────────────────
+        // ── Clear functions ───────────────────────────────────────────
+        function clearShellLayout() {
+            ['sh_id','sh_len','sh_thk','sh_sec'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            document.getElementById('sh_results').classList.add('hidden');
+            document.getElementById('svg-shell').classList.add('hidden');
+            document.getElementById('sh-preview-img').classList.remove('hidden');
+            document.getElementById('sh_diagram_title').textContent = 'Reference Image';
+        }
+        function clearTruncConeLayout() {
+            ['tc_D','tc_d','tc_H','tc_T','tc_sec'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            document.getElementById('tc_results').classList.add('hidden');
+            document.getElementById('svg-trunccone').classList.add('hidden');
+            document.getElementById('tc-preview-img').classList.remove('hidden');
+            document.getElementById('tc_diagram_title').textContent = 'Reference Image';
+        }
+        function clearFullConeLayout() {
+            ['fc_D','fc_H','fc_T','fc_sec'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            document.getElementById('fc_results').classList.add('hidden');
+            document.getElementById('svg-fullcone').classList.add('hidden');
+            document.getElementById('fc-preview-img').classList.remove('hidden');
+            document.getElementById('fc_diagram_title').textContent = 'Reference Image';
+        }
+
+        // ── Shell SVG ─────────────────────────────────────────────────
         function updateShellSVG(blankW, blankL, sec, ID, T, Dm) {
             const svg = document.getElementById('svg-shell');
-            const W = 500, H = 320;
+            // Canvas: left 72px (L label), top 50px (W label+title), right 16px, bottom 16px
+            const W = 560, H = 340;
             svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-            const lm = 50, rm = 100, tm = 40, bm = 16;   // margins
-            const drawW = W - lm - rm, drawH = H - tm - bm;
-            const gap = 8;
+            const LM = 72, RM = 16, TM = 50, BM = 16, GAP = 10;
+            const drawW = W - LM - RM, drawH = H - TM - BM;
 
-            // Fit blank(s) proportionally
+            // Scale plates to fit
             const ratio = blankW / blankL;
             let bW = drawW, bH = bW / ratio;
-            if (bH * sec + gap*(sec-1) > drawH) {
-                bH = (drawH - gap*(sec-1)) / sec;
+            if (bH * sec + GAP * (sec - 1) > drawH) {
+                bH = (drawH - GAP * (sec - 1)) / sec;
                 bW = bH * ratio;
             }
             bW = Math.min(bW, drawW);
-            const totalH = bH*sec + gap*(sec-1);
-            const x0 = lm + (drawW - bW)/2;
-            const y0 = tm + (drawH - totalH)/2;
+            const totalH = bH * sec + GAP * (sec - 1);
+            const x0 = LM + (drawW - bW) / 2;
+            const y0 = TM + (drawH - totalH) / 2;
 
             const FILLS   = ['#dbeafe','#e0f2fe','#ede9fe','#d1fae5','#fce7f3','#fef3c7','#fee2e2','#f1f5f9'];
             const STROKES = ['#2563eb','#0284c7','#7c3aed','#16a34a','#db2777','#d97706','#dc2626','#64748b'];
 
             let h = mkDefs('sh');
-            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">CYLINDRICAL SHELL — PLATE BLANK LAYOUT</text>`;
+            h += `<text x="${(W/2).toFixed(1)}" y="18" text-anchor="middle" font-size="13" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">CYLINDRICAL SHELL — PLATE BLANK</text>`;
 
-            for (let i=0; i<sec; i++) {
-                const py = y0 + i*(bH+gap);
-                h += `<rect x="${x0.toFixed(1)}" y="${py.toFixed(1)}" width="${bW.toFixed(1)}" height="${bH.toFixed(1)}" fill="${FILLS[i%FILLS.length]}" stroke="${STROKES[i%STROKES.length]}" stroke-width="1.8" rx="2"/>`;
-                const fs = Math.max(9, Math.min(12, bH*0.4));
-                h += `<text x="${(x0+bW/2).toFixed(1)}" y="${(py+bH/2+fs*0.38).toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(0)}" font-weight="bold" fill="${STROKES[i%STROKES.length]}" font-family="Inter,sans-serif">SECTION ${i+1}</text>`;
+            for (let i = 0; i < sec; i++) {
+                const py  = y0 + i * (bH + GAP);
+                const col = STROKES[i % STROKES.length];
+                h += `<rect x="${x0.toFixed(1)}" y="${py.toFixed(1)}" width="${bW.toFixed(1)}" height="${bH.toFixed(1)}" fill="${FILLS[i%FILLS.length]}" stroke="${col}" stroke-width="2" rx="2"/>`;
+                const fs = Math.max(10, Math.min(14, bH * 0.38));
+                h += `<text x="${(x0 + bW/2).toFixed(1)}" y="${(py + bH/2 + fs*0.38).toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(0)}" font-weight="bold" fill="${col}" font-family="Inter,sans-serif">SECTION ${i+1}</text>`;
             }
 
-            // ── Width dim: above the top plate ──
-            const dimTop = y0 - 22;
-            h += ext(x0, y0-2, x0, dimTop-3);
-            h += ext(x0+bW, y0-2, x0+bW, dimTop-3);
-            h += dbl(x0+4, dimTop, x0+bW-4, dimTop, 'W', '#2563eb', 'sh');
-            h += `<text x="${(x0+bW/2).toFixed(1)}" y="${(dimTop-7).toFixed(1)}" text-anchor="middle" font-size="9" fill="#2563eb" font-family="Inter,sans-serif">(Blank Width per Section)</text>`;
+            // W dim — horizontal, 30px above top plate, with extension lines
+            const wY = y0 - 30;
+            h += ext(x0, y0, x0, wY + 2);
+            h += ext(x0 + bW, y0, x0 + bW, wY + 2);
+            h += hdim(x0 + 6, wY, x0 + bW - 6, 'W', '#2563eb', 'bl', 'sh');
+            h += `<text x="${(x0 + bW/2).toFixed(1)}" y="${(wY - 10).toFixed(1)}" text-anchor="middle" font-size="10" fill="#2563eb" font-family="Inter,sans-serif">(Blank Width per Section)</text>`;
 
-            // ── Height dim: to the right of the stack ──
-            const dimRx = x0+bW+30;
-            h += ext(x0+bW+2, y0, dimRx+3, y0);
-            h += ext(x0+bW+2, y0+totalH, dimRx+3, y0+totalH);
-            h += dbl(dimRx, y0+4, dimRx, y0+totalH-4, 'L', '#334155', 'sh');
-            h += `<text x="${(dimRx+10).toFixed(1)}" y="${(y0+totalH/2+4).toFixed(1)}" font-size="9" fill="#334155" font-family="Inter,sans-serif" font-weight="bold">(Shell Length)</text>`;
+            // L dim — vertical, 28px left of plate, rotated label
+            const lX = x0 - 28;
+            h += ext(x0, y0, lX + 2, y0);
+            h += ext(x0, y0 + totalH, lX + 2, y0 + totalH);
+            h += `<line x1="${lX.toFixed(1)}" y1="${(y0 + 6).toFixed(1)}" x2="${lX.toFixed(1)}" y2="${(y0 + totalH - 6).toFixed(1)}" stroke="#334155" stroke-width="1.6" marker-start="url(#bsl${'sh'})" marker-end="url(#fsl${'sh'})"/>`;
+            const lLabelX = lX - 14;
+            const lLabelY = y0 + totalH / 2;
+            h += `<text x="${lLabelX.toFixed(1)}" y="${lLabelY.toFixed(1)}" text-anchor="middle" font-size="13" font-weight="bold" fill="#334155" font-family="Inter,sans-serif" transform="rotate(-90,${lLabelX.toFixed(1)},${lLabelY.toFixed(1)})">L  (Shell Length)</text>`;
 
             svg.innerHTML = h;
         }
 
-        // ── Truncated Cone layout ─────────────────────────────────────
+        // ── Truncated Cone SVG ────────────────────────────────────────
         function updateTruncConeSVG(R1, R2, theta_deg, sec, slant, D, d, alpha) {
             const svg = document.getElementById('svg-trunccone');
-            // Wider canvas so labels have room on both sides
-            const W = 500, H = 360;
+            // 700 × 520 canvas — plenty of breathing room on all sides
+            const W = 700, H = 520;
             svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-            // Apex sits at bottom-centre; sector fans straight upward
-            const cx = W/2, cy = H - 50;
-            const maxR = Math.min(cx - 55, cy - 30);
-            const scale = maxR / R1;
-            const r1 = R1 * scale;
-            const r2 = Math.max(R2 * scale, r1 * 0.08, 6);
+            // Fixed label rails
+            const RAIL_R = W - 8;   // R1, R2 labels sit here (right side)
+            const RAIL_L = 8;       // L label sits here (left side)
+
+            // Drawing box for the sector (inside these margins)
+            // Top: 32px title + a bit of pad
+            // Bottom: 80px for X1, X2 dim lines + apex label
+            // Left/Right: 90px each for leader labels
+            const DT = 38, DB = 82, DL = 90, DR = 90;
+            const boxW = W - DL - DR;   // 520
+            const boxH = H - DT - DB;   // 358
+
+            // Apex at bottom-centre of the drawing box
+            const cx = W / 2;
+            const cy = H - DB;   // apex Y
 
             const tRad = (theta_deg * Math.PI) / 180;
-            const la = tRad > Math.PI ? 1 : 0;
+            const la   = tRad > Math.PI ? 1 : 0;
+            const angL = -Math.PI / 2 - tRad / 2;  // left edge
+            const angR = -Math.PI / 2 + tRad / 2;  // right edge
 
-            // All angles measured from positive-X; sector bisector points straight UP (-π/2)
-            const angL = -Math.PI/2 - tRad/2;
-            const angR = -Math.PI/2 + tRad/2;
+            // Scale r1 so sector fits inside box:
+            // height of sector = r1 (fans straight up)
+            // half-width of sector at outer arc = r1 × |sin(θ/2)|
+            const sinH = Math.abs(Math.sin(tRad / 2));
+            const r1ByH = boxH;
+            const r1ByW = sinH > 0.001 ? (boxW / 2) / sinH : boxH;
+            const r1 = Math.min(r1ByH, r1ByW) * 0.88;
+            const r2 = Math.max((R2 / R1) * r1, 10);
 
-            // Key points
-            const oL = { x: cx+r1*Math.cos(angL), y: cy+r1*Math.sin(angL) };  // outer left
-            const oR = { x: cx+r1*Math.cos(angR), y: cy+r1*Math.sin(angR) };  // outer right
-            const iL = { x: cx+r2*Math.cos(angL), y: cy+r2*Math.sin(angL) };  // inner left
-            const iR = { x: cx+r2*Math.cos(angR), y: cy+r2*Math.sin(angR) };  // inner right
-            const topMid = { x: cx, y: cy-r1 };   // midpoint of outer arc (straight up)
-            const botMid = { x: cx, y: cy-r2 };   // midpoint of inner arc
+            // All key points
+            const oL   = { x: cx + r1 * Math.cos(angL), y: cy + r1 * Math.sin(angL) };
+            const oR   = { x: cx + r1 * Math.cos(angR), y: cy + r1 * Math.sin(angR) };
+            const iL   = { x: cx + r2 * Math.cos(angL), y: cy + r2 * Math.sin(angL) };
+            const iR   = { x: cx + r2 * Math.cos(angR), y: cy + r2 * Math.sin(angR) };
+            const oTop = { x: cx, y: cy - r1 };  // outer arc midpoint (bisector = up)
+            const iTop = { x: cx, y: cy - r2 };  // inner arc midpoint
 
             // Sector path
-            const path = `M ${iL.x.toFixed(1)},${iL.y.toFixed(1)}
-                          L ${oL.x.toFixed(1)},${oL.y.toFixed(1)}
-                          A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}
-                          L ${iR.x.toFixed(1)},${iR.y.toFixed(1)}
-                          A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},0 ${iL.x.toFixed(1)},${iL.y.toFixed(1)} Z`;
+            const path = `M ${iL.x.toFixed(1)},${iL.y.toFixed(1)} L ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)} L ${iR.x.toFixed(1)},${iR.y.toFixed(1)} A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},0 ${iL.x.toFixed(1)},${iL.y.toFixed(1)} Z`;
 
             let h = mkDefs('tc');
-            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">TRUNCATED CONE — DEVELOPED BLANK</text>`;
+            h += `<text x="${(W/2).toFixed(1)}" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">TRUNCATED CONE — DEVELOPED BLANK</text>`;
 
-            // Sector: light blue fill, solid outer arc, dashed inner arc
+            // Shape (fill first, then strokes on top)
             h += `<path d="${path}" fill="#dbeafe" stroke="none"/>`;
-            // Outer arc (large end) — solid blue
-            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2"/>`;
-            // Inner arc (small end) — dashed red
-            h += `<path d="M ${iL.x.toFixed(1)},${iL.y.toFixed(1)} A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},1 ${iR.x.toFixed(1)},${iR.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="6 3"/>`;
-            // Straight edges
-            h += `<line x1="${iL.x.toFixed(1)}" y1="${iL.y.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
-            h += `<line x1="${iR.x.toFixed(1)}" y1="${iR.y.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+            // Outer arc — solid blue (large end)
+            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r1.toFixed(1)},${r1.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2.5"/>`;
+            // Inner arc — dashed red (small end)
+            h += `<path d="M ${iL.x.toFixed(1)},${iL.y.toFixed(1)} A ${r2.toFixed(1)},${r2.toFixed(1)} 0 ${la},1 ${iR.x.toFixed(1)},${iR.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="8 4"/>`;
+            // Straight cut edges
+            h += `<line x1="${iL.x.toFixed(1)}" y1="${iL.y.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="2"/>`;
+            h += `<line x1="${iR.x.toFixed(1)}" y1="${iR.y.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="2"/>`;
 
-            // ── θ arc near apex ──
-            const tArcR = Math.min(28, r2*0.55);
-            h += `<path d="M ${(cx+tArcR*Math.cos(angL)).toFixed(1)},${(cy+tArcR*Math.sin(angL)).toFixed(1)} A ${tArcR},${tArcR} 0 ${la},1 ${(cx+tArcR*Math.cos(angR)).toFixed(1)},${(cy+tArcR*Math.sin(angR)).toFixed(1)}" fill="none" stroke="#d97706" stroke-width="1.5"/>`;
-            h += `<text x="${cx.toFixed(1)}" y="${(cy - tArcR - 6).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
+            // θ arc near apex
+            const tArcR = Math.min(40, r2 * 0.45, r1 * 0.18);
+            const tArcL_x = cx + tArcR * Math.cos(angL), tArcL_y = cy + tArcR * Math.sin(angL);
+            const tArcR_x = cx + tArcR * Math.cos(angR), tArcR_y = cy + tArcR * Math.sin(angR);
+            h += `<path d="M ${tArcL_x.toFixed(1)},${tArcL_y.toFixed(1)} A ${tArcR},${tArcR} 0 ${la},1 ${tArcR_x.toFixed(1)},${tArcR_y.toFixed(1)}" fill="none" stroke="#d97706" stroke-width="2"/>`;
+            // θ label always directly above the arc (bisector = straight up from apex)
+            h += `<text x="${cx.toFixed(1)}" y="${(cy - tArcR - 8).toFixed(1)}" text-anchor="middle" font-size="16" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
 
-            // ── Apex dot ──
-            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3.5" fill="#1e3a5f"/>`;
+            // Apex dot + label below
+            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4" fill="#1e3a5f"/>`;
+            h += `<text x="${cx.toFixed(1)}" y="${(cy + 16).toFixed(1)}" text-anchor="middle" font-size="10" fill="#1e3a5f" font-family="Inter,sans-serif">Apex</text>`;
 
-            // ── X1 dimension: horizontal span at outer arc level ──
-            // Drop a horizontal dim line just below the outer arc ends
-            const x1DimY = Math.max(oL.y, oR.y) + 18;
-            h += ext(oL.x, oL.y, oL.x, x1DimY+3);
-            h += ext(oR.x, oR.y, oR.x, x1DimY+3);
-            h += dbl(oL.x+3, x1DimY, oR.x-3, x1DimY, 'X1', '#2563eb', 'tc');
+            // ── R1 leader: origin = midpoint of OUTER arc (oTop) ──────
+            // Radiates upward (away from apex), elbow goes right to RAIL_R
+            h += rLeader(oTop.x, oTop.y, cx, cy, RAIL_R, 'R1', '#2563eb', 'R');
 
-            // ── X2 dimension: horizontal span at inner arc level ──
-            const x2DimY = x1DimY + 26;
-            h += ext(iL.x, iL.y, iL.x, x2DimY+3);
-            h += ext(iR.x, iR.y, iR.x, x2DimY+3);
-            h += dbl(iL.x+3, x2DimY, iR.x-3, x2DimY, 'X2', '#dc2626', 'tc');
+            // ── R2 leader: origin = midpoint of INNER arc (iTop) ──────
+            h += rLeader(iTop.x, iTop.y, cx, cy, RAIL_R, 'R2', '#dc2626', 'R');
 
-            // ── R1 leader: from midpoint of outer arc, pointing out to the right ──
-            const r1LeadStart = { x: cx + r1*0.72*Math.cos(angR + 0.18), y: cy + r1*0.72*Math.sin(angR + 0.18) };
-            const r1LeadEnd   = { x: Math.min(W-10, r1LeadStart.x + 42), y: r1LeadStart.y - 8 };
-            h += ldr(r1LeadStart.x, r1LeadStart.y, r1LeadEnd.x, r1LeadEnd.y, '#2563eb');
-            h += `<text x="${(r1LeadEnd.x+4).toFixed(1)}" y="${(r1LeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">R1</text>`;
+            // ── L leader: origin = midpoint of LEFT straight edge ─────
+            const lMx = (iL.x + oL.x) / 2;
+            const lMy = (iL.y + oL.y) / 2;
+            h += rLeader(lMx, lMy, cx, cy, RAIL_L, 'L', '#16a34a', 'L');
 
-            // ── R2 leader: from midpoint of inner arc, pointing right ──
-            const r2LeadStart = { x: cx + r2*0.68*Math.cos(angR + 0.25), y: cy + r2*0.68*Math.sin(angR + 0.25) };
-            const r2LeadEnd   = { x: Math.min(W-10, r2LeadStart.x + 38), y: r2LeadStart.y + 10 };
-            h += ldr(r2LeadStart.x, r2LeadStart.y, r2LeadEnd.x, r2LeadEnd.y, '#dc2626');
-            h += `<text x="${(r2LeadEnd.x+4).toFixed(1)}" y="${(r2LeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#dc2626" font-family="Inter,sans-serif">R2</text>`;
+            // ── X1 dim: horizontal below outer arc ends ───────────────
+            // oL.y == oR.y (symmetric), so xBase is below either
+            const xBase1 = cy + 22;   // always just below apex → but arc ends are above apex
+            // Actually outer arc ends are above apex: oL.y < cy (since sector fans UP)
+            const x1y = Math.max(oL.y, oR.y) + 26;  // just below the lower of the two outer corners
+            h += ext(oL.x, oL.y, oL.x, x1y + 2);
+            h += ext(oR.x, oR.y, oR.x, x1y + 2);
+            h += hdim(oL.x + 6, x1y, oR.x - 6, 'X1', '#2563eb', 'bl', 'tc');
 
-            // ── L (slant) leader: from midpoint of left straight edge, pointing left ──
-            const slMidX = (iL.x+oL.x)/2, slMidY = (iL.y+oL.y)/2;
-            const slLeadEnd = { x: Math.max(10, slMidX - 40), y: slMidY - 10 };
-            h += ldr(slMidX, slMidY, slLeadEnd.x, slLeadEnd.y, '#16a34a');
-            h += `<text x="${(slLeadEnd.x-4).toFixed(1)}" y="${(slLeadEnd.y+4).toFixed(1)}" text-anchor="end" font-size="12" font-weight="bold" fill="#16a34a" font-family="Inter,sans-serif">L</text>`;
+            // ── X2 dim: 38px below X1 ─────────────────────────────────
+            const x2y = x1y + 38;
+            h += ext(iL.x, iL.y, iL.x, x2y + 2);
+            h += ext(iR.x, iR.y, iR.x, x2y + 2);
+            h += hdim(iL.x + 6, x2y, iR.x - 6, 'X2', '#dc2626', 'rd', 'tc');
 
             svg.innerHTML = h;
         }
 
-        // ── Full Cone layout ──────────────────────────────────────────
+        // ── Full Cone SVG ─────────────────────────────────────────────
         function updateFullConeSVG(R, theta_deg, sec, slant, D, alpha) {
             const svg = document.getElementById('svg-fullcone');
-            const W = 500, H = 340;
+            const W = 700, H = 480;
             svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-            const cx = W/2, cy = H - 50;
-            const maxR = Math.min(cx - 55, cy - 30);
-            const r = maxR;   // scaled radius
+            const RAIL_R = W - 8;
+            const DT = 38, DB = 60, DL = 60, DR = 90;
+            const boxW = W - DL - DR;
+            const boxH = H - DT - DB;
+            const cx = W / 2;
+            const cy = H - DB;
 
             const tRad = (theta_deg * Math.PI) / 180;
-            const la = tRad > Math.PI ? 1 : 0;
+            const la   = tRad > Math.PI ? 1 : 0;
+            const angL = -Math.PI / 2 - tRad / 2;
+            const angR = -Math.PI / 2 + tRad / 2;
 
-            const angL = -Math.PI/2 - tRad/2;
-            const angR = -Math.PI/2 + tRad/2;
+            const sinH = Math.abs(Math.sin(tRad / 2));
+            const rByH = boxH;
+            const rByW = sinH > 0.001 ? (boxW / 2) / sinH : boxH;
+            const r = Math.min(rByH, rByW) * 0.88;
 
-            const oL = { x: cx+r*Math.cos(angL), y: cy+r*Math.sin(angL) };
-            const oR = { x: cx+r*Math.cos(angR), y: cy+r*Math.sin(angR) };
+            const oL   = { x: cx + r * Math.cos(angL), y: cy + r * Math.sin(angL) };
+            const oR   = { x: cx + r * Math.cos(angR), y: cy + r * Math.sin(angR) };
+            const oTop = { x: cx, y: cy - r };   // arc midpoint, straight up
 
             const path = `M ${cx.toFixed(1)},${cy.toFixed(1)} L ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)} Z`;
 
             let h = mkDefs('fc');
-            h += `<text x="${W/2}" y="18" text-anchor="middle" font-size="12" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">FULL CONE — DEVELOPED BLANK</text>`;
+            h += `<text x="${(W/2).toFixed(1)}" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#1e3a5f" font-family="Inter,sans-serif">FULL CONE — DEVELOPED BLANK</text>`;
 
-            // Sector
             h += `<path d="${path}" fill="#dbeafe" stroke="none"/>`;
-            // Outer arc — solid blue
-            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2"/>`;
-            // Straight edges
-            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
-            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="1.8"/>`;
+            h += `<path d="M ${oL.x.toFixed(1)},${oL.y.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)} 0 ${la},1 ${oR.x.toFixed(1)},${oR.y.toFixed(1)}" fill="none" stroke="#2563eb" stroke-width="2.5"/>`;
+            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oL.x.toFixed(1)}" y2="${oL.y.toFixed(1)}" stroke="#334155" stroke-width="2"/>`;
+            h += `<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${oR.x.toFixed(1)}" y2="${oR.y.toFixed(1)}" stroke="#334155" stroke-width="2"/>`;
 
-            // ── θ arc near apex ──
-            const tArcR2 = Math.min(30, r*0.2);
-            h += `<path d="M ${(cx+tArcR2*Math.cos(angL)).toFixed(1)},${(cy+tArcR2*Math.sin(angL)).toFixed(1)} A ${tArcR2},${tArcR2} 0 ${la},1 ${(cx+tArcR2*Math.cos(angR)).toFixed(1)},${(cy+tArcR2*Math.sin(angR)).toFixed(1)}" fill="none" stroke="#d97706" stroke-width="1.5"/>`;
-            h += `<text x="${cx.toFixed(1)}" y="${(cy - tArcR2 - 6).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
+            // θ arc + label
+            const tAR = Math.min(42, r * 0.18);
+            h += `<path d="M ${(cx + tAR*Math.cos(angL)).toFixed(1)},${(cy + tAR*Math.sin(angL)).toFixed(1)} A ${tAR},${tAR} 0 ${la},1 ${(cx + tAR*Math.cos(angR)).toFixed(1)},${(cy + tAR*Math.sin(angR)).toFixed(1)}" fill="none" stroke="#d97706" stroke-width="2"/>`;
+            h += `<text x="${cx.toFixed(1)}" y="${(cy - tAR - 8).toFixed(1)}" text-anchor="middle" font-size="16" font-weight="bold" fill="#d97706" font-family="Inter,sans-serif">θ</text>`;
 
-            // ── Apex dot ──
-            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3.5" fill="#1e3a5f"/>`;
+            // Apex dot
+            h += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4" fill="#1e3a5f"/>`;
+            h += `<text x="${cx.toFixed(1)}" y="${(cy + 16).toFixed(1)}" text-anchor="middle" font-size="10" fill="#1e3a5f" font-family="Inter,sans-serif">Apex</text>`;
 
-            // ── X1 dim: horizontal span of the arc ends ──
-            const x1DimY = Math.max(oL.y, oR.y) + 18;
-            h += ext(oL.x, oL.y, oL.x, x1DimY+3);
-            h += ext(oR.x, oR.y, oR.x, x1DimY+3);
-            h += dbl(oL.x+3, x1DimY, oR.x-3, x1DimY, 'X', '#2563eb', 'fc');
+            // R leader: origin = midpoint of arc (oTop), radially upward, elbow right to RAIL_R
+            h += rLeader(oTop.x, oTop.y, cx, cy, RAIL_R, 'R', '#2563eb', 'R');
+            // Sub-label "(= Slant)" on the next line at same X as R text
+            const rElbowY = oTop.y - 32;   // approximate elbow Y (outward from arc midpoint)
+            h += `<text x="${(RAIL_R - 6).toFixed(1)}" y="${(oTop.y - 32 + 20).toFixed(1)}" text-anchor="end" font-size="10" fill="#2563eb" font-family="Inter,sans-serif">(= Slant)</text>`;
 
-            // ── R leader: from midpoint along right straight edge ──
-            const rMidX = (cx + oR.x)/2, rMidY = (cy + oR.y)/2;
-            const rLeadEnd = { x: Math.min(W-12, rMidX + 44), y: rMidY - 12 };
-            h += ldr(rMidX, rMidY, rLeadEnd.x, rLeadEnd.y, '#2563eb');
-            h += `<text x="${(rLeadEnd.x+4).toFixed(1)}" y="${(rLeadEnd.y+4).toFixed(1)}" font-size="12" font-weight="bold" fill="#2563eb" font-family="Inter,sans-serif">R</text>`;
-            h += `<text x="${(rLeadEnd.x+4).toFixed(1)}" y="${(rLeadEnd.y+16).toFixed(1)}" font-size="9" fill="#2563eb" font-family="Inter,sans-serif">(= Slant)</text>`;
+            // X dim: horizontal below arc ends
+            const xY = Math.max(oL.y, oR.y) + 26;
+            h += ext(oL.x, oL.y, oL.x, xY + 2);
+            h += ext(oR.x, oR.y, oR.x, xY + 2);
+            h += hdim(oL.x + 6, xY, oR.x - 6, 'X', '#2563eb', 'bl', 'fc');
 
             svg.innerHTML = h;
         }
 
+        // ============================================================
         // ============================================================
 
         if ('serviceWorker' in navigator) {
